@@ -16,14 +16,6 @@ CREATE TABLE `tokens`(
    `token` VARCHAR(255) NOT NULL UNIQUE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `favorite`(
-   `id_favorite` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `name` varchar(255) NOT NULL,
-   `status` ENUM ('en attente', 'validé', 'refusé') NOT NULL,
-   `fk_id_user` int(11) UNSIGNED NOT NULL,
-   FOREIGN KEY(fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 sql CREATE TABLE `favorite` (
    `id_favorite` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `fk_id_user` INT(11) UNSIGNED NOT NULL,
@@ -47,9 +39,8 @@ CREATE TABLE `event`(
    `nombre_de_joueurs` int(11) UNSIGNED NOT NULL,
    `description` text NOT NULL,
    `visibility` ENUM('public', 'privé') NOT NULL DEFAULT 'public',
-   `fk_id_favorite` int(11) UNSIGNED NOT NULL,
+   `status` ENUM ('en attente', 'validé', 'refusé') NOT NULL,
    `fk_id_user` int(11) UNSIGNED NOT NULL,
-   FOREIGN KEY(fk_id_favorite) REFERENCES favorite(id_favorite) ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY(fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -64,7 +55,7 @@ CREATE TABLE `password`(
 CREATE TABLE `scores`(
    `fk_id_user` int(11) UNSIGNED NOT NULL,
    `fk_id_event` int(11) UNSIGNED NOT NULL,
-   PRIMARY KEY(id_user, id_event),
+   PRIMARY KEY(fk_id_user, fk_id_event),
    `score` int(11) UNSIGNED NOT NULL CHECK (score >=0),
    `score_total` decimal(10,2) UNSIGNED NOT NULL CHECK (score_total >= score),
    FOREIGN KEY(fk_id_user) REFERENCES user(id_user),
@@ -82,5 +73,5 @@ CREATE TABLE `specification`(
 CREATE INDEX idx_user ON user (mail, pseudo);
 CREATE INDEX idx_event_user ON event (fk_id_user);
 CREATE INDEX idx_event_visibility ON event (visibility);
-CREATE INDEX idx_score_event ON event (fk_id_event);
+CREATE INDEX idx_score_event ON scores (fk_id_event);
 CREATE UNIQUE INDEX idx_token_token ON tokens (token);
