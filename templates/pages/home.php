@@ -8,6 +8,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
 ?>
 
 <main>
+<h1>Page d'Accueil</h1>
     <section>
         <div class="background-container">
             <img src="..\assets\images\signal-5153517_1920.jpg" alt="" class="w-100 image-en-tete col-10">
