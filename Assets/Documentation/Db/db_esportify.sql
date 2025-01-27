@@ -17,15 +17,6 @@ CREATE TABLE `tokens`(
    `token` VARCHAR(255) NOT NULL UNIQUE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-sql CREATE TABLE `favorite` (
-   `id_favorite` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `fk_id_user` INT(11) UNSIGNED NOT NULL,
-   `fk_id_event` INT(11) UNSIGNED NOT NULL,
-   FOREIGN KEY (fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
-   FOREIGN KEY (fk_id_event) REFERENCES event(id_event) ON DELETE CASCADE ON UPDATE CASCADE,
-   UNIQUE KEY (fk_id_user, fk_id_event) 
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 CREATE TABLE `plateforme`(
    `id_plateforme` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `name` varchar(255) NOT NULL
@@ -47,6 +38,15 @@ CREATE TABLE `event`(
    FOREIGN KEY(fk_id_plateforme) REFERENCES plateforme(id_plateforme) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `favorite`(
+   `id_favorite` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   `fk_id_user` INT(11) UNSIGNED NOT NULL,
+   `fk_id_event` INT(11) UNSIGNED NOT NULL,
+   UNIQUE KEY (fk_id_user, fk_id_event),
+   FOREIGN KEY (fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (fk_id_event) REFERENCES event(id_event) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `password`(
    `fk_id_user` int(11) UNSIGNED NOT NULL,
    `fk_id_token` int(11) UNSIGNED NOT NULL,
@@ -59,8 +59,8 @@ CREATE TABLE `scores`(
    `fk_id_user` int(11) UNSIGNED NOT NULL,
    `fk_id_event` int(11) UNSIGNED NOT NULL,
    PRIMARY KEY(fk_id_user, fk_id_event),
-   `score` int(11) UNSIGNED NOT NULL CHECK (score >=0),
-   `score_total` decimal(10,2) UNSIGNED NOT NULL CHECK (score_total >= score),
+   `score` int(11) UNSIGNED NOT NULL,
+   `score_total` decimal(10,2) UNSIGNED NOT NULL CHECK,
    FOREIGN KEY(fk_id_user) REFERENCES user(id_user),
    FOREIGN KEY(fk_id_event) REFERENCES event(id_event)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
