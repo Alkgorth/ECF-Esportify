@@ -16,18 +16,15 @@ class Controller
                         break;
                     case 'connexions':
                         // charger controller jeux
-                        $pageController = new ConnexionsController();
-                        $pageController->route();
+                        
                         break;
                     case 'games':
                         // charger controller jeux
-                        $pageController = new GameController();
-                        $pageController->route();
+                        
                         break;
                     case 'admin':
                         // charger controller jeux
-                        $pageController = new AdminController();
-                        $pageController->route();
+                        
                         break;
                     default:
                         throw new \Exception("Désolé cette page n'existe pas 😣");

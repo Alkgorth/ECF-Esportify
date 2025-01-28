@@ -11,28 +11,30 @@ class EventRepository extends MainRepository
     public function homeDisplay()
     {
         $query = $this->pdo->prepare('SELECT
-            g.name AS name,
-            p.label AS pegi_name,
-            s.price AS specification_price,
+            e.name_event AS name,
+            e.name_game AS game_name,
+            e.date_hour_start AS start,
+            e.nombre_de_joueurs AS joueurs,
+            e.description AS description,
             pl.name AS plateforme_name,
-            g.id_jeu AS id
-            FROM games AS g
-            INNER JOIN specifications s ON g.id_jeu = s.id_jeu
-            INNER JOIN plateforme pl ON s.id_plateforme = pl.id_plateforme
-            INNER JOIN pegi p ON g.id_pegi = p.id_pegi
+            u.pseudo AS organisateur
+            FROM event AS e
+            INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
+            INNER JOIN user u ON e.fk_id_user = u.id_user
+            
             ORDER BY RAND()
-            LIMIT 3');
+            LIMIT 8');
 
 
         $query->execute();
 
-        $game = $query->fetchAll($this->pdo::FETCH_ASSOC);
+        $event = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
-        return $game;
+        return $event;
     }
 
 
-    public function findDetail(int $id)
+    /*public function findDetail(int $id)
     {
 
 
@@ -103,5 +105,5 @@ class EventRepository extends MainRepository
         $game = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
         return $game;
-    }
+    }*/
 }
