@@ -14,17 +14,18 @@ class Controller
                         // on appelle la méthode route du fichier PageController
                         $pageController->route();
                         break;
+                    case 'event':
+                        // charger controller event
+                        $pageController = new EventController();
+                        $pageController->route();
+                        break;
                     case 'connexions':
                         // charger controller jeux
-                        
-                        break;
-                    case 'games':
-                        // charger controller jeux
-                        
+
                         break;
                     case 'admin':
                         // charger controller jeux
-                        
+
                         break;
                     default:
                         throw new \Exception("Désolé cette page n'existe pas 😣");
