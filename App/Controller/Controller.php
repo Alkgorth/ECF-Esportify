@@ -19,9 +19,10 @@ class Controller
                         $pageController = new EventController();
                         $pageController->route();
                         break;
-                    case 'connexions':
+                    case 'auth':
                         // charger controller jeux
-
+                        $pageController = new AuthController();
+                        $pageController->route();
                         break;
                     case 'admin':
                         // charger controller jeux

@@ -147,6 +147,11 @@ class UserController extends Controller
         }
     }
 
+    /*protected function espacePersonnel()
+    {
+        $this->render('pages/espacePersonnel', []);
+    }*/
+
     protected function panier()
     {
         $this->render('pages/panier', []);
