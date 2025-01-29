@@ -11,27 +11,23 @@ class Controller
                 switch ($_GET['controller']) {
                     case 'pages':
                         $pageController = new UserController();
-                        // on appelle la méthode route du fichier PageController
                         $pageController->route();
                         break;
                     case 'event':
-                        // charger controller event
                         $pageController = new EventController();
                         $pageController->route();
                         break;
                     case 'auth':
-                        // charger controller jeux
                         $pageController = new AuthController();
                         $pageController->route();
                         break;
-                    case 'personnal':
-                        // charger controller jeux
+                    case 'personal':
                         $pageController = new PersonalController();
                         $pageController->route();
                         break;
                     case 'admin':
-                        // charger controller jeux
-
+                        $pageController = new PersonalController();
+                        $pageController->route();
                         break;
                     default:
                         throw new \Exception("Désolé cette page n'existe pas 😣");

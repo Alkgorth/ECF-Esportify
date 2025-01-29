@@ -21,6 +21,12 @@ class PersonalController extends Controller
                     case 'espacePersonnel':
                         $this->espacePersonnel();
                         break;
+                    case 'espacePersonnelOrga':
+                        $this->espacePersonnelOrga();
+                        break;
+                    case 'espacePersonnelAdmin':
+                        $this->espacePersonnelAdmin();
+                        break;
                     case 'panier':
                         $this->panier();
                         break;
@@ -82,7 +88,7 @@ class PersonalController extends Controller
                 header('Location: index.php?controller=pages&action=home');
             }
 
-            $this->render('pages/espacePersonnel', [
+            $this->render('personal/espacePersonnel', [
                 'affichage' => $affichage,
                 'error' => $error
             ]);
@@ -93,8 +99,18 @@ class PersonalController extends Controller
         }
     }
 
+    protected function espacePersonnelOrga()
+    {
+        $this->render('personal/espacePersonnelOrga', []);
+    }
+
+    protected function espacePersonnelAdmin()
+    {
+        $this->render('personal/espacePersonnelAdmin', []);
+    }
+
     protected function panier()
     {
-        $this->render('pages/panier', []);
+        $this->render('personal/panier', []);
     }
 }
