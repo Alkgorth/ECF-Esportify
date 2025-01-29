@@ -24,6 +24,11 @@ class Controller
                         $pageController = new AuthController();
                         $pageController->route();
                         break;
+                    case 'personnal':
+                        // charger controller jeux
+                        $pageController = new PersonalController();
+                        $pageController->route();
+                        break;
                     case 'admin':
                         // charger controller jeux
 

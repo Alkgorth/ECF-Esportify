@@ -5,7 +5,7 @@ namespace App\Tools;
 
 use App\Repository\UserRepository;
 use App\Entity\User;
-use App\Controller\ConnexionsController;
+use App\Controller\AuthController;
 use App\Tools\configSecu;
 
 //Import PHPMailer classes into the global namespace
@@ -51,7 +51,7 @@ class SendMail
             $mail->Subject = 'Confirmation de la création de votre compte client';
             $mail->Body    = '<h2>Bonjour</h2>
                             <p>Bienvenue ' . $last_name . ' ' . $first_name . ' chez GameStore !</p>
-                            <a href="http://localhost:3000/index.php?controller=connexions&action=connexion">Pour vous connecter cliquez ici</a>';
+                            <a href="http://localhost:3000/index.php?controller=auth&action=connexion">Pour vous connecter cliquez ici</a>';
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients'; // pour les boites mail plus anciennes
 
             $mail->send();
@@ -91,7 +91,7 @@ class SendMail
             $mail->ContentType = 'text/html; charset=UTF-8';
             $mail->Subject = 'Demande de réinitiamisation de mot de passe';
 
-            $resetPasswordUrl = 'http://localhost:3000/index.php?controller=connexions&action=reinitialiserMdp&token=' . urlencode($tokenValue);
+            $resetPasswordUrl = 'http://localhost:3000/index.php?controller=auth&action=reinitialiserMdp&token=' . urlencode($tokenValue);
 
             $mail->Body    = '<h2>Réinitialisation de mot de passe</h2>
                             <p>Bonjour' . $last_name . ' ' . $first_name . ' Vous avez fait une demande pour réinitialiser votre mot de passe.</p>

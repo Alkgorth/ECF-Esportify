@@ -111,7 +111,7 @@ class AuthController extends Controller
                 }
             }
 
-            $this->render('connexions/mdpOublie', [
+            $this->render('auth/mdpOublie', [
                 'error' => $error
             ]);
         } catch (\Exception $e) {
@@ -125,7 +125,7 @@ class AuthController extends Controller
 
     protected function mdpReinitialise()
     {
-        $this->render('connexions/mdpReinitialise', []);
+        $this->render('auth/mdpReinitialise', []);
     }
 
 
@@ -173,7 +173,7 @@ class AuthController extends Controller
 
                         $tokenRepo->deleteToken($tokenValue);
 
-                        header('Location: index.php?controller=connexions&action=mdpReinitialise');
+                        header('Location: index.php?controller=auth&action=mdpReinitialise');
                     }
                 }
             } else {
@@ -181,7 +181,7 @@ class AuthController extends Controller
             }
 
 
-            $this->render('connexions/reinitialiserMdp', [
+            $this->render('auth/reinitialiserMdp', [
                 'error' => $error
             ]);
         } catch (\Exception $e) {
@@ -196,6 +196,6 @@ class AuthController extends Controller
         session_regenerate_id(true);
         session_destroy();
         unset($_SESSION);
-        header('location: index.php?controller=connexions&action=connexion');
+        header('location: index.php?controller=auth&action=connexion');
     }
 }

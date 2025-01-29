@@ -35,7 +35,7 @@ require_once _ROOTPATH_ . '\templates\head.php';
         <div>
             <div class="text-center">
                 <button class="mb-3 btn btn-dark text-center">
-                    <a href="index.php?controller=connexions&action=mdpOublie" class="text-white">Mot de passe oublié</a>
+                    <a href="index.php?controller=auth&action=mdpOublie" class="text-white">Mot de passe oublié</a>
                 </button>
             </div>
 

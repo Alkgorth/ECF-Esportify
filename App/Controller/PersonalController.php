@@ -9,8 +9,7 @@ use App\Tools\UserValidator;
 use App\Tools\SendMail;
 use App\Tools\Security;
 
-
-class UserController extends Controller
+class PersonalController extends Controller
 {
 
     public function route(): void
@@ -19,11 +18,8 @@ class UserController extends Controller
             //on mes en place une condition pour lancer le bon controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                    case 'home':
-                        $this->home();
-                        break;
-                    case 'creationCompte':
-                        $this->creationCompte();
+                    case 'espacePersonnel':
+                        $this->espacePersonnel();
                         break;
                     case 'panier':
                         $this->panier();
@@ -42,43 +38,52 @@ class UserController extends Controller
         }
     }
 
-    // controller=page&action=home
-    protected function home()
-    {
-        $eventRepository = new EventRepository();
-        $event = $eventRepository->homeDisplay();
-
-        $this->render('pages/home', [
-            'events' => $event
-        ]);
-    }
-
-    // controller=page&action=creationCompte
-    protected function creationCompte()
+    protected function espacePersonnel()
     {
         try {
-            $error = [];
 
-            $user = new User();
+            $error = [];
+            $affichage = "Vos informations ont bien été modifiées";
+
+            if (!isset($_SESSION['user'])) {
+                header('Location: index.php?controller=auth&action=connexion');
+            }
 
             if (isset($_POST['saveUser'])) {
+
+                $user = new User();
                 $user->hydrate($_POST);
-                $user->setRole('user');
+                $user->setIdUser($_SESSION['user']['id']);
+                $user->setRole($_SESSION['user']['role']);
                 $error = UserValidator::validate($user);
 
                 if (empty($error)) {
                     $userRepository = new UserRepository();
                     $userRepository->persist($user);
 
-                    SendMail::mailCreateUser($user->getLastName(), $user->getFirstName(), $user->getMail());
-
-                    header('Location: index.php?controller=auth&action=connexion');
+                    $_SESSION['user'] = [
+                        'id' => $user->getIdUser(),
+                        'mail' => $user->getMail(),
+                        'last_name' => $user->getLastName(),
+                        'first_name' => $user->getFirstName(),
+                        'adresse' => $user->getAdresse(),
+                        'zip_code' => $user->getZipCode(),
+                        'city' => $user->getCity(),
+                        'fk_id_store' => $user->getFkIdStore(),
+                        'role' => $user->getRole()
+                    ];
                 }
             }
 
-            $this->render('pages/creationCompte', [
-                'user' => '',
-                'creationCompte' => 'Créer mon compte',
+            if (isset($_POST['delete'])) {
+                $userRepository = new UserRepository();
+                $userRepository->delete($_SESSION['user']['id']);
+                session_destroy();
+                header('Location: index.php?controller=pages&action=home');
+            }
+
+            $this->render('pages/espacePersonnel', [
+                'affichage' => $affichage,
                 'error' => $error
             ]);
         } catch (\Exception $e) {
