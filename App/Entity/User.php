@@ -8,13 +8,10 @@ class User extends MainEntity
     protected string $last_name = '';
     protected string $first_name = '';
     protected string $mail = '';
-    protected string $adresse = '';
-    protected string $zip_code = '';
-    protected string $city = '';
+    protected string $pseudo = '';
     protected string $password = '';
     protected string $role = '';
     protected int $fk_id_store;
-
 
     /**
      * Get the value of id_user
@@ -89,55 +86,19 @@ class User extends MainEntity
     }
 
     /**
-     * Get the value of adresse
+     * Get the value of pseudo
      */
-    public function getAdresse(): string
+    public function getPseudo(): string
     {
-        return $this->adresse;
+        return $this->pseudo;
     }
 
     /**
-     * Set the value of adresse
+     * Set the value of pseudo
      */
-    public function setAdresse(string $adresse): self
+    public function setPseudo(string $pseudo): self
     {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of zip_code
-     */
-    public function getZipCode(): string
-    {
-        return $this->zip_code;
-    }
-
-    /**
-     * Set the value of zip_code
-     */
-    public function setZipCode(string $zip_code): self
-    {
-        $this->zip_code = $zip_code;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of city
-     */
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set the value of city
-     */
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
+        $this->pseudo = $pseudo;
 
         return $this;
     }

@@ -26,7 +26,11 @@ class Controller
                         $pageController->route();
                         break;
                     case 'admin':
-                        $pageController = new PersonalController();
+                        $pageController = new AdminController();
+                        $pageController->route();
+                        break;
+                    case 'footer':
+                        $pageController = new FooterController();
                         $pageController->route();
                         break;
                     default:

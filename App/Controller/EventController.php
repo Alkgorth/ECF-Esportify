@@ -26,6 +26,9 @@ class EventController extends Controller
                     case 'eventAdmin':
                         $this->eventAdmin();
                         break;
+                        case 'createEvent':
+                            $this->createEvent();
+                            break;
                     case 'delete':
                         // Pour appler la méthode delete()
                         break;
@@ -87,5 +90,10 @@ class EventController extends Controller
     protected function eventAdmin()
     {
         $this->render('event/eventAdmin', []);
+    }
+
+    protected function createEvent()
+    {
+        $this->render('event/createEvent', []);
     }
 }
