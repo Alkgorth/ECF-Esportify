@@ -7,7 +7,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
 <main>
     <section>
-        <h1>Page d'Accueil</h1>
+        <h1 class="text-align-center fs-4">Page d'Accueil</h1>
     </section>
 </main>
 
