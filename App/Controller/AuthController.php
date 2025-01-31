@@ -71,9 +71,7 @@ class AuthController extends Controller
                         'mail' => $user->getMail(),
                         'last_name' => $user->getLastName(),
                         'first_name' => $user->getFirstName(),
-                        'adresse' => $user->getAdresse(),
-                        'zip_code' => $user->getZipCode(),
-                        'city' => $user->getCity(),
+                        'pseudo' => $user->getPseudo(),
                         'fk_id_store' => $user->getFkIdStore(),
                         'role' => $user->getRole()
                     ];

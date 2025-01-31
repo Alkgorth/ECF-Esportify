@@ -18,7 +18,7 @@ class UserRepository extends MainRepository
     public function findOneById(int $id)
     {
         // requête qui récupère l'utilisateur
-        $query = $this->pdo->prepare("SELECT * FROM app_user WHERE id_user = :id");
+        $query = $this->pdo->prepare("SELECT * FROM user WHERE id_user = :id");
         $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
         $query->execute();
         $user = $query->fetch($this->pdo::FETCH_ASSOC);
@@ -34,7 +34,7 @@ class UserRepository extends MainRepository
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
-        $query = $this->pdo->prepare('SELECT * FROM app_user WHERE mail = :mail');
+        $query = $this->pdo->prepare('SELECT * FROM user WHERE mail = :mail');
 
         $query->bindValue(':mail', htmlspecialchars($mail), $this->pdo::PARAM_STR);
 
@@ -54,15 +54,15 @@ class UserRepository extends MainRepository
         // requête qui insère l'utilisateur
         if ($user->getIdUser() !== null) {
             $query = $this->pdo->prepare(
-                "UPDATE app_user SET last_name = :last_name, first_name = :first_name, mail = :mail,
-                                        adresse = :adresse, zip_code = :zip_code, city = :city, password = :password, fk_id_store = :fk_id_store
+                "UPDATE user SET last_name = :last_name, first_name = :first_name, mail = :mail,
+                                        pseudo = :pseudo, password = :password, fk_id_store = :fk_id_store
                                         WHERE id_user = :id"
             );
             $query->bindValue(':id', $user->getIdUser(), $this->pdo::PARAM_INT);
         } else {
             $query = $this->pdo->prepare(
-                "INSERT INTO app_user (last_name, first_name, mail, adresse, zip_code, city, password, role, fk_id_store)
-                                        VALUES (:last_name, :first_name, :mail, :adresse, :zip_code, :city, :password, :role, :fk_id_store)"
+                "INSERT INTO user (last_name, first_name, mail, pseudo, password, role, fk_id_store)
+                                        VALUES (:last_name, :first_name, :mail, :pseudo, :password, :role, :fk_id_store)"
             );
             $query->bindValue(':role', $user->getRole(), $this->pdo::PARAM_STR);
         }
@@ -70,9 +70,7 @@ class UserRepository extends MainRepository
         $query->bindValue(':last_name', htmlspecialchars($user->getLastName()), $this->pdo::PARAM_STR);
         $query->bindValue(':first_name', htmlspecialchars($user->getFirstName()), $this->pdo::PARAM_STR);
         $query->bindValue(':mail', htmlspecialchars($user->getMail()), $this->pdo::PARAM_STR);
-        $query->bindValue(':adresse', htmlspecialchars($user->getAdresse()), $this->pdo::PARAM_STR);
-        $query->bindValue(':zip_code', htmlspecialchars($user->getZipCode()), $this->pdo::PARAM_INT);
-        $query->bindValue(':city', htmlspecialchars($user->getCity()), $this->pdo::PARAM_STR);
+        $query->bindValue(':city', htmlspecialchars($user->getPseudo()), $this->pdo::PARAM_STR);
         $query->bindValue(':password', htmlspecialchars(password_hash($user->getPassword(), PASSWORD_DEFAULT)), $this->pdo::PARAM_STR);
         $query->bindValue(':fk_id_store', htmlspecialchars($user->getFkIdStore()), $this->pdo::PARAM_INT);
 
@@ -82,7 +80,7 @@ class UserRepository extends MainRepository
     public function delete(int $id)
     {
         // requête qui supprime l'utilisateur
-        $query = $this->pdo->prepare("DELETE FROM app_user WHERE id_user = :id");
+        $query = $this->pdo->prepare("DELETE FROM user WHERE id_user = :id");
         $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
         return $query->execute();
     }
@@ -131,7 +129,7 @@ class UserRepository extends MainRepository
     public function updatePassword(User $user)
     {
         if ($user->getIdUser() !== null) {
-            $query = $this->pdo->prepare('UPDATE app_user SET password = :password WHERE id_user = :id');
+            $query = $this->pdo->prepare('UPDATE Ksuser SET password = :password WHERE id_user = :id');
         } else {
             throw new \Exception("Aucun utilisateur rattaché à ce mail.");
         }
