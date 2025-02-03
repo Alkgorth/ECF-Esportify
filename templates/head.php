@@ -11,4 +11,4 @@
 
 </head>
 
-<body class="bg-primary">
+<body class="">
