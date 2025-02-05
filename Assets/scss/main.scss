@@ -1,6 +1,90 @@
 
 
-
-
-@use "custom";
 @use "../../node_modules/bootstrap/scss/bootstrap.scss";
+@use "custom";
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    height: 100vh;
+    width: 100vw;
+   
+    position: relative;
+    background-color: --esportify-blue;
+  }
+  
+  nav {
+    width: 100%;
+    z-index: 1;
+  }
+  
+  main {
+    height: 100vh;
+    overflow: auto;
+    padding: 2rem 25vw;
+  }
+  
+  main::-webkit-scrollbar {
+    background-color: #dedede;
+    width: 0.5rem;
+  }
+  main::-webkit-scrollbar-thumb {
+    background-color: #757575;
+  }
+  
+  .nav-link a {
+    text-decoration: none;
+  }
+  .nav-latteral {
+    height: 100vh;
+    
+    width: max-content;
+    transition: all 0.1s ease;
+  }
+  
+  #nav-wrapper {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  #nav-wrapper.active{
+    display: block;
+  }
+  
+  .nav-links {
+    padding: 1rem 6rem 1rem 3rem;
+  }
+  
+  .nav-link {
+    cursor: pointer;
+    margin-bottom: 20px;
+    
+  }
+  
+  .nav-link svg {
+    font-size: 1.5rem;
+  }
+  
+  .bi-house,
+  .bi-person,
+  .bi-gear-fill{
+    cursor: pointer;
+    margin-bottom: 50px;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 4rem;
+  }
+  
+  .bi-house:hover,
+  .bi-person:hover,
+  .bi-gear-fill:hover {
+    color: orange;
+    background-color: #dedede;
+  }
