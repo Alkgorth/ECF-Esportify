@@ -11965,7 +11965,44 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@media only screen and (max-width: 600px) {
+  .navbar {
+    bottom: 0;
+    width: 100vw;
+    height: 5rem;
+  }
+  .logo {
+    display: none;
+  }
+  .navbar-nav {
+    flex-direction: row;
+  }
+  .nav-item {
+    justify-content: center;
+  }
+  main {
+    margin: 0;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .navbar {
+    top: 0;
+    width: 5rem;
+    height: 100vh;
+  }
+  .navbar:hover {
+    width: 16rem;
+  }
+  .navbar:hover .nav-text {
+    display: inline;
+  }
+  .navbar:hover .logo {
+    margin-left: 5rem;
+    left: 0px;
+  }
+}
 :root {
+  font-size: 16px;
   --esportify-blue: #0B92D0;
   --esportify-darkblue: #105f83;
   --esportify-green: #93C022;

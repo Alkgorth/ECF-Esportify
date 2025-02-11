@@ -1,7 +1,9 @@
 @use "../../node_modules/bootstrap/scss/bootstrap" as *;
+@use "layout/navbar";
 
 
 :root {
+  font-size: 16px;
     --esportify-blue: #0B92D0;
     --esportify-darkblue: #105f83;
     --esportify-green: #93C022;
