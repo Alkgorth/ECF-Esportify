@@ -12061,11 +12061,16 @@ input.form-control:focus {
   text-transform: uppercase;
   margin-bottom: 1rem;
   text-align: center;
-  color: var(--esportify-white) !important;
   background: var(--esportify-grey-25);
   font-size: 1.5rem;
   letter-spacing: 0.3ch;
-  width: 100%;
+}
+
+.nav-burger {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: 0.3ch;
 }
 
 .logo img {
@@ -12118,7 +12123,7 @@ input.form-control:focus {
   .navbar:hover .nav-text {
     display: inline;
   }
-  .navbar:hover .logo {
+  .navbar:hover .logo-text {
     margin-left: 5rem;
     left: 0px;
   }
