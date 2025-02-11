@@ -1,18 +1,21 @@
 @use "../../node_modules/bootstrap/scss/bootstrap" as *;
+@use "layout/navbar";
 
 
 :root {
-    --esportify-blue: #0B92D0;
-    --esportify-darkblue: #105f83;
-    --esportify-green: #93C022;
-    --esportify-red: #C32C88;
-    --esportify-yellow: #efc64d;
-    --esportify-black: #2B2727;
-    --esportify-gray: #f0f0f0;
-    --esportify-white: #fcf3ff;
-    --esportify-font-menus: "Rajdhani", sans-serif;
-    --esportify-font-titles: "Orbitron", sans-serif;
+  font-size: 16px;
+    --esportify-blue: #36fef6;
+    --esportify-green: #bffe88;
+    --esportify-dark: #2e434a;
+    --esportify-grey-75: #8d8e8e;
+    --esportify-grey-50: #4d5152;
+    --esportify-grey-25: #424546;
+    --esportify-grey-5: #2b2e2f;
+    --esportify-white: #fbf1ff;
+    --esportify-font-subtitles: "Rajdhani", sans-serif;
+    --esportify-font-menus: "Orbitron", sans-serif;
     --esportify-font-texts: "Roboto", sans-serif;
     --esportify-text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
     --esportify-box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+    --transition-speed: 600ms;
   }
