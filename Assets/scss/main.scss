@@ -4,30 +4,6 @@
 @use "custom";
 
 
-
-
-// .orbitron-<uniquifier> {
-//   font-family: "Orbitron", serif;
-//   font-optical-sizing: auto;
-//   font-weight: <weight>;
-//   font-style: normal;
-// }
-
-// .rajdhani-regular {
-//   font-family: "Rajdhani", serif;
-//   font-weight: 400;
-//   font-style: normal;
-// }
-
-// .roboto-<uniquifier> {
-//   font-family: "Roboto", serif;
-//   font-optical-sizing: auto;
-//   font-weight: 400;
-//   font-style: normal;
-//   font-variation-settings:
-//     "wdth" 100;
-// }
-
 * {
     margin: 0;
     padding: 0;
@@ -39,6 +15,7 @@
     width: 100vw;
     position: relative;
     background-color: var(--esportify-grey-25);
+    color: var(--esportify-white);
   }
   
 
