@@ -12,19 +12,8 @@ nav {
 
 .navbar {
   position: fixed;
-  transition: width 600ms ease;
+  transition: var(--transition-speed);
   overflow: hidden;
-}
-
-#nav-wrapper {
-  height: 100vh;
-  width: 100vw;
- 
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-#nav-wrapper.active {
-  display: block;
 }
 
 .navbar-nav {
