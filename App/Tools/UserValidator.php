@@ -22,14 +22,8 @@ class UserValidator extends User
         } else if (!filter_var($user->getMail(), FILTER_VALIDATE_EMAIL)) {
             $error[] = "Veuillez renseigner un email valide";
         }
-        if(empty($user->getAdresse())){
+        if(empty($user->getPseudo())){
             $error[] = "Veuillez renseigner votre adresse";
-        }
-        if(empty($user->getZipCode())){
-            $error[] = "Veuillez renseigner votre code postal";
-        }
-        if(empty($user->getCity())){
-            $error[] = "Veuillez renseigner votre ville";
         }
         if(empty($user->getPassword())){
             $error[] = "Veuillez renseigner un mot de passe";

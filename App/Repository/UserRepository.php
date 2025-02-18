@@ -55,14 +55,14 @@ class UserRepository extends MainRepository
         if ($user->getIdUser() !== null) {
             $query = $this->pdo->prepare(
                 "UPDATE user SET last_name = :last_name, first_name = :first_name, mail = :mail,
-                                        pseudo = :pseudo, password = :password, fk_id_store = :fk_id_store
+                                        pseudo = :pseudo, password = :password
                                         WHERE id_user = :id"
             );
             $query->bindValue(':id', $user->getIdUser(), $this->pdo::PARAM_INT);
         } else {
             $query = $this->pdo->prepare(
-                "INSERT INTO user (last_name, first_name, mail, pseudo, password, role, fk_id_store)
-                                        VALUES (:last_name, :first_name, :mail, :pseudo, :password, :role, :fk_id_store)"
+                "INSERT INTO user (last_name, first_name, mail, pseudo, password, role)
+                                        VALUES (:last_name, :first_name, :mail, :pseudo, :password, :role)"
             );
             $query->bindValue(':role', $user->getRole(), $this->pdo::PARAM_STR);
         }
@@ -70,9 +70,8 @@ class UserRepository extends MainRepository
         $query->bindValue(':last_name', htmlspecialchars($user->getLastName()), $this->pdo::PARAM_STR);
         $query->bindValue(':first_name', htmlspecialchars($user->getFirstName()), $this->pdo::PARAM_STR);
         $query->bindValue(':mail', htmlspecialchars($user->getMail()), $this->pdo::PARAM_STR);
-        $query->bindValue(':city', htmlspecialchars($user->getPseudo()), $this->pdo::PARAM_STR);
+        $query->bindValue(':pseudo', htmlspecialchars($user->getPseudo()), $this->pdo::PARAM_STR);
         $query->bindValue(':password', htmlspecialchars(password_hash($user->getPassword(), PASSWORD_DEFAULT)), $this->pdo::PARAM_STR);
-        $query->bindValue(':fk_id_store', htmlspecialchars($user->getFkIdStore()), $this->pdo::PARAM_INT);
 
         return $query->execute();
     }
