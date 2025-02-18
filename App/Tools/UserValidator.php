@@ -60,16 +60,22 @@ class UserValidator extends User
         }
     }
 
-    public static function isUser(): bool
+    public static function isJoueur(): bool
     {
         // on vérifie si il y a un user en session, puis on vérifie si cette utilisateur a le rôle user
-        return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'user';
+        return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'joueur';
+    }
+
+    public static function isOrga(): bool
+    {
+        // on vérifie si il y a un admin en session, puis on vérifie si cette utilisateur a le rôle admin
+        return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'organisateur';
     }
 
     public static function isAdmin(): bool
     {
         // on vérifie si il y a un admin en session, puis on vérifie si cette utilisateur a le rôle admin
-        return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+        return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'administrateur';
     }
 
 }

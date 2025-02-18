@@ -35,6 +35,7 @@ use App\Tools\UserValidator;
                     <li><a href="#" class="dropdown-item">En cours</a></li>
                 </ul>
             </li>
+            <?php if (UserValidator::isJoueur()) { ?>
             <li class="mb-1 ms-3 dropdown nav-item">
                 <a href="#" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
@@ -67,6 +68,7 @@ use App\Tools\UserValidator;
                     <span class="nav-text">Aide</span>
                 </a>
             </li>
+            <?php } else { ?>
             <li class="border-top my-3"></li>
             <li class="mb-1 ms-3 nav-item">
                 <a href="/index.php?controller=pages&action=creationCompte" class="nav-link " aria-expanded="false">
@@ -77,6 +79,16 @@ use App\Tools\UserValidator;
                     <span class="nav-text">Inscription</span>
                 </a>
             </li>
+            <li class="mb-1 ms-3 nav-item">
+                <a href="/index.php?controller=pages&action=creationCompte" class="nav-link " aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                        <path class="color-first color-second" fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                        <path class="color-first color-second" fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                    </svg>
+                    <span class="nav-text">Connexion</span>
+                </a>
+            </li>
+            
             <li class="border-top my-3"></li>
             <li class="mb-1 ms-3 nav-item">
                 <a href="#" class="nav-link " aria-expanded="false">
@@ -87,6 +99,7 @@ use App\Tools\UserValidator;
                     <span class="nav-text">Déconnexion</span>
                 </a>
             </li>
+            <?php } ?>
         </ul>
     </nav>
 </header>
