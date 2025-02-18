@@ -11979,8 +11979,8 @@ nav {
 
 .navbar {
   position: fixed;
-  transition: width 600ms ease;
-  overflow: scroll;
+  transition: var(--transition-speed);
+  overflow: hidden;
 }
 
 .navbar-nav {
@@ -12131,6 +12131,25 @@ input.form-control:focus {
     display: none;
   }
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-color: var(--esportify-grey-50);
+  color: var(--esportify-white);
+}
+
+main {
+  height: 100vh;
+  overflow: auto;
+}
+
 :root {
   font-size: 16px;
   --esportify-blue: #36fef6;
@@ -12147,22 +12166,4 @@ input.form-control:focus {
   --esportify-text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
   --esportify-box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
   --transition-speed: 600ms;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-  background-color: var(--esportify-grey-25);
-}
-
-main {
-  height: 100vh;
-  overflow: auto;
 }/*# sourceMappingURL=main.css.map */

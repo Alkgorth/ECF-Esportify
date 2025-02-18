@@ -12,8 +12,8 @@ nav {
 
 .navbar {
   position: fixed;
-  transition: width 600ms ease;
-  overflow: scroll;
+  transition: var(--transition-speed);
+  overflow: hidden;
 }
 
 .navbar-nav {

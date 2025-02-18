@@ -72,10 +72,9 @@ class AuthController extends Controller
                         'last_name' => $user->getLastName(),
                         'first_name' => $user->getFirstName(),
                         'pseudo' => $user->getPseudo(),
-                        'fk_id_store' => $user->getFkIdStore(),
                         'role' => $user->getRole()
                     ];
-                    header('Location: index.php?controller=pages&action=espacePersonnel');
+                    header('Location: index.php?controller=pages&action=home');
                 } else {
                     $error[] = "Identifiant ou mot de passe incorrect";
                 }

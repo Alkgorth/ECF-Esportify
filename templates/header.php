@@ -25,8 +25,7 @@ use App\Tools\UserValidator;
             <li class="mb-1 ms-3 dropdown nav-item">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar2-week">
-                        <path class="color-first color-second" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
-                        <path class="color-first color-second" d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                        <use href="../node_modules/bootstrap-icons/bootstrap-icons.svg#calendar2-week" class="color-second"></use>
                     </svg>
                     <span class="nav-text">Événements</span>
                 </a>
@@ -36,6 +35,7 @@ use App\Tools\UserValidator;
                     <li><a href="#" class="dropdown-item">En cours</a></li>
                 </ul>
             </li>
+            <?php if (UserValidator::isJoueur()) { ?>
             <li class="mb-1 ms-3 dropdown nav-item">
                 <a href="#" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
@@ -55,7 +55,7 @@ use App\Tools\UserValidator;
                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="2.5em" height="2.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search">
                             <path class="color-first color-second" d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                         </svg>
-                        <input class="form-control nav-text" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control nav-text me-2" type="search" placeholder="Search" aria-label="Search">
                     </form>
                 </a>
             </li>
@@ -68,9 +68,10 @@ use App\Tools\UserValidator;
                     <span class="nav-text">Aide</span>
                 </a>
             </li>
+            <?php } else { ?>
             <li class="border-top my-3"></li>
             <li class="mb-1 ms-3 nav-item">
-                <a href="#" class="nav-link " aria-expanded="false">
+                <a href="/index.php?controller=pages&action=creationCompte" class="nav-link " aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-add">
                         <path class="color-first color-second" d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
                         <path class="color-first color-second" d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
@@ -78,6 +79,16 @@ use App\Tools\UserValidator;
                     <span class="nav-text">Inscription</span>
                 </a>
             </li>
+            <li class="mb-1 ms-3 nav-item">
+                <a href="/index.php?controller=pages&action=creationCompte" class="nav-link " aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                        <path class="color-first color-second" fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                        <path class="color-first color-second" fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                    </svg>
+                    <span class="nav-text">Connexion</span>
+                </a>
+            </li>
+            
             <li class="border-top my-3"></li>
             <li class="mb-1 ms-3 nav-item">
                 <a href="#" class="nav-link " aria-expanded="false">
@@ -88,6 +99,7 @@ use App\Tools\UserValidator;
                     <span class="nav-text">Déconnexion</span>
                 </a>
             </li>
+            <?php } ?>
         </ul>
     </nav>
 </header>

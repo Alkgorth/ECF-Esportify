@@ -63,7 +63,7 @@ class UserController extends Controller
 
             if (isset($_POST['saveUser'])) {
                 $user->hydrate($_POST);
-                $user->setRole('user');
+                $user->setRole('joueur');
                 $error = UserValidator::validate($user);
 
                 if (empty($error)) {
