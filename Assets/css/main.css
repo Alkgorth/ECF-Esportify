@@ -12091,24 +12091,37 @@ input.form-control:focus {
     bottom: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: 5rem !important;
+    height: 10rem !important;
     justify-content: space-between !important;
     overflow: hidden !important;
+    display: flex;
+  }
+  .navbar.visible:hover {
+    height: 15rem;
+    display: block !important;
+  }
+  .nav-burger {
+    display: block;
+    position: absolute;
+    z-index: 9999 !important;
   }
   .logo {
-    display: none !important;
+    visibility: hidden;
+  }
+  .navbar.visible .logo {
+    visibility: visible;
   }
   .navbar-nav {
     flex-direction: row !important;
   }
   .nav-item {
-    display: none !important;
+    visibility: hidden;
+  }
+  .navbar.visible .nav-item {
+    visibility: visible !important;
   }
   main {
     margin: 0 !important;
-  }
-  .nav-burger {
-    display: block;
   }
 }
 @media only screen and (min-width: 601px) {

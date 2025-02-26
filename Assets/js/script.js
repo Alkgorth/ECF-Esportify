@@ -1,34 +1,32 @@
-let openBtn = document.getElementById("nav-burger");
+console.log("Je suis chargé");
+
+const openBtn = document.getElementById("nav-burger");
+const navBar = document.getElementById("navbar");
 
 
+/*if (openBtn && navBar) {
+    openBtn.addEventListener('click', () => {
+        console.log("Click détecté !");
+        console.log("navBar:", navBar);
+        
+        if (navBar.classList) {  // Vérifie que classList existe
+            navBar.classList.toggle('visible');
+        } else {
+            console.error("L'élément navBar n'a pas classList !");
+        }
+    });
+} else {
+    console.error("L'élément navBar ou openBtn n'existe pas !");
+}*/
 
-const openNav = () => {
-    
-    navbar.style.left = "0";
-};
 
-const closeNav = () => {
-    
-    navbar.style.left = "-100%";
-};
+openBtn.addEventListener('click', () => {
+    const isNavVisible = navBar.classList.contains('visible');
 
-openBtn.addEventListener("click", openNav);
-closeBtn.addEventListener("click", closeNav);
-navWrapper.addEventListener("click", closeNav);
+    if (isNavVisible) {
+        navBar.classList.remove('visible');
+    } else {
+        navBar.classList.add('visible');
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const navbar = document.querySelector(".navbar");
-//     const navBurger = document.getElementById("nav-burger");
-
-//     navBurger.addEventListener("click", function (event) {
-//         event.preventDefault();
-//         navbar.classList.toggle("active");
-//     });
-
-//     // Fermer le menu si on clique en dehors
-//     document.addEventListener("click", function (event) {
-//         if (!navbar.contains(event.target) && !navBurger.contains(event.target)) {
-//             navbar.classList.remove("active");
-//         }
-//     });
-// });
+    }
+});
