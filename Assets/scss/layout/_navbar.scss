@@ -104,7 +104,7 @@ input.form-control:focus {
   text-transform: uppercase;
   font-size: 1.5rem;
   letter-spacing: 0.3ch;
-  
+
 }
 
 .logo img {
@@ -112,8 +112,7 @@ input.form-control:focus {
   transition: var(--transition-speed);
 }
 
-.logo-text
-{
+.logo-text {
   display: inline;
   position: absolute;
   left: -999px;
@@ -121,59 +120,74 @@ input.form-control:focus {
 }
 
 @media only screen and (max-width: 600px) {
-    .navbar {
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      width: 100vw !important;
-      height: 5rem !important;
-      justify-content: space-between !important;
-      overflow: hidden !important;
-    }
-  
-    .logo {
-      display: none !important;
-    }
-  
-    .navbar-nav {
-      flex-direction: row !important;
-    }
-  
-    .nav-item {
-      display: none !important;
-    }
-  
-    main {
-      margin: 0 !important;
-    }
-
-    .nav-burger {
-      display: block;
-    }
+  .navbar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 10rem !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+    display: flex;
   }
+
+  .navbar.visible:hover {
+    height: 15rem;
+    display: block !important;
+  }
+
+  .nav-burger {
+    display: block;
+    position: absolute;
+    z-index: 9999 !important;
+  }
+
+  .logo {
+    visibility: hidden;
+  }
+
+  .navbar.visible .logo {
+    visibility: visible;
+  }
+
+  .navbar-nav {
+    flex-direction: row !important;
+  }
+
+  .nav-item {
+    visibility: hidden;
+  }
+
+  .navbar.visible .nav-item {
+    visibility: visible !important;
+  }
+
+  main {
+    margin: 0 !important;
+  }
+}
 
 @media only screen and (min-width: 601px) {
-    .navbar {
-      top: 0;
-      width: 5rem;
-      height: 100vh;
-    }
-  
-    .navbar:hover {
-      width: 16rem;
-    }
-  
-    .navbar:hover .nav-text {
-      display: inline;
-    }
-  
-    .navbar:hover .logo-text
-    {
-      margin-left: 5rem;
-      left: 0px;
-    }
-
-    .nav-burger {
-      display: none;
-    }
+  .navbar {
+    top: 0;
+    width: 5rem;
+    height: 100vh;
   }
+
+  .navbar:hover {
+    width: 16rem;
+  }
+
+  .navbar:hover .nav-text {
+    display: inline;
+  }
+
+  .navbar:hover .logo-text {
+    margin-left: 5rem;
+    left: 0px;
+  }
+
+  .nav-burger {
+    display: none;
+  }
+}

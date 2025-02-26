@@ -15,10 +15,10 @@ use App\Tools\UserValidator;
                 </a>
             </li>
             <li class="nav-burger" id="nav-burger">
-                <a href="#" class="nav-link d-flex ps-3" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="nav-link d-flex ps-3" aria-expanded="false">
                     <span class="logo-vert">Esportify</span>
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                        <use href="../node_modules/bootstrap-icons/bootstrap-icons.svg#list" class="color-second"></use>
                     </svg>
                 </a>
             </li>
@@ -35,7 +35,7 @@ use App\Tools\UserValidator;
                     <li><a href="#" class="dropdown-item">En cours</a></li>
                 </ul>
             </li>
-            <?php if (UserValidator::isJoueur() || (UserValidator::isOrga()) || (UserValidator::isAdmin())) { ?>
+            <?php if (UserValidator::isJoueur() || UserValidator::isOrga() || UserValidator::isAdmin()) { ?>
                 <li class="mb-1 ms-3 dropdown nav-item">
                     <a href="#" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
@@ -80,7 +80,7 @@ use App\Tools\UserValidator;
                     </a>
                 </li>
                 <li class="mb-1 ms-3 nav-item">
-                    <a href="/index.php?controller=pages&action=creationCompte" class="nav-link " aria-expanded="false">
+                    <a href="/index.php?controller=auth&action=connexion" class="nav-link " aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                             <path class="color-first color-second" fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
                             <path class="color-first color-second" fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
