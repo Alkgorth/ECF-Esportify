@@ -12091,18 +12091,34 @@ input.form-control:focus {
     bottom: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: 10rem !important;
+    height: 8rem !important;
     justify-content: space-between !important;
     overflow: hidden !important;
     display: flex;
   }
-  .navbar.visible:hover {
-    height: 15rem;
+  .navbar.visible {
+    top: 0;
+    left: 0;
+    width: 5rem;
     display: block !important;
   }
+  .navbar:hover {
+    width: 16rem;
+  }
+  .navbar:hover .nav-text {
+    display: inline;
+  }
+  .navbar:hover .logo-text {
+    margin-left: 5rem;
+    left: 0px;
+  }
   .nav-burger {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
     display: block;
     position: absolute;
+    margin-bottom: 5rem;
     z-index: 9999 !important;
   }
   .logo {
@@ -12113,6 +12129,9 @@ input.form-control:focus {
   }
   .navbar-nav {
     flex-direction: row !important;
+  }
+  .navabar.visible .navbar-nav {
+    flex-direction: column !important;
   }
   .nav-item {
     visibility: hidden;
