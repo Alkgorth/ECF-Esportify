@@ -6,15 +6,15 @@ use App\Tools\UserValidator;
 
 ?>
 <header>
-    <nav class="navbar w-auto h-100" id="navbar">
+    <nav class="navbar" id="navbar">
         <ul class="navbar-nav flex-shrink-0 list-unstyled ps-0 flex-grow-1 z-3 d-flex flex-column h-100">
             <li class="nav-item logo">
-                <a href="#" class="nav-link d-flex p-3 m-3 border-bottom">
+                <a href="/index.php?controller=pages&action=home" class="nav-link d-flex p-3 m-3 border-bottom">
                     <span class="logo-text">Esportify</span>
                     <img src="#" alt="">
                 </a>
             </li>
-            
+
             <li class="mb-1 ms-3 dropdown nav-item">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar2-week">
@@ -96,13 +96,13 @@ use App\Tools\UserValidator;
         </ul>
     </nav>
     <ul>
-    <li class="nav-burger" id="nav-burger">
-                <a href="#" class="nav-link d-flex ps-3" aria-expanded="false">
-                    <span class="logo-vert">Esportify</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                        <use href="../node_modules/bootstrap-icons/bootstrap-icons.svg#list" class="color-second"></use>
-                    </svg>
-                </a>
-            </li>
+        <li class="nav-burger" id="nav-burger">
+            <a href="#" class="nav-link d-flex ps-3" aria-expanded="false">
+                <span class="logo-vert">Esportify</span>
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <use href="../node_modules/bootstrap-icons/bootstrap-icons.svg#list" class="color-second"></use>
+                </svg>
+            </a>
+        </li>
     </ul>
 </header>
