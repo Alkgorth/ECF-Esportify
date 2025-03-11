@@ -38,8 +38,8 @@ use App\Tools\UserValidator;
                     </a>
                     <ul class="list-unstyled fw-normal pb-1 small dropdown-menu">
                         <li><a href="#" class="dropdown-item">Données personnelles</a></li>
-                        <li><a href="#" class="dropdown-item">Favoris</a></li>
                         <li><a href="#" class="dropdown-item">Mes événements</a></li>
+                        <li><a href="#" class="dropdown-item">Mon historique</a></li>
                     </ul>
                 </li>
                 <li class="mb-1 ms-3 nav-item">
