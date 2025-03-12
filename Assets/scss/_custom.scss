@@ -1,7 +1,15 @@
 @use "../../node_modules/bootstrap/scss/bootstrap" as *;
+@use "components/banner";
+@use "components/button";
+@use "components/card";
+@use "components/loader";
+@use "components/messages";
+@use "components/scrollTop";
 @use "layout/navbar";
 @use "layout/body";
-
+@use "layout/titles";
+@use "pages/home";
+@use "pages/events";
 
 
 :root {

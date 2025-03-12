@@ -12187,6 +12187,10 @@ main {
   overflow: auto;
 }
 
+.carousel {
+  width: 50%;
+}
+
 :root {
   font-size: 16px;
   --esportify-blue: #36fef6;
