@@ -6,8 +6,8 @@ use App\Tools\UserValidator;
 
 ?>
 <header>
-    <nav class="navbar" id="navbar">
-        <ul class="navbar-nav flex-shrink-0 list-unstyled ps-0 flex-grow-1 z-3 d-flex flex-column h-100">
+    <nav class="navbar z-3" id="navbar">
+        <ul class="navbar-nav flex-shrink-0 list-unstyled ps-0 flex-grow-1 d-flex flex-column h-100">
             <li class="nav-item logo">
                 <a href="/index.php?controller=pages&action=home" class="nav-link d-flex p-3 m-3 border-bottom">
                     <span class="logo-text">Esportify</span>
