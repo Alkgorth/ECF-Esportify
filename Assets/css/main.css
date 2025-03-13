@@ -12179,7 +12179,6 @@ body {
   height: 100vh;
   width: 100vw;
   position: relative;
-  overflow: hidden;
   background-color: var(--esportify-grey-50);
   color: var(--esportify-white);
 }
@@ -12198,12 +12197,18 @@ main {
 
 .section-light {
   background-color: #ccc;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
-  -webkit-clip-path: ellipse(60% 40% at 50% 100%);
-          clip-path: ellipse(60% 40% at 50% 100%);
-  z-index: 0;
+  padding: 5rem 0;
+  -webkit-clip-path: ellipse(70% 100% at 50% 100%);
+          clip-path: ellipse(70% 100% at 50% 100%);
+}
+
+.titleEvent {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .events {
