@@ -6,11 +6,11 @@ require_once _ROOTPATH_ . '\templates\header.php';
 ?>
 
 <main class="w-100">
-    <section class="d-flex flex-column mx-auto justify-content-center">
-        <div class="banniere container">
+    <section class="container mt-4">
+        <div class="banniere container-fluid">
             <img src="../../Assets/Documentation/Images/Logo-Bannière/Banniere_Esportify.png" alt="bannière esportify">
         </div>
-        <div class="bienvenue container p-4">
+        <div class="container p-4">
             <p class="text-align-center fs-4">
                 Fondée en 2021, Esportify est une startup innovante spécialisée dans l’organisation
                 de compétitions de jeux vidéo. Après un succès grandissant, nous développons une
@@ -21,8 +21,8 @@ require_once _ROOTPATH_ . '\templates\header.php';
         </div>
 
         <!-- Carrousel -->
-        <div class="container toutCarousel d-flex flex-column justify-content-center">
-            <div id="carouselExampleRide" class="carousel slide mx-auto justify-content-center" data-bs-ride="true">
+        <div class="container toutCarousel text-center">
+            <div id="carouselExampleRide" class="carousel slide mx-auto justify-content-center col-8" data-bs-ride="true">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="d-block w-100" alt="Gameuse victoire">
@@ -50,7 +50,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
                 </button>
 
                 <!-- Miniatures -->
-                <div class="gap-2 mt-3 d-flex justify-content-center flex-nowrap thumbnails-container miniature">
+                <div class="gap-2 mt-3 d-flex justify-content-center flex-nowrap col-8 miniature">
                     <div class="col-4 thumbnail active" data-bs-target="#carouselExample" data-bs-slide-to="0">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid" alt="Image 1">
                     </div>
