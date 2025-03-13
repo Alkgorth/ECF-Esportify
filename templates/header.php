@@ -11,7 +11,7 @@ use App\Tools\UserValidator;
             <li class="nav-item logo">
                 <a href="/index.php?controller=pages&action=home" class="nav-link d-flex p-3 m-3 border-bottom">
                     <span class="logo-text">Esportify</span>
-                    <img src="#" alt="">
+                    <img src="../Assets/Documentation/Images/Logo-Bannière/Logo_Esportify.png" alt="Logo Esportify">
                 </a>
             </li>
 

@@ -12074,6 +12074,7 @@ input.form-control:focus {
 }
 
 .logo img {
+  width: 2.5rem;
   transform: rotate(0deg);
   transition: var(--transition-speed);
 }
@@ -12187,8 +12188,8 @@ main {
   overflow: auto;
 }
 
-.carousel {
-  width: 50%;
+.toutCarousel {
+  width: 600px;
 }
 
 :root {
