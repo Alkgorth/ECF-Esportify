@@ -12190,11 +12190,24 @@ main {
   overflow: auto;
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.sectionHaute {
   padding-left: 15vw;
 }
 
-.toutCarousel {
-  width: 500px;
+.section-light {
+  background-color: #ccc;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  -webkit-clip-path: ellipse(60% 40% at 50% 100%);
+          clip-path: ellipse(60% 40% at 50% 100%);
+  z-index: 0;
+}
+
+.events {
+  z-index: 1;
 }
 
 :root {

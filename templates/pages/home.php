@@ -6,7 +6,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
 ?>
 
 <main class="w-100">
-    <section class="container mt-4">
+    <section class="container mt-4 sectionHaute">
         <div class="banniere container-fluid">
             <img src="../../Assets/Documentation/Images/Logo-Bannière/Banniere_Esportify.png" alt="bannière esportify">
         </div>
@@ -21,9 +21,9 @@ require_once _ROOTPATH_ . '\templates\header.php';
         </div>
 
         <!-- Carrousel -->
-        <div class="container toutCarousel text-center">
+        <div class="container toutCarousel">
             <div id="carouselExampleRide" class="carousel slide mx-auto justify-content-center col-8" data-bs-ride="true">
-                <div class="carousel-inner">
+                <div class="carousel-inner mb-2">
                     <div class="carousel-item active">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="d-block w-100" alt="Gameuse victoire">
                     </div>
@@ -50,26 +50,67 @@ require_once _ROOTPATH_ . '\templates\header.php';
                 </button>
 
                 <!-- Miniatures -->
-                <div class="gap-2 mt-3 d-flex justify-content-center flex-nowrap col-8 miniature">
-                    <div class="col-4 thumbnail active" data-bs-target="#carouselExample" data-bs-slide-to="0">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid" alt="Image 1">
+                <div class="d-flex flex-nowrap justify-content-center col-8 mx-auto miniature">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="0">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid w-100" alt="Image 1">
                     </div>
-                    <div class="col-4 thumbnail" data-bs-target="#carouselExample" data-bs-slide-to="1">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="img-fluid" alt="Image 2">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="1">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="img-fluid w-100" alt="Image 2">
                     </div>
-                    <div class="col-4 thumbnail" data-bs-target="#carouselExample" data-bs-slide-to="2">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid" alt="Image 3">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid w-100" alt="Image 3">
                     </div>
-                    <div class="col-4 thumbnail" data-bs-target="#carouselExample" data-bs-slide-to="2">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid" alt="Image 3">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid w-100" alt="Image 4">
                     </div>
-                    <div class="col-4 thumbnail" data-bs-target="#carouselExample" data-bs-slide-to="2">
-                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid" alt="Image 3">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
+                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid w-100" alt="Image 5">
                     </div>
                 </div>
             </div>
         </div>
 
+
+    </section>
+    <section class="section-light">
+        <div class="row row-cols-1 row-cols-md-3 g-4 events">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a short card.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
 
