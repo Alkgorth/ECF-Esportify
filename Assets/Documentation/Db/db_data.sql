@@ -1,0 +1,38 @@
+INSERT INTO `plateforme` (`id_plateforme`, `name`) VALUES
+(1, 'PlayStation 5'),
+(2, 'Xbox Series X|S'),
+(3, 'Nintendo Switch'),
+(4, 'PlayStation 4'),
+(5, 'Xbox One'),
+(6, 'Nintendo Switch Lite'),
+(7, 'PlayStation 3'),
+(8, 'Xbox 360'),
+(9, 'Wii U'),
+(10, 'Nintendo 3DS'),
+(11, 'PlayStation 2'),
+(12, 'Xbox'),
+(13, 'GameCube'),
+(14, 'Nintendo 64'),
+(15, 'PlayStation'),
+(16, 'Sega Saturn'),
+(17, 'Nintendo 64DD'),
+(18, 'Super Nintendo Entertainment System'),
+(19, 'Mega Drive'),
+(20, 'Super Famicom'),
+(21, 'Game Boy Advance SP'),
+(22, 'Game Boy Color'),
+(23, 'Game Boy'),
+(24, 'Nintendo DS Lite'),
+(25, 'Nintendo 3DS XL'),
+(26, 'PlayStation Vita'),
+(27, 'Sega Game Gear'),
+(28, 'Neo Geo Pocket'),
+(29, 'PC'),
+(30, 'Stadia'),
+(31, 'GeForce Now');
+
+
+INSERT INTO `user` (`id_user`, `last_name`, `first_name`, `mail`, `pseudo`, `password`, `role`) VALUES
+(1, 'Utilisateur', 'User', 'muppihoicraprau-3140@yopmail.com', 'UserMuppi', '$2y$10$zuyEFd2KsNSNz7DJEMduXu4rlRIMbZ5chun4RGFlZTHD0J85ijbSe', 'joueur'),
+(2, 'Organisateur', 'Orga', 'frussaroxaufroi-3534@yopmail.com', 'OrgaFruss', '$2y$10$e.04EuLKJJYO1DbUs/3qi.wzBkbXvxEOTY1y8YtBJzDQXrKRQa2mS', 'organisateur'),
+(3, 'Administrateur', 'Admin', 'loulawojeuse-9062@yopmail.com', 'AdminLoula', '$2y$10$/2ysJgTO2nsxYdgCqQC0SeSXGiU0g7Xo.fMf4YE.OdeAZACXIybye', 'administrateur');
