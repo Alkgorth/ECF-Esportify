@@ -14,6 +14,7 @@ class EventRepository extends MainRepository
             e.name_event AS name,
             e.name_game AS game_name,
             e.date_hour_start AS start,
+            e.date_hour_end AS end,
             e.nombre_de_joueurs AS joueurs,
             e.description AS description,
             pl.name AS plateforme_name,
@@ -22,7 +23,7 @@ class EventRepository extends MainRepository
             INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
             INNER JOIN user u ON e.fk_id_user = u.id_user
             ORDER BY RAND()
-            LIMIT 8');
+            LIMIT 4');
 
 
         $query->execute();

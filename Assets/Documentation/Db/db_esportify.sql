@@ -14,7 +14,9 @@ CREATE TABLE `tokens`(
    `id_token` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `creation_date` datetime DEFAULT CURRENT_TIMESTAMP,
    `expiration_date` datetime NOT NULL,
-   `token` VARCHAR(255) NOT NULL UNIQUE
+   `token` VARCHAR(255) NOT NULL UNIQUE,
+   `fk_id_user` int(11) UNSIGNED NOT NULL,
+   FOREIGN KEY(fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `plateforme`(
@@ -47,20 +49,12 @@ CREATE TABLE `favorite`(
    FOREIGN KEY (fk_id_event) REFERENCES event(id_event) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `password`(
-   `fk_id_user` int(11) UNSIGNED NOT NULL,
-   `fk_id_token` int(11) UNSIGNED NOT NULL,
-   PRIMARY KEY (fk_id_user, fk_id_token),
-   FOREIGN KEY(fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
-   FOREIGN KEY(fk_id_token) REFERENCES tokens(id_token) ON DELETE CASCADE ON UPDATE CASCADE
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 CREATE TABLE `scores`(
    `fk_id_user` int(11) UNSIGNED NOT NULL,
    `fk_id_event` int(11) UNSIGNED NOT NULL,
    PRIMARY KEY(fk_id_user, fk_id_event),
    `score` int(11) UNSIGNED NOT NULL,
-   `score_total` decimal(10,2) UNSIGNED NOT NULL CHECK,
+   `score_total` decimal(10,2) UNSIGNED NOT NULL CHECK(`score_total` >= 0),
    FOREIGN KEY(fk_id_user) REFERENCES user(id_user),
    FOREIGN KEY(fk_id_event) REFERENCES event(id_event)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

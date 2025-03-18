@@ -12,6 +12,9 @@ class Token extends MainEntity
     protected DateTimeImmutable $creation_date;
     protected DateTimeImmutable $expiration_date;
     protected string $token = '';
+    protected int $fk_id_user;
+
+   
 
     /**
      * Get the value of id_token
@@ -81,6 +84,24 @@ class Token extends MainEntity
     public function setToken(string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fk_id_user
+     */
+    public function getFkIdUser(): int
+    {
+        return $this->fk_id_user;
+    }
+
+    /**
+     * Set the value of fk_id_user
+     */
+    public function setFkIdUser(int $fk_id_user): self
+    {
+        $this->fk_id_user = $fk_id_user;
 
         return $this;
     }
