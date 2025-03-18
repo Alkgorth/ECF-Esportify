@@ -73,87 +73,66 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
     </section>
     <section class="section-light mt-2">
+
         <h2 class="titleEvent">Les derniers évènements</h2>
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-4 g-4 events">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <?php foreach ($events as $event) { ?>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-4 g-4 events">
+                    <div class="col">
+                        <div class="card h-100">
+                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?> id=derniersEvent" class="text-decoration-none text-white">
+                                <img src="..." class="card-img-top" alt="<?= $event['name'] ?>">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $event['name'] ?></h5>
+                                <p class="card-text"><?= $event['plateforme_name'] ?></p>
+                                <p class="card-text">Début : <?= $event['start'] ?></p>
+                                <p class="card-text">Fin : <?= $event['end'] ?></p>
+                                <p class="card-text">Joueurs inscrits : <?= $event['joueurs'] ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a short card.</p>
+            <div class="container mt-4">
+                <div class="row row-cols-1 row-cols-md-4 g-4 events">
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a short card.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4">
-            <div class="row row-cols-1 row-cols-md-4 g-4 events">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a short card.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     </section>
 </main>
 
