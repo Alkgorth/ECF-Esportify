@@ -40,6 +40,14 @@ CREATE TABLE `event`(
    FOREIGN KEY(fk_id_plateforme) REFERENCES plateforme(id_plateforme) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `event_image` (
+  `id_event_image` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `fk_id_event` int(11) UNSIGNED NOT NULL,
+  `image_path` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image_order` int UNSIGNED NOT NULL,
+  FOREIGN KEY(fk_id_event) REFERENCES event(id_event)ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `favorite`(
    `id_favorite` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `fk_id_user` INT(11) UNSIGNED NOT NULL,

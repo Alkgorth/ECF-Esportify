@@ -12212,6 +12212,18 @@ main {
   z-index: 1;
 }
 
+.carousel-inner {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-inner img {
+  width: auto;
+  max-height: 350px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 @media only screen and (min-width: 601px) {
   .sectionHaute {
     padding: 2vw 0;

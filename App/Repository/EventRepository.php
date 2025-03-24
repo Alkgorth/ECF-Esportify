@@ -70,17 +70,17 @@ class EventRepository extends MainRepository
         return false;
     }
 
-    /*public function getAllGenre()
+    public function getAllPlateformes()
     {
-        $query = $this->pdo->prepare('SELECT id_genre, name FROM genre');
+        $query = $this->pdo->prepare('SELECT id_plateforme, name FROM plateforme');
         $query->execute();
-        $genres = $query->fetchAll($this->pdo::FETCH_ASSOC);
+        $plateformes = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
-        return $genres;
+        return $plateformes;
         
     }
 
-    public function promoDisplay()
+    /*public function promoDisplay()
     {
         $query = $this->pdo->prepare('SELECT
             g.name AS name,
