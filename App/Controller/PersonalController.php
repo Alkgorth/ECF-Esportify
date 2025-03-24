@@ -27,9 +27,6 @@ class PersonalController extends Controller
                     case 'espacePersonnelAdmin':
                         $this->espacePersonnelAdmin();
                         break;
-                    case 'panier':
-                        $this->panier();
-                        break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
                         break;
@@ -73,7 +70,6 @@ class PersonalController extends Controller
                         'last_name' => $user->getLastName(),
                         'first_name' => $user->getFirstName(),
                         'pseudo' => $user->getPseudo(),
-                        'fk_id_store' => $user->getFkIdStore(),
                         'role' => $user->getRole()
                     ];
                 }
@@ -105,10 +101,5 @@ class PersonalController extends Controller
     protected function espacePersonnelAdmin()
     {
         $this->render('personal/espacePersonnelAdmin', []);
-    }
-
-    protected function panier()
-    {
-        $this->render('personal/panier', []);
     }
 }

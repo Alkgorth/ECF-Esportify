@@ -10,8 +10,8 @@
         <h1 class="text-center pb-4">Créer un évènement</h1>
 
         <div class="mb-3 text-center">
-        <label for="cover">Choisissez une image de couverture:</label>
-        <input type="file" id="cover" name="cover" accept="image/png, image/jpeg" />
+        <label for="cover_image">Choisissez une image de couverture:</label>
+        <input type="file" id="cover_image" name="cover_image" accept="image/png, image/jpeg" />
         </div>
         
         <div class="mb-3 text-center">
