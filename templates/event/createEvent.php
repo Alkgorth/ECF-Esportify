@@ -6,10 +6,9 @@
 ?>
 
 <main class="container mx-5">
-    <h1>Page Création Évènement</h1>
     <form class="m-5 p-4 text-white" method="POST">
         <h1 class="text-center pb-4">Créer un évènement</h1>
-        
+
         <div class="mb-3 text-center">
         <label for="cover">Choisissez une image de couverture:</label>
         <input type="file" id="cover" name="cover" accept="image/png, image/jpeg" />
@@ -45,11 +44,6 @@
                     <option value="<?php $plateforme['id_plateforme']?>"><?php echo $plateforme['name'] ?></option>
                 <?php endforeach; ?>
             </select>
-            <input type="text" class="form-control
-            <?php echo(isset($errors['name_plateforme']) ? 'is-invalid' : '') ?>" id="name_plateforme" name="name_plateforme" required>
-            <?php if (isset($errors['name_plateforme'])) {?>
-                <div class="invalid-feedback"><?php echo $errors['name_plateforme'] ?></div>
-            <?php }?>
         </div>
 
         <div class="mb-3 text-center">
