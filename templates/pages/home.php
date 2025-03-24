@@ -60,10 +60,10 @@ require_once _ROOTPATH_ . '\templates\header.php';
                     <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid w-100" alt="Image 3">
                     </div>
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="3">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid w-100" alt="Image 4">
                     </div>
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
+                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="4">
                         <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid w-100" alt="Image 5">
                     </div>
                 </div>

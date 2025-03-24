@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Repository\EventRepository;
@@ -26,9 +25,9 @@ class EventController extends Controller
                     case 'eventAdmin':
                         $this->eventAdmin();
                         break;
-                        case 'createEvent':
-                            $this->createEvent();
-                            break;
+                    case 'createEvent':
+                        $this->createEvent();
+                        break;
                     case 'delete':
                         // Pour appler la méthode delete()
                         break;
@@ -41,7 +40,7 @@ class EventController extends Controller
             }
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
@@ -81,7 +80,7 @@ class EventController extends Controller
     {
         $this->render('event/eventGamer', []);
     }
-    
+
     protected function eventOrga()
     {
         $this->render('event/eventOrga', []);
@@ -94,6 +93,18 @@ class EventController extends Controller
 
     protected function createEvent()
     {
-        $this->render('event/createEvent', []);
+        $error = [];
+
+        $eventRepository = new EventRepository();
+        $plateformes = $eventRepository->getAllPlateformes();
+        
+        if (isset($_POST['valider'])){
+            
+        }
+
+        $this->render('event/createEvent', [
+            'plateformes' => $plateformes,
+            'error' => $error
+        ]);
     }
 }
