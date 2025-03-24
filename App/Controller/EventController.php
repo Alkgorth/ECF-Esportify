@@ -2,6 +2,9 @@
 namespace App\Controller;
 
 use App\Repository\EventRepository;
+use App\Entity\Event;
+use App\Tools\EventValidator;
+use Exception;
 
 class EventController extends Controller
 {
@@ -93,18 +96,36 @@ class EventController extends Controller
 
     protected function createEvent()
     {
-        $error = [];
+        try {
+            $error = [];
 
-        $eventRepository = new EventRepository();
-        $plateformes = $eventRepository->getAllPlateformes();
-        
-        if (isset($_POST['valider'])){
+            $eventRepository = new EventRepository();
+            $plateformes = $eventRepository->getAllPlateformes();
             
+            $event = new Event();
+
+            if (isset($_POST['valider'])){
+                $event->hydrate($_POST);
+                
+                $error = EventValidator::validate($event);
+
+                if (empty($error)) {
+                    $eventRepository = new EventRepository();
+                    $eventRepository->persist($event);
+
+                    header('Location: index.php?controller=connexions&action=connexion');
+                }
+            }
+    
+            $this->render('event/createEvent', [
+                'plateformes' => $plateformes,
+                'error' => $error
+            ]);
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage()
+            ]);
         }
 
-        $this->render('event/createEvent', [
-            'plateformes' => $plateformes,
-            'error' => $error
-        ]);
     }
 }
