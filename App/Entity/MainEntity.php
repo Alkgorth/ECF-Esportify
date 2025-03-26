@@ -26,6 +26,15 @@ class MainEntity
                     if ($key == 'expiration_date') {
                         $value = new \DateTime($value);
                     }
+                    if ($key == 'date_hour_start') {
+                        $value = new \DateTimeImmutable($value);
+                    }
+                    if ($key == 'date_hour_end') {
+                        $value = new \DateTimeImmutable($value);
+                    }
+                    if ($key == 'visibility') {
+                        $value = Visibility::tryFrom($value);
+                    }
                     $this->$method($value);
                 }
             }

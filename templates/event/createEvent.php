@@ -10,13 +10,13 @@
         <h1 class="text-center pb-4">Créer un évènement</h1>
 
         <div class="mb-3 text-center">
-        <label for="cover_image">Choisissez une image de couverture:</label>
-        <input type="file" id="cover_image" name="cover_image" accept="image/png, image/jpeg" />
+        <label for="cover_image_path">Choisissez une image de couverture:</label>
+        <input type="file" id="cover_image_path" name="cover_image_path" accept="image/png, image/jpeg" />
         </div>
         
         <div class="mb-3 text-center">
-        <label for="diapo">Choisissez les images de diaporama</label>
-        <input type="file" id="diapo" name="diapo" accept="image/png, image/jpeg" multiple/>
+        <label for="image_path">Choisissez les images de diaporama</label>
+        <input type="file" id="image_path" name="image_path" accept="image/png, image/jpeg" multiple/>
         </div>
 
         <div class="mb-3 text-center">
