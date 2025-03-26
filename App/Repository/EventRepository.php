@@ -141,9 +141,23 @@ class EventRepository extends MainRepository
         }
     }
 
-    public function creationEvent1()
+    public function insertEvent(Event $event)
     {
-        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (! isset($data['name_event'], $data['name_game'], $data['fk_id_plateforme'],
+            $data['date_hour_start'], $data['date_hour_end'], $data['nombre_de_joueurs'],
+            $data['description'], $data['visibility'])){
+                throw new \Exception("Vous devez remplir tout les champs");
+            }
+            $name_event        = htmlspecialchars(trim($data['name_event']), ENT_QUOTES, 'UTF-8');
+            $name_game         = htmlspecialchars(trim($data['name_game']), ENT_QUOTES, 'UTF-8');
+            $fk_id_plateforme  = filter_var($data['fk_id_plateforme'], FILTER_VALIDATE_INT);
+            $date_hour_start   = trim($data['date_hour_start']);
+            $date_hour_end     = trim($data['date_hour_end']);
+            $nombre_de_joueurs = filter_var($data['nombre_de_joueurs'], FILTER_VALIDATE_INT);
+            $description       = htmlspecialchars(trim($data['description']), ENT_QUOTES, 'UTF-8');
+            $visibility        = htmlspecialchars(trim($data['visibility']), ENT_QUOTES, 'UTF-8');
+        }
     }
 
     /*
