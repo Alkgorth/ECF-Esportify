@@ -6,7 +6,7 @@ use App\Entity\Event;
 
 class EventValidator extends Event
 {
-    public static function validate(Event $event): array
+    public static function validate($event): array
     {
         $error = [];
 
@@ -31,4 +31,22 @@ class EventValidator extends Event
         
         return $error;
     }
+
+    public static function secureInput(string $input): string
+    {
+        return htmlspecialchars(trim($input));
+    }
+
+    public static function secureImage(string $input)
+    {
+        return filter_var(trim($input), FILTER_SANITIZE_URL);
+    }
+
+    /* vérification des caractères dans le nom du fichier, utili aussi pour les input titre, nom de jeu
+    if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $gameName)) {
+        $errors['game_name'] = 'Le nom n\'est pas valide.';
+      }
+
+      !preg_match() signifie que seuls les caractères indiqués sont autorisés, tandis que preg_match() sans ! détecte les caractères interdits  
+      */
 }
