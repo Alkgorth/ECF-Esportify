@@ -111,12 +111,11 @@ class EventController extends Controller
 
                 if (empty($error)) {
                     $eventRepository = new EventRepository();
-                    $eventRepository->persist($event);
+                    $eventRepository->creationEvent($event);
 
-                    header('Location: index.php?controller=connexions&action=connexion');
+                    header('Location: index.php?');
                 }
             }
-    
             $this->render('event/createEvent', [
                 'plateformes' => $plateformes,
                 'error' => $error
@@ -126,6 +125,5 @@ class EventController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-
     }
 }

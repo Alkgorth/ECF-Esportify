@@ -33,6 +33,7 @@ class Event extends MainEntity
     protected Status $status;
     protected int $fk_id_user;
     protected int $fk_id_plateforme;
+    protected string $cover_image_path;
 
     /**
      * Get the value of id_event
@@ -228,6 +229,24 @@ class Event extends MainEntity
     public function setFkIdPlateforme(int $fk_id_plateforme): self
     {
         $this->fk_id_plateforme = $fk_id_plateforme;
+
+        return $this;
+    }
+
+        /**
+     * Get the value of cover_image_path
+     */
+    public function getCoverImagePath(): string
+    {
+        return $this->cover_image_path;
+    }
+
+    /**
+     * Set the value of cover_image_path
+     */
+    public function setCoverImagePath(string $cover_image_path): self
+    {
+        $this->cover_image_path = $cover_image_path;
 
         return $this;
     }
