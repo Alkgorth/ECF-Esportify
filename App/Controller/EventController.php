@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Repository\EventRepository;
 use App\Entity\Event;
+use App\Entity\EventImage;
 use App\Tools\EventValidator;
 use Exception;
 
@@ -103,15 +104,18 @@ class EventController extends Controller
             $plateformes = $eventRepository->getAllPlateformes();
             
             $event = new Event();
+            $eventImage = new EventImage();
 
             if (isset($_POST['valider'])){
                 $event->hydrate($_POST);
-                
+                $eventImage->hydrate(($_POST));
                 $error = EventValidator::validate($event);
+                $error = EventValidator::validate($eventImage);
+
 
                 if (empty($error)) {
                     $eventRepository = new EventRepository();
-                    $eventRepository->creationEvent($event);
+                    $eventRepository->creationEvent($data, int $fk_id_user);
 
                     header('Location: index.php?');
                 }
