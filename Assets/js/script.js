@@ -12,3 +12,18 @@ openBtn.addEventListener('click', () => {
         navBar.classList.add('visible');
     }
 });
+
+const checkVisibilityPublic = document.getElementById("public");
+const checkVisibilityPivate = document.getElementById("privé");
+
+checkVisibilityPublic.addEventListener('change', () => {
+    if (checkVisibilityPublic.checked) {
+        checkVisibilityPivate.checked = false;
+    }
+});
+
+checkVisibilityPivate.addEventListener('change', () => {
+    if (checkVisibilityPivate.checked) {
+        checkVisibilityPublic.checked = false;
+    }
+});
