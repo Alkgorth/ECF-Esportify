@@ -81,7 +81,7 @@
         </div>
 
         <div>
-        <fieldset>
+        <fieldset id="checkVisibility">
             <legend>Visibilité</legend>
             <div>
                 <input type="checkbox" id="public" name="visibility" value="public" checked />
