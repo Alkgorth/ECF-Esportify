@@ -41,7 +41,7 @@
             <select name="name_plateforme" id="name_plateforme">
                 <option value="">Choisisez une plateforme</option>
                 <?php foreach ($plateformes as $plateforme): ?>
-                    <option value="<?php $plateforme['id_plateforme']?>"><?php echo $plateforme['name'] ?></option>
+                    <option value="<?php echo $plateforme['id_plateforme']?>"><?php echo $plateforme['name'] ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
