@@ -106,8 +106,7 @@ class EventController extends Controller
             $eventRepository = new EventRepository();
             $plateformes     = $eventRepository->getAllPlateformes();
 
-            $event      = new Event();
-            
+            $event = new Event();
 
             if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
@@ -121,7 +120,7 @@ class EventController extends Controller
 
             $eventImage = new EventImage();
             $eventImage->hydrate(($_POST));
-            $error = EventValidator::validateEventImage($eventImage);
+            $error = EventValidator::isFileUploaded($eventImage);
 
             if (empty($plateformes)) {
                 throw new \Exception("Aucune donnée n'a été trouvée");

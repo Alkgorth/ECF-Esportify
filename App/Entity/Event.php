@@ -32,7 +32,7 @@ class Event extends MainEntity
     protected Visibility $visibility;
     protected Status $status;
     protected int $fk_id_user;
-    protected int $fk_id_plateforme;
+    protected ?int $fk_id_plateforme = null;
     protected string $cover_image_path;
 
     /**
@@ -218,7 +218,7 @@ class Event extends MainEntity
     /**
      * Get the value of fk_id_plateforme
      */
-    public function getFkIdPlateforme(): int
+    public function getFkIdPlateforme(): ?int
     {
         return $this->fk_id_plateforme;
     }
@@ -226,7 +226,7 @@ class Event extends MainEntity
     /**
      * Set the value of fk_id_plateforme
      */
-    public function setFkIdPlateforme(int $fk_id_plateforme): self
+    public function setFkIdPlateforme(?int $fk_id_plateforme): self
     {
         $this->fk_id_plateforme = $fk_id_plateforme;
 

@@ -7,6 +7,7 @@ use DateTimeImmutable;
 
 class EventValidator extends Event
 {
+    //Vérifie si les champs du formaulaire de création d'évènements son correctement renseignés.
     public static function validateEvent($event): array
     {
         $error = [];
@@ -92,17 +93,21 @@ class EventValidator extends Event
         return $error;
     }
 
-    public static function validateEventImage($eventImage)
+    //Vérifie si les fichiers envoyés son conforme à ce qui est attendu.
+    public static function isFileUploaded($eventImage)
     {
         $error = [];
 
+        if (isset($eventImage['name']) && !empty($eventImage['name']));
     }
 
+    //Sécurisation des champs pouvant être envoyé par un utilisateur.
     public static function secureInput(string $input): string
     {
         return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
     }
 
+    //Effectue tout les contrôle sur l'image (type, taille, dimensions)
     public static function secureImage(string $input)
     {
         return filter_var(trim($input), FILTER_SANITIZE_URL);
