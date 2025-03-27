@@ -166,7 +166,7 @@ class EventRepository extends MainRepository
     }
 
     //Récupération des inforamations dans le formaulaire de création d'évènement à ajouter dans la table Event
-    public function insertEvent(Event $data, int $fk_id_user, ?string $cover_image_path)
+   /* public function insertEvent(Event $data, int $fk_id_user, ?string $cover_image_path)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($data->getNameEvent(), $data->getNameGame(), $data->getFkIdPlateforme(),
@@ -196,7 +196,7 @@ class EventRepository extends MainRepository
 
     }
 
-    /*
+    
 
     public function creationEvent(Event $event, string $cover_image_path, string $image_path)
 {

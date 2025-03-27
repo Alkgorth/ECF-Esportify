@@ -49,12 +49,25 @@ class EventValidator extends Event
 
         if (empty($event->getNombreDeJoueurs()) || !is_numeric($event->getNombreDeJoueurs())) {
             $error[] = "Veuillez renseigner un nombre de joueurs";
-        } elseif (intval($event->getNombreDeJoueurs() < 10)) {
+        } elseif (intval($event->getNombreDeJoueurs()) < 10) {
             $error[] = "Le nombre de participant doit être au moins de 10 joueurs";
         }
 
         if (empty($event->getDescription())) {
             $error[] = "Veuillez apporter une description à l'évènement";
+        } else {
+            $description = EventValidator::secureInput($event->getDescription());
+            $descriptionLenght = mb_strlen($description);
+
+            if($descriptionLenght < 10) {
+                $error[] = "La description doit comporter au moins 10 caractères.";
+            } elseif($descriptionLenght > 500) {
+                $error[] = "La description ne doit pas dépasser 500 caractères.";
+            }
+
+            if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $description)) {
+                $error[] = "La description contient des caractères non autorisés.";
+            }
         }
 
         return $error;
@@ -68,7 +81,7 @@ class EventValidator extends Event
 
     public static function secureInput(string $input): string
     {
-        return htmlspecialchars(trim($input));
+        return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
     }
 
     public static function secureImage(string $input)

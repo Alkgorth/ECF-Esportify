@@ -99,9 +99,9 @@ class EventController extends Controller
         try {
             $error = [];
 
-            if (! isset($_SESSION['user'])) {
-                header('Location: index.php?controller=connexions&action=connexion');
-            }
+            // if (! isset($_SESSION['user'])) {
+            //     header('Location: index.php?controller=connexions&action=connexion');
+            // }
 
             $eventRepository = new EventRepository();
             $plateformes     = $eventRepository->getAllPlateformes();
