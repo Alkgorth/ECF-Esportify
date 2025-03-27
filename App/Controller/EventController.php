@@ -1,11 +1,10 @@
 <?php
 namespace App\Controller;
 
-use App\Repository\EventRepository;
 use App\Entity\Event;
 use App\Entity\EventImage;
+use App\Repository\EventRepository;
 use App\Tools\EventValidator;
-use Exception;
 
 class EventController extends Controller
 {
@@ -59,7 +58,7 @@ class EventController extends Controller
                 
                 // Charger le jeu par un appel au repository
                 $eventRepository = new EventRepository();
-                $eventGlobal = $eventRepository->findGlobal($id);
+                $eventGlobal = $eventRepository->findGlobal($id); 
 
                 $this->render('games/jeuxDetail', [
                     'gamesDetails' => $eventGlobal
@@ -100,33 +99,41 @@ class EventController extends Controller
         try {
             $error = [];
 
+            if (! isset($_SESSION['user'])) {
+                header('Location: index.php?controller=connexions&action=connexion');
+            }
+
             $eventRepository = new EventRepository();
-            $plateformes = $eventRepository->getAllPlateformes();
+            $plateformes     = $eventRepository->getAllPlateformes();
+
+            $event      = new Event();
             
-            $event = new Event();
-            $eventImage = new EventImage();
 
-            if (isset($_POST['valider'])){
+            if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
-                $eventImage->hydrate(($_POST));
-                $error = EventValidator::validate($event);
-                $error = EventValidator::validate($eventImage);
-
-
+                $error = EventValidator::validateEvent($event);
                 if (empty($error)) {
                     $eventRepository = new EventRepository();
-                    $eventRepository->creationEvent($data, int $fk_id_user);
 
                     header('Location: index.php?');
                 }
             }
-            $this->render('event/createEvent', [
-                'plateformes' => $plateformes,
-                'error' => $error
-            ]);
+
+            $eventImage = new EventImage();
+            $eventImage->hydrate(($_POST));
+            $error = EventValidator::validateEventImage($eventImage);
+
+            if (empty($plateformes)) {
+                throw new \Exception("Aucune donnée n'a été trouvée");
+            } else {
+                $this->render('event/createEvent', [
+                    'plateformes' => $plateformes,
+                    'error'       => $error,
+                ]);
+            }
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }

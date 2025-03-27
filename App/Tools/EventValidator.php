@@ -1,35 +1,69 @@
 <?php
-
 namespace App\Tools;
 
 use App\Entity\Event;
+use DateTime;
+use DateTimeImmutable;
 
 class EventValidator extends Event
 {
-    public static function validate($event): array
+    public static function validateEvent($event): array
     {
         $error = [];
 
-        if(empty($event->getNameEvent())){
-            $error[] = "Veuillez renseigner un titre pour l'évènement";
+        if (empty($event->getNameEvent())) {
+            $error[] = "Veuillez renseigner un titre pour l'évènement !";
+        } elseif (strlen($event->getNameEvent()) > 100) {
+            $error[] = "Le titre est trop long, taille maximum autorisé 100 caractères.";
         }
-        if(empty($event->getNameGame())){
+
+        if (empty($event->getNameGame())) {
             $error[] = "Veuillez renseigner titre de jeux";
+        } elseif (strlen($event->getNameGame()) > 100) {
+            $error[] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
         }
-        if(empty($event->getDateHourStart())){
+
+        if (empty($event->getDateHourStart())) {
             $error[] = "Veuillez renseigner une date et une heure à laquelle commence l'évènement";
+        } else {
+            $now = new DateTimeImmutable();
+            if($event->getDateHourStart() < $now) {
+                $error[] = "La date et l'heure de début doivent être ultérieures à l'heure actuelle.";
+            }
         }
-        if(empty($event->getDateHourEnd())){
+
+        if (empty($event->getDateHourEnd())) {
             $error[] = "Veuillez renseigner une date et une heure à laquelle ce termine l'évènement";
+        } else {
+            if ($event->getDateHourEnd() <= $event->getDateHourStart()) {
+                $error[] = "La date et l'heure de fin doivent être ultérieures à la date et l'heure de début.";
+            } else {
+                $interval = $event->getDateHourStart()->diff($event->getDateHourEnd());
+                $totalTime = ($interval->days * 24 *60) + ($interval->h * 60) + $interval->i;
+
+                if($totalTime < 60) {
+                    $error[] = "L'évènement doit durer au moins 1 heure.";
+                }
+            }
         }
-        if(empty($event->getNombreDeJoueurs())){
+
+        if (empty($event->getNombreDeJoueurs()) || !is_numeric($event->getNombreDeJoueurs())) {
             $error[] = "Veuillez renseigner un nombre de joueurs";
+        } elseif (intval($event->getNombreDeJoueurs() < 10)) {
+            $error[] = "Le nombre de participant doit être au moins de 10 joueurs";
         }
-        if(empty($event->getDescription())){
+
+        if (empty($event->getDescription())) {
             $error[] = "Veuillez apporter une description à l'évènement";
         }
-        
+
         return $error;
+    }
+
+    public static function validateEventImage($eventImage)
+    {
+        $error = [];
+
     }
 
     public static function secureInput(string $input): string
