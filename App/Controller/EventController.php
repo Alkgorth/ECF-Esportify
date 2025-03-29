@@ -98,6 +98,7 @@ class EventController extends Controller
     {
         try {
             $error = [];
+            $affichage = "Votre proposition d'évènement à bien été envoyé";
 
             // if (! isset($_SESSION['user'])) {
             //     header('Location: index.php?controller=connexions&action=connexion');
@@ -107,25 +108,32 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
 
             $event = new Event();
+            $eventImage = new EventImage();
 
             if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
-                $error = EventValidator::validateEvent($event);
+                $eventErrors = EventValidator::validateEvent($event);
+                $imageErrors = EventValidator::isFileUploaded($eventImage);
+
+                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
+
                 if (empty($error)) {
                     $eventRepository = new EventRepository();
 
-                    header('Location: index.php?');
+                    //header('Location: index.php?');
                 }
             }
+            // var_dump($error);
 
-            $eventImage = new EventImage();
-            $eventImage->hydrate(($_POST));
-            $error = EventValidator::isFileUploaded($eventImage);
+            // $eventImage = new EventImage();
+            // $eventImage->hydrate(($_POST));
+            // $error = EventValidator::isFileUploaded($eventImage);
 
             if (empty($plateformes)) {
                 throw new \Exception("Aucune donnée n'a été trouvée");
             } else {
                 $this->render('event/createEvent', [
+                    'affichage' => $affichage,
                     'plateformes' => $plateformes,
                     'error'       => $error,
                 ]);
