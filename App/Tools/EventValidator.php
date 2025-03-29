@@ -5,13 +5,17 @@ use App\Entity\Event;
 use App\Repository\PlateformeRepository;
 use DateTimeImmutable;
 
-class EventValidator extends Event
+class EventValidator
 {
     //Vérifie si les champs du formaulaire de création d'évènements son correctement renseignés.
     public static function validateEvent($event): array
     {
         $error = [];
 
+        if(empty($event->getCoverImagePath())){
+            $error[] = "Veuillez ajouter au moins une image de couverture pour l'évènement";
+        }
+            
         if (empty($event->getNameEvent())) {
             $error[] = "Veuillez renseigner un titre pour l'évènement !";
         } elseif (strlen($event->getNameEvent()) > 100) {
@@ -24,7 +28,8 @@ class EventValidator extends Event
             $error[] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
         }
 
-        if (!empty($event->getFkIdPlateforme())) {
+        $event->setFkIdPlateforme($_POST['name_plateforme'] ?? '');
+        if (!empty($event->getFkIdPlateforme()) && is_numeric($event->getFkIdPlateforme())) {
             $plateformeRepository = new PlateformeRepository();
             $plateformeId = $plateformeRepository->findPlateforme($event->getFkIdPlateforme());
 
@@ -84,11 +89,14 @@ class EventValidator extends Event
             }
         }
 
+        $event->setVisibility($_POST['visibility'] ?? '');
         if (empty($event->getVisibility())) {
             $error[] = "Aucune visibilité n'a été choisit pour l'évènement.";
-        } elseif (! in_array($event->getVisibility(), ['public', 'privé'])) {
+        } elseif (!in_array($event->getVisibility(), ['public', 'privé'])) {
             $error[] = "La visibilité sélectionnée est invalide.";
         }
+
+        // var_dump($event->getFkIdPlateforme(), $event->getVisibility());
 
         return $error;
     }
@@ -98,7 +106,9 @@ class EventValidator extends Event
     {
         $error = [];
 
-        if (isset($eventImage['name']) && !empty($eventImage['name']));
+        if (isset($eventImage->getImagePath) && !empty($eventImage->getImagePath)){
+           $error[] = "Aucune image n'a été sélectionné pour le diaporama.";
+        };
     }
 
     //Sécurisation des champs pouvant être envoyé par un utilisateur.
@@ -118,6 +128,50 @@ class EventValidator extends Event
         $errors['game_name'] = 'Le nom n\'est pas valide.';
       }
 
-      !preg_match() signifie que seuls les caractères indiqués sont autorisés, tandis que preg_match() sans ! détecte les caractères interdits  
+      !preg_match() signifie que seuls les caractères indiqués sont autorisés, tandis que preg_match() sans ! détecte les caractères interdits
+
+
+      public static function validateImage(array $file, string $fieldName): array {
+    $errors = [];
+
+    // Vérifier s'il y a une erreur d'upload
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        $errors[] = "Une erreur est survenue lors du téléchargement de l'image ($fieldName).";
+    }
+
+    // Vérifier le type de fichier
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    $fileType = mime_content_type($file['tmp_name']);
+    if (!in_array($fileType, $allowedTypes)) {
+        $errors[] = "Le fichier $fieldName doit être au format JPEG, PNG, GIF ou WEBP.";
+    }
+
+    // Vérifier la taille (max 5 Mo)
+    $maxSize = 5 * 1024 * 1024;
+    if ($file['size'] > $maxSize) {
+        $errors[] = "L'image $fieldName ne doit pas dépasser 5 Mo.";
+    }
+
+    // Vérifier les dimensions de l'image
+    list($width, $height) = getimagesize($file['tmp_name']);
+    
+    if ($fieldName === 'cover_image') {
+        $minWidth = 500;  // Spécifique pour la cover
+        $minHeight = 500;
+    } else {
+        $minWidth = 300;  // Spécifique pour les autres images
+        $minHeight = 300;
+    }
+
+    if ($width < $minWidth || $height < $minHeight) {
+        $errors[] = "L'image $fieldName est trop petite (min {$minWidth}x{$minHeight} px).";
+    }
+    if ($width > 5000 || $height > 5000) {
+        $errors[] = "L'image $fieldName est trop grande (max 5000x5000 px).";
+    }
+
+    return $errors;
+}
+
       */
 }
