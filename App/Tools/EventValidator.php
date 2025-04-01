@@ -13,90 +13,77 @@ class EventValidator
         $error = [];
 
         if(empty($event->getCoverImagePath())){
-            $error[] = "Veuillez ajouter au moins une image de couverture pour l'évènement";
+            $error['cover_image_path'] = "Veuillez ajouter au moins une image de couverture pour l'évènement";
         }
             
         if (empty($event->getNameEvent())) {
-            $error[] = "Veuillez renseigner un titre pour l'évènement !";
+            $error['name_event'] = "Veuillez renseigner un titre pour l'évènement !";
         } elseif (strlen($event->getNameEvent()) > 100) {
-            $error[] = "Le titre est trop long, taille maximum autorisé 100 caractères.";
+            $error['name_event'] = "Le titre est trop long, taille maximum autorisé 100 caractères.";
         }
 
         if (empty($event->getNameGame())) {
-            $error[] = "Veuillez renseigner titre de jeux";
+            $error['name_game'] = "Veuillez renseigner titre de jeux";
         } elseif (strlen($event->getNameGame()) > 100) {
-            $error[] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
+            $error['name_game'] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
         }
 
-        $event->setFkIdPlateforme($_POST['name_plateforme'] ?? '');
-        if (!empty($event->getFkIdPlateforme()) && is_numeric($event->getFkIdPlateforme())) {
-            $plateformeRepository = new PlateformeRepository();
-            $plateformeId = $plateformeRepository->findPlateforme($event->getFkIdPlateforme());
+        $fkIdPlateforme = $_POST['name_plateforme'];
 
-            if ($plateformeId) {
-                $event->setFkIdPlateforme($plateformeId['id_plateforme']);
-            } else {
-                $error[] = "La plateforme spécifiée n'existe pas.";
-            }
-        } else {
-            $error[] = "Veuillez sélectionner une plateforme.";
+        if(empty($fkIdPlateforme)) {
+            $error['name_plateforme'] = "Veuillez sélectionner une plateforme.";
         }
 
         if (empty($event->getDateHourStart())) {
-            $error[] = "Veuillez renseigner une date et une heure à laquelle commence l'évènement";
+            $error['date_hour_start'] = "Veuillez renseigner une date et une heure à laquelle commence l'évènement";
         } else {
             $now = new DateTimeImmutable();
             if ($event->getDateHourStart() < $now) {
-                $error[] = "La date et l'heure de début doivent être ultérieures à l'heure actuelle.";
+                $error['date_hour_start'] = "La date et l'heure de début doivent être ultérieures à l'heure actuelle.";
             }
         }
 
         if (empty($event->getDateHourEnd())) {
-            $error[] = "Veuillez renseigner une date et une heure à laquelle ce termine l'évènement";
+            $error['date_hour_end'] = "Veuillez renseigner une date et une heure à laquelle ce termine l'évènement";
         } else {
             if ($event->getDateHourEnd() <= $event->getDateHourStart()) {
-                $error[] = "La date et l'heure de fin doivent être ultérieures à la date et l'heure de début.";
+                $error['date_hour_end'] = "La date et l'heure de fin doivent être ultérieures à la date et l'heure de début.";
             } else {
                 $interval  = $event->getDateHourStart()->diff($event->getDateHourEnd());
                 $totalTime = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
 
                 if ($totalTime < 60) {
-                    $error[] = "L'évènement doit durer au moins 1 heure.";
+                    $error['date_hour_end'] = "L'évènement doit durer au moins 1 heure.";
                 }
             }
         }
 
         if (empty($event->getNombreDeJoueurs()) || ! is_numeric($event->getNombreDeJoueurs())) {
-            $error[] = "Veuillez renseigner un nombre de joueurs";
+            $error['nombre_de_joueurs'] = "Veuillez renseigner un nombre de joueurs";
         } elseif (intval($event->getNombreDeJoueurs()) < 10) {
-            $error[] = "Le nombre de participant doit être au moins de 10 joueurs";
+            $error['nombre_de_joueurs'] = "Le nombre de participant doit être au moins de 10 joueurs";
         }
 
         if (empty($event->getDescription())) {
-            $error[] = "Veuillez apporter une description à l'évènement";
+            $error['description'] = "Veuillez apporter une description à l'évènement";
         } else {
             $description       = EventValidator::secureInput($event->getDescription());
             $descriptionLenght = mb_strlen($description);
 
             if ($descriptionLenght < 10) {
-                $error[] = "La description doit comporter au moins 10 caractères.";
+                $error['description'] = "La description doit comporter au moins 10 caractères.";
             } elseif ($descriptionLenght > 500) {
-                $error[] = "La description ne doit pas dépasser 500 caractères.";
+                $error['description'] = "La description ne doit pas dépasser 500 caractères.";
             }
 
-            if (! preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $description)) {
-                $error[] = "La description contient des caractères non autorisés.";
+            if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $description)) {
+                $error['description'] = "La description contient des caractères non autorisés.";
             }
         }
 
-        $event->setVisibility($_POST['visibility'] ?? '');
-        if (empty($event->getVisibility())) {
-            $error[] = "Aucune visibilité n'a été choisit pour l'évènement.";
-        } elseif (!in_array($event->getVisibility(), ['public', 'privé'])) {
-            $error[] = "La visibilité sélectionnée est invalide.";
+        if (!isset($_POST['visibility'])) {
+            $error['visibility'] = "Veuillez sélectionner une visibilité pour l'évènement.";
         }
-
-        // var_dump($event->getFkIdPlateforme(), $event->getVisibility());
 
         return $error;
     }

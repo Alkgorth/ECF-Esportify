@@ -13,17 +13,24 @@ openBtn.addEventListener('click', () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
 const checkVisibilityPublic = document.getElementById("public");
-const checkVisibilityPivate = document.getElementById("privé");
+const checkVisibilityPrivate = document.getElementById("private");
 
-checkVisibilityPublic.addEventListener('change', () => {
-    if (checkVisibilityPublic.checked) {
-        checkVisibilityPivate.checked = false;
-    }
-});
+if (checkVisibilityPublic && checkVisibilityPrivate) {
+    checkVisibilityPublic.addEventListener('change', () => {
+        if (checkVisibilityPublic.checked) {
+            checkVisibilityPrivate.checked = false;
+        }
+    });
 
-checkVisibilityPivate.addEventListener('change', () => {
-    if (checkVisibilityPivate.checked) {
-        checkVisibilityPublic.checked = false;
-    }
-});
+    checkVisibilityPrivate.addEventListener('change', () => {
+        if (checkVisibilityPrivate.checked) {
+            checkVisibilityPublic.checked = false;
+        }
+    });
+} else {
+    console.error("Les checkboxes 'public' et 'private' n'ont pas été trouvées.");
+}
+})
+

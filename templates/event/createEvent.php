@@ -10,14 +10,14 @@
 
     <?php if (empty($error) && isset($_POST['valider'])) {?>
       <div class="alert alert-primary" role="alert">
-        <?php echo $affichage;?>
+        <?php echo $affichage; ?>
       </div>
     <?php }?>
 
-    <?php if (! empty($error)) {
+    <?php if (!empty($error)) {
         foreach ($error as $errors) {?>
       <div class="alert alert-danger" role="alert">
-        <?php echo $errors;?>
+        <?php echo $errors; ?>
       </div>
     <?php }
     }?>
@@ -99,12 +99,12 @@
         <fieldset id="checkVisibility">
             <legend>Visibilité</legend>
             <div>
-                <input type="radio" id="public" name="visibility" value="public" checked />
+                <input type="checkbox" id="public" name="visibility" value="public" checked />
                 <label for="public">Public</label>
             </div>
             <div>
-                <input type="radio" id="privé" name="visibility" value="privé" />
-                <label for="privé">Privé</label>
+                <input type="checkbox" id="private" name="visibility" value="privé" />
+                <label for="private">Privé</label>
             </div>
             </fieldset>
         </div>
