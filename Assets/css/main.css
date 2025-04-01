@@ -11968,6 +11968,7 @@ textarea.form-control-lg {
 nav {
   font-family: var(--esportify-font-menus);
   background-color: var(--esportify-grey-5);
+  box-shadow: 5px 0 20px rgba(196, 192, 192, 0.4);
 }
 
 .navbar-nav .nav-link,
