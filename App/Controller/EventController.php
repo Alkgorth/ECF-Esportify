@@ -132,10 +132,6 @@ class EventController extends Controller
             }
             // var_dump($error);
 
-            // $eventImage = new EventImage();
-            // $eventImage->hydrate(($_POST));
-            // $error = EventValidator::isFileUploaded($eventImage);
-
             if (empty($plateformes)) {
                 throw new \Exception("Aucune donnée n'a été trouvée");
             } else {

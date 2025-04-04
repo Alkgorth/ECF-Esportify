@@ -95,7 +95,18 @@ class EventValidator
 
         if (!isset($eventImage['name']) || empty($eventImage['name'][0])){
            $error['image_path'] = "Aucune image n'a été sélectionné pour le diaporama.";
-        };
+        } else {
+            foreach ($eventImage['error'] as $key => $error) {
+                if ($error === UPLOAD_ERR_OK){
+                    $maxSize = 2 * 1024 * 1024;
+                    $allowedTypes = ['image/jpeg', 'image/png'];
+                } 
+                if (!in_array($eventImage['type'][$key], $allowedTypes)){
+                    $error['image_path'][] = "Le type du fichier " . $eventImage['name'][$key] . "n'est pas autorisé";
+                }
+            }
+        }
+        ;
 
         return $error;
     }
