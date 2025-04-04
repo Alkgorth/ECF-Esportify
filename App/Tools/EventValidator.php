@@ -93,9 +93,11 @@ class EventValidator
     {
         $error = [];
 
-        if (isset($eventImage->getImagePath) && !empty($eventImage->getImagePath)){
-           $error[] = "Aucune image n'a été sélectionné pour le diaporama.";
+        if (!isset($eventImage['name']) || empty($eventImage['name'][0])){
+           $error['image_path'] = "Aucune image n'a été sélectionné pour le diaporama.";
         };
+
+        return $error;
     }
 
     //Sécurisation des champs pouvant être envoyé par un utilisateur.
