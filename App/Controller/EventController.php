@@ -108,14 +108,21 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
 
             $event = new Event();
-            $eventImage = new EventImage();
 
             if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
                 $eventErrors = EventValidator::validateEvent($event);
-                $imageErrors = EventValidator::isFileUploaded($eventImage);
+                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
 
                 $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
+
+                if (!empty($eventErrors)) {
+                    $error = array_merge($error, $eventErrors);
+                }
+
+                if (!empty($imageErrors)) {
+                    $error = array_merge($error, $imageErrors);
+                }
 
                 if (empty($error)) {
                     $eventRepository = new EventRepository();
