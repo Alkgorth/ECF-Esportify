@@ -23,7 +23,7 @@ class UserValidator extends User
             $error[] = "Veuillez renseigner un email valide";
         }
         if(empty($user->getPseudo())){
-            $error[] = "Veuillez renseigner votre adresse";
+            $error[] = "Veuillez renseigner votre pseudo";
         }
         if(empty($user->getPassword())){
             $error[] = "Veuillez renseigner un mot de passe";

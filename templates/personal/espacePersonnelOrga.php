@@ -34,22 +34,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
             <label for="first_name" class="form-label">Prénom</label>
             <input type="text" class="form-control" id="first_name" name="first_name" value="<?= htmlspecialchars($_SESSION['user']['first_name']) ?>">
 
-        </div>
-        <div class="mb-3 text-center">
-            <label for="adresse" class="form-label">Adresse</label>
-            <input type="text" class="form-control" id="adresse" name="adresse" value="<?= htmlspecialchars($_SESSION['user']['adresse']) ?>">
-
-        </div>
-        <div class="mb-3 text-center">
-            <label for="zip_code" class="form-label">Code Postale</label>
-            <input type="text" pattern="[0-9, A-B]{5}" class="form-control" id="zip_code" name="zip_code" maxlength="5" value="<?= htmlspecialchars($_SESSION['user']['zip_code']) ?>">
-
-        </div>
-        <div class="mb-3 text-center">
-            <label for="city" class="form-label">Ville</label>
-            <input type="text" class="form-control" id="city" name="city" value="<?= htmlspecialchars($_SESSION['user']['city']) ?>">
-
-        </div>
+       
         <div class="mb-3 text-center">
             <label for="mail" class="form-label">Email</label>
             <input type="email" class="form-control" id="mail" name="mail" value="<?= htmlspecialchars($_SESSION['user']['mail']) ?>">

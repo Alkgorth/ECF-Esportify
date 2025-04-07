@@ -1,8 +1,6 @@
 <?php
 namespace App\Tools;
 
-use App\Entity\Event;
-use App\Repository\PlateformeRepository;
 use DateTimeImmutable;
 
 class EventValidator
@@ -12,10 +10,10 @@ class EventValidator
     {
         $error = [];
 
-        if(empty($event->getCoverImagePath())){
+        if (empty($event->getCoverImagePath())) {
             $error['cover_image_path'] = "Veuillez ajouter au moins une image de couverture pour l'évènement";
         }
-            
+
         if (empty($event->getNameEvent())) {
             $error['name_event'] = "Veuillez renseigner un titre pour l'évènement !";
         } elseif (strlen($event->getNameEvent()) > 100) {
@@ -30,7 +28,7 @@ class EventValidator
 
         $fkIdPlateforme = $_POST['name_plateforme'];
 
-        if(empty($fkIdPlateforme)) {
+        if (empty($fkIdPlateforme)) {
             $error['name_plateforme'] = "Veuillez sélectionner une plateforme.";
         }
 
@@ -76,12 +74,12 @@ class EventValidator
                 $error['description'] = "La description ne doit pas dépasser 500 caractères.";
             }
 
-            if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $description)) {
+            if (! preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $description)) {
                 $error['description'] = "La description contient des caractères non autorisés.";
             }
         }
 
-        if (!isset($_POST['visibility'])) {
+        if (! isset($_POST['visibility'])) {
             $error['visibility'] = "Veuillez sélectionner une visibilité pour l'évènement.";
         }
 
@@ -93,21 +91,45 @@ class EventValidator
     {
         $error = [];
 
-        if (!isset($eventImage['name']) || empty($eventImage['name'][0])){
-           $error['image_path'] = "Aucune image n'a été sélectionné pour le diaporama.";
+        if (! isset($eventImage['name']) || empty($eventImage['name'][0])) {
+            $error['image_path'] = "Aucune image n'a été sélectionné pour le diaporama.";
         } else {
             foreach ($eventImage['error'] as $key => $error) {
-                if ($error === UPLOAD_ERR_OK){
-                    $maxSize = 2 * 1024 * 1024;
+                if ($error === UPLOAD_ERR_OK) {
+                    $maxSize      = 2 * 1024 * 1024;
                     $allowedTypes = ['image/jpeg', 'image/png'];
-                } 
-                if (!in_array($eventImage['type'][$key], $allowedTypes)){
+                }
+                if (! in_array($eventImage['type'][$key], $allowedTypes)) {
                     $error['image_path'][] = "Le type du fichier " . $eventImage['name'][$key] . "n'est pas autorisé";
+                } else {
+                    // Gestion des erreurs de téléchargement
+                    switch ($error) {
+                        case UPLOAD_ERR_INI_SIZE:
+                        case UPLOAD_ERR_FORM_SIZE:
+                            $errors['image_path'][] = "Le fichier " . $eventImage['name'][$key] . " est trop volumineux.";
+                            break;
+                        case UPLOAD_ERR_PARTIAL:
+                            $errors['image_path'][] = "Le fichier " . $eventImage['name'][$key] . " n'a été que partiellement téléchargé.";
+                            break;
+                        case UPLOAD_ERR_NO_FILE:
+                            $errors['image_path'][] = "Aucun fichier n'a été téléchargé.";
+                            break;
+                        case UPLOAD_ERR_NO_TMP_DIR:
+                            $errors['image_path'][] = "Le dossier temporaire est manquant.";
+                            break;
+                        case UPLOAD_ERR_CANT_WRITE:
+                            $errors['image_path'][] = "Échec de l'écriture du fichier sur le disque.";
+                            break;
+                        case UPLOAD_ERR_EXTENSION:
+                            $errors['image_path'][] = "Une extension PHP a arrêté le téléchargement du fichier.";
+                            break;
+                        default:
+                            $errors['image_path'][] = "Erreur inconnue lors du téléchargement du fichier.";
+                            break;
+                    }
                 }
             }
         }
-        ;
-
         return $error;
     }
 
