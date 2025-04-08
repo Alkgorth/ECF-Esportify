@@ -62,7 +62,7 @@ class UserRepository extends MainRepository
         } else {
             $query = $this->pdo->prepare(
                 "INSERT INTO user (last_name, first_name, mail, pseudo, password, role)
-                                        VALUES (:last_name, :first_name, :mail, :pseudo, :password, :role)"
+                    VALUES (:last_name, :first_name, :mail, :pseudo, :password, :role)"
             );
             $query->bindValue(':role', $user->getRole(), $this->pdo::PARAM_STR);
         }
@@ -128,7 +128,7 @@ class UserRepository extends MainRepository
     public function updatePassword(User $user)
     {
         if ($user->getIdUser() !== null) {
-            $query = $this->pdo->prepare('UPDATE Ksuser SET password = :password WHERE id_user = :id');
+            $query = $this->pdo->prepare('UPDATE user SET password = :password WHERE id_user = :id');
         } else {
             throw new \Exception("Aucun utilisateur rattaché à ce mail.");
         }

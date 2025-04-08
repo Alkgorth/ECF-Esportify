@@ -10,7 +10,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
     <h1>Page Espace Personnel Admin</h1>
   </section>
 
-  <form class="m-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnel">
+  <form class="m-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnelAdmin">
 
     <?php if (empty($error) && isset($_POST['saveUser'])) { ?>
       <div class="alert alert-primary" role="alert">
