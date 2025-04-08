@@ -28,37 +28,26 @@ require_once _ROOTPATH_ . '\templates\header.php';
     <div class="mb-3 text-center">
       <label for="last_name" class="form-label">Nom</label>
       <input type="text" class="form-control" id="last_name" name="last_name" value="<?= htmlspecialchars($_SESSION['user']['last_name']) ?>">
-
     </div>
+
     <div class="mb-3 text-center">
       <label for="first_name" class="form-label">Prénom</label>
       <input type="text" class="form-control" id="first_name" name="first_name" value="<?= htmlspecialchars($_SESSION['user']['first_name']) ?>">
-
     </div>
+
     <div class="mb-3 text-center">
-      <label for="adresse" class="form-label">Adresse</label>
-      <input type="text" class="form-control" id="adresse" name="adresse" value="<?= htmlspecialchars($_SESSION['user']['adresse']) ?>">
-
+      <label for="pseudo" class="form-label">Pseudo</label>
+      <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?= htmlspecialchars($_SESSION['user']['pseudo']) ?>">
     </div>
-    <div class="mb-3 text-center">
-      <label for="zip_code" class="form-label">Code Postale</label>
-      <input type="text" pattern="[0-9, A-B]{5}" class="form-control" id="zip_code" name="zip_code" maxlength="5" value="<?= htmlspecialchars($_SESSION['user']['zip_code']) ?>">
 
-    </div>
-    <div class="mb-3 text-center">
-      <label for="city" class="form-label">Ville</label>
-      <input type="text" class="form-control" id="city" name="city" value="<?= htmlspecialchars($_SESSION['user']['city']) ?>">
-
-    </div>
     <div class="mb-3 text-center">
       <label for="mail" class="form-label">Email</label>
       <input type="email" class="form-control" id="mail" name="mail" value="<?= htmlspecialchars($_SESSION['user']['mail']) ?>">
-
     </div>
+
     <div class="mb-3 text-center">
       <label for="password" class="form-label">Mot de passe</label>
       <input type="password" class="form-control" id="password" name="password" required minlength="12">
-
     </div>
 
     <div class="mb-3 text-center">
@@ -69,6 +58,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
     <div class="text-center">
       <button type="submit" name="saveUser" class="btn btn-warning m-4">Valider</button>
     </div>
+    
     <div class="text-center">
       <button type="submit" name="delete" class="btn btn-dark m-4">Supprimer mon compte</button>
     </div>
