@@ -10,7 +10,7 @@
         <h1>Page Espace Personnel Orga</h1>
     </section>
 
-    <form class="m-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnel">
+    <form class="m-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnelOrga">
 
         <?php if (empty($error) && isset($_POST['saveUser'])) {?>
             <div class="alert alert-primary" role="alert">
