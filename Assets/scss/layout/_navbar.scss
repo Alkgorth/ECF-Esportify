@@ -1,7 +1,7 @@
 nav {
   font-family: var(--esportify-font-menus);
   background-color: var(--esportify-grey-5);
-  box-shadow: 5px 0 20px rgba(196, 192, 192, 0.4);
+  box-shadow: var(--esportify-box-shadow);
 }
 
 .navbar-nav .nav-link,
@@ -127,7 +127,7 @@ input.form-control:focus {
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 8rem;
+    height: 6rem;
     justify-content: space-between;
     overflow: hidden;
     display: flex;
@@ -168,7 +168,7 @@ input.form-control:focus {
     bottom: 0;
     left: 0;
     display: block;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     z-index: 9999;
   }
 
