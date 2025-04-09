@@ -11968,7 +11968,7 @@ textarea.form-control-lg {
 nav {
   font-family: var(--esportify-font-menus);
   background-color: var(--esportify-grey-5);
-  box-shadow: 5px 0 20px rgba(196, 192, 192, 0.4);
+  box-shadow: var(--esportify-box-shadow);
 }
 
 .navbar-nav .nav-link,
@@ -12093,7 +12093,7 @@ input.form-control:focus {
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 8rem;
+    height: 6rem;
     justify-content: space-between;
     overflow: hidden;
     display: flex;
@@ -12128,7 +12128,7 @@ input.form-control:focus {
     bottom: 0;
     left: 0;
     display: block;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     z-index: 9999;
   }
   .navbar.visible .nav-burger {
@@ -12228,10 +12228,6 @@ main {
 @media only screen and (min-width: 601px) {
   .sectionHaute {
     padding: 2vw 0;
-  }
-}
-@media only screen and (min-width: 601px) {
-  .sectionHaute {
     padding-left: 15vw;
   }
 }
@@ -12249,6 +12245,6 @@ main {
   --esportify-font-menus: "Orbitron", sans-serif;
   --esportify-font-texts: "Roboto", sans-serif;
   --esportify-text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
-  --esportify-box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+  --esportify-box-shadow: 5px 0 20px rgba(196, 192, 192, 0.4);
   --transition-speed: 600ms;
 }/*# sourceMappingURL=main.css.map */
