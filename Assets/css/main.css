@@ -12013,7 +12013,7 @@ nav {
 
 .nav-text {
   display: none;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .nav-link svg {
@@ -12076,7 +12076,6 @@ input.form-control:focus {
 
 .logo img {
   width: 2.5rem;
-  transform: rotate(0deg);
   transition: var(--transition-speed);
 }
 
@@ -12093,7 +12092,7 @@ input.form-control:focus {
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 6rem;
+    height: 4rem;
     justify-content: space-between;
     overflow: hidden;
     display: flex;
@@ -12128,7 +12127,7 @@ input.form-control:focus {
     bottom: 0;
     left: 0;
     display: block;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     z-index: 9999;
   }
   .navbar.visible .nav-burger {
