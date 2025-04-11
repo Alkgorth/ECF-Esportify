@@ -63,8 +63,7 @@ class UserValidator extends User
     public static function isLoggedIn(?string $roleConnected = null): bool
     {
         if (isset($_SESSION['user']) &&
-            isset($_SESSION['user']['id_user'])) 
-            var_dump($_SESSION['user']);
+            isset($_SESSION['user']['id_user']))
             {
 
             if ($roleConnected !== null) {

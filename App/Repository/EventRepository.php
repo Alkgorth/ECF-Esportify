@@ -115,7 +115,6 @@ class EventRepository extends MainRepository
             $description       = htmlspecialchars(trim($data['description']), ENT_QUOTES, 'UTF-8');
             $visibility        = htmlspecialchars(trim($data['visibility']), ENT_QUOTES, 'UTF-8');
 
-            var_dump($data);
 
             if ($nombre_de_joueurs === false || $nombre_de_joueurs < 10) {
                 throw new \Exception("Le nombre de joueurs doit être au minimum de 10.");

@@ -130,7 +130,6 @@ class EventController extends Controller
                     //header('Location: index.php?');
                 }
             }
-            // var_dump($error);
 
             if (empty($plateformes)) {
                 throw new \Exception("Aucune donnée n'a été trouvée");
