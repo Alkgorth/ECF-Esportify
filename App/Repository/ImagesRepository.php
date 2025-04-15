@@ -13,69 +13,70 @@ class ImagesRepository extends MainRepository
     {
         $destinationCover = "../../Assets/Documentation/Images/Couverture/";
         $destinationDiapo = "../../Assets/Documentation/Images/Diapo/";
+        $uploadedFiles = [];
+        $error = [];
 
-        if($_SERVER['REQUEST_METHOD'] === $_POST){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
+            //Traitement de l'image de couverture
             if(isset($_FILES['cover_image_path']) && $_FILES['cover_image_path']['error'] === UPLOAD_ERR_OK){
 
                 $file = $_FILES['cover_image_path']['name'];
 
-                $target_dir = $destinationCover.basename($file);
+                $targetDir = $destinationCover.uniqid().'_'.basename($file);
 
-                $allowed_types = ['image/png','image/jpeg'];
+                $allowedTypes = ['image/png','image/jpeg'];
 
-                if(in_array($_FILES['cover_image_path']['type'], $allowed_types) && $_FILES['cover_image_path']['size']<=2000000){
-                    
-                    $unique_filename = uniqid().'_'.basename($file);
+                $maxSize = 2000000;
 
-                    $target_dir = $destinationCover.$unique_filename;
+                if(in_array($_FILES['cover_image_path']['type'], $allowedTypes) && $_FILES['cover_image_path']['size']<= $maxSize){
 
-                    if(move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $target_dir)){
-
-                        echo "Le fichier".htmlspecialchars(basename($file))." a bien été téléchargé.";
+                    if(move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $targetDir)){
+                        $uploadedFiles['cover_image_path'] = htmlspecialchars(basename($file));
                     } else {
-                        echo "Erreur lors du téléchargement de l'image de couverture.";
+                        $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture.";
                     } 
                 } else {
-                        echo "Type ou taille de fichier non valide pour l'image de couverture.";
+                        $error['cover_image_path'] = "Type ou taille de fichier non valide pour l'image de couverture.";
+                    }
+            } elseif (isset($_FILES['cover_images_path']) && $_FILES['cover_image_path']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture(code: ".$_FILES['cover_image_path']['error'] . ")";
                 }
-            }
         }
         if(isset($_FILES['image_path']) && is_array($_FILES['image_path']['error'])){
             
             $files = $_FILES['image_path'];
+            $uploadedFiles['image_path'] = [];
+            $error['image_path'] = [];
 
-            $uploaded_files = [];
 
             foreach($files['name'] as $key => $name){
-                if($files['error']['$key'] === UPLOAD_ERR_OK){
+                if($files['error'][$key] === UPLOAD_ERR_OK){
 
                     $file = $name;
 
-                    $target_dir = $destinationDiapo.basename($file);
+                    $targetDir = $destinationDiapo.uniqid().'_'.basename($file);
 
-                    $allowed_types = ['image/png','image/jpeg'];
+                    $allowedTypes = ['image/png','image/jpeg'];
 
-                    if(in_array($files['type'][$key], $allowed_types) && $files['size']['key']<=2000000){
+                    $maxSize = 2000000;
 
-                        $unique_filename = uniqid().'_'.basename($file);
+                    if(in_array($files['type'][$key], $allowedTypes) && $files['size'][$key]<= $maxSize){
 
-                        $target_dir = $destinationDiapo.$unique_filename;
+                        if(move_uploaded_file($files['tmp_name'][$key], $targetDir)){
 
-                        if(move_uploaded_file($files['tmp_name'][$key], $target_dir)){
-
-                            $uploaded_files[] = htmlspecialchars(basename($file));
+                            $uploadedFiles['image_path'][] = htmlspecialchars(basename($file));
                         } else {
-                            echo "Erreur lors du téléchargement de ".htmlspecialchars(basename($file)).".";
+                           $error['image_path'][$key] = "Erreur lors du téléchargement de ".htmlspecialchars(basename($file)).".";
                         }
                     } else {
-                        echo "Type ou taille de fichier non valide pour ".htmlspecialchars(basename($file)).".";
+                        $error['image_path'][$key] = "Type ou taille de fichier non valide pour ".htmlspecialchars(basename($file)).".";
                     }
+                } elseif ($files['error'][$key] !== UPLOAD_ERR_NO_FILE){
+                    $error['image_path'][$key] = "Erreur lors du téléchargement de ".htmlspecialchars(basename($name))."(code : ".$files['error'][$key].".";
                 }
             }
-            if(!empty ($uploaded_files)){
-                echo "Les fichiers suivants on été téléchargés: ".implode(",",$uploaded_files);
-            }
         }
+        return ['uploaded' => $uploadedFiles, 'errors' => $error];
     }
 }
