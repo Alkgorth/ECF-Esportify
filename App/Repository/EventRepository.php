@@ -164,7 +164,7 @@ class EventRepository extends MainRepository
         }
     }
 
-    //Récupération des inforamations dans le formaulaire de création d'évènement à ajouter dans la table Event
+    //Récupération des informations dans le formulaire de création d'évènement à ajouter dans la table Event
    /* public function insertEvent(Event $data, int $fk_id_user, ?string $cover_image_path)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
