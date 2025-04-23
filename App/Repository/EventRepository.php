@@ -78,11 +78,11 @@ class EventRepository extends MainRepository
 
 
     //Création d'un évènement en base de données
-    public function persistEvent(Event $event, EventImage $eventImage){
+    public function persistEvent(Event $event, array $diapoImage = []){
 
         //requête pour mettre à jour l'évènement
         if ($event->getIdEvent() !== null) {
-            $query = $this->pdo->prepare(
+            $queryEvent = $this->pdo->prepare(
                 "UPDATE event SET cover_image_path = :cover_image_path,
                                 name_event = :name_event,
                                 name_game = :name_game,
@@ -95,39 +95,47 @@ class EventRepository extends MainRepository
                                 status = :status
                                 WHERE id_event = :id"
             );
-            $query->bindValue(':id', $event->getIdEvent(), $this->pdo::PARAM_INT);
-        } else {
-            $query = $this->pdo->prepare(
-                "INSERT INTO event (cover_image_path, name_event, name_game, fk_id_plateforme, date_hour_start, date_hour_end, nombre_de_joueurs, description, visibility, fk_id_user)
-                VALUES (:cover_image_path, :name_event, :name_game, :name_plateforme, :date_hour_start, :date_hour_end, :nombre_de_joueurs, :description, :visibility, :fk_id_user)"
-            );
-            $query->bindValue(':statut', $event->getStatus(), $this->pdo::PARAM_STR);
-            
-        }
-        $query->bindValue(':cover_image_path', htmlspecialchars(trim($event->getCoverImagePath()), FILTER_SANITIZE_URL), $this->pdo::PARAM_STR);
-        $query->bindValue(':name_event', htmlspecialchars($event->getNameEvent()), $this->pdo::PARAM_STR);
-        $query->bindValue(':name_game', htmlspecialchars($event->getNameGame()), $this->pdo::PARAM_STR);
-        $query->bindValue(':name_plateforme', filter_var($event->getFkIdPlateforme(), FILTER_VALIDATE_INT), $this->pdo::PARAM_INT);
-        $query->bindValue(':date_hour_start', trim($event->getDateHourStart()->format('Y-m-d H:i:s')), $this->pdo::PARAM_STR);
-        $query->bindValue(':date_hour_end', trim($event->getDateHourEnd()->format('Y-m-d H:i:s')), $this->pdo::PARAM_STR);
-        $query->bindValue('nombre_de_joueurs', htmlspecialchars($event->getNombreDeJoueurs(), FILTER_VALIDATE_INT), $this->pdo::PARAM_INT);
-        $query->bindValue(':description', htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
-        $query->bindValue(':visibility', htmlspecialchars(trim($event->$this->visibility()), ENT_QUOTES, 'UTF-8'));
-        $query->bindValue('fk_id_user', htmlspecialchars($event->getFkIdUser(), FILTER_VALIDATE_INT), $this->pdo::PARAM_INT);
+            $queryEvent->bindValue(':id', $event->getIdEvent(), $this->pdo::PARAM_INT);
+            $queryEvent->bindValue(':status', $event->getStatus(), $this->pdo::PARAM_STR);
 
-        if ($eventImage->getFkIdEvent() !== null) {
-            $query = $this->pdo->prepare(
-                "UPDATE event_image SET image_path = :image_path, image_order = :image_order
-                WHERE id_event_image = :id"
-            );
         } else {
-            $query = $this->pdo->prepare(
+            $queryEvent = $this->pdo->prepare(
+                "INSERT INTO event (cover_image_path, name_event, name_game, fk_id_plateforme, date_hour_start, date_hour_end, nombre_de_joueurs, description, visibility, fk_id_user, status)
+                VALUES (:cover_image_path, :name_event, :name_game, :name_plateforme, :date_hour_start, :date_hour_end, :nombre_de_joueurs, :description, :visibility, :fk_id_user, :status)"
+            );
+            $queryEvent->bindValue(':statut', $event->getStatus(), $this->pdo::PARAM_STR);
+            $queryEvent->bindValue('fk_id_user', $event->getFkIdUser(), $this->pdo::PARAM_INT);
+        }
+        $queryEvent->bindValue(':cover_image_path', htmlspecialchars(trim($event->getCoverImagePath())), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':name_event', htmlspecialchars($event->getNameEvent()), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':name_game', htmlspecialchars($event->getNameGame()), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':name_plateforme', $event->getFkIdPlateforme(), $this->pdo::PARAM_INT);
+        $queryEvent->bindValue(':date_hour_start', $event->getDateHourStart()->format('d-m-Y H:i:s'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('d-m-Y H:i:s'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue('nombre_de_joueurs', $event->getNombreDeJoueurs(), $this->pdo::PARAM_INT);
+        $queryEvent->bindValue(':description', htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->$this->visibility()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        
+
+        $queryEvent->execute();
+
+        $eventId = $this->pdo->lastInsertId();
+
+        if($event->getIdEvent() !== null && !empty ($diapoImage)) {
+            $queryImage = $this->pdo->prepare(
                 "INSERT INTO event_image (fk_id_event, image_path, image_order)
                 VALUES (:fk_id_event, :image_path, :image_order)"
             );
+            
+            foreach ($diapoImage as $order => $imagePath) {
+                $queryImage->bindValue(':fk_id_event', $eventId, $this->pdo::PARAM_INT);
+                $queryImage->bindValue(':image_path', htmlspecialchars(trim($imagePath)), $this->pdo::PARAM_STR);
+                $queryImage->bindValue(':image_order', $order + 1, $this->pdo::PARAM_INT);
+                $queryImage->execute();
+            }
         }
         
-        return $query->execute();
+        return $eventId;
     }
 
 
