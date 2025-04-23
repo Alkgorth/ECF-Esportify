@@ -138,79 +138,80 @@ class EventValidator
     {
         $destinationCover = "../../Assets/Documentation/Images/Couverture/";
         $destinationDiapo = "../../Assets/Documentation/Images/Diapo/";
-        $uploadedFiles = [];
-        $error = [];
+        $uploadedFiles    = [];
+        $error            = [];
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //Traitement de l'image de couverture
-            if(isset($_FILES['cover_image_path']) && $_FILES['cover_image_path']['error'] === UPLOAD_ERR_OK){
+            if (isset($_FILES['cover_image_path']) && $_FILES['cover_image_path']['error'] === UPLOAD_ERR_OK) {
 
                 $file = $_FILES['cover_image_path']['name'];
 
                 $clearFileName = filter_var(trim($file), FILTER_SANITIZE_URL);
-                if($clearFileName !== $file){
+                if ($clearFileName !== $file) {
                     $error['cover_image_path'] = "Le nom du fichier contient des caratères non autorisés.";
-                    
+
                 }
 
-                $targetDir = $destinationCover.uniqid().'_'.basename($file);
+                $targetDir = $destinationCover . uniqid() . '_' . basename($file);
 
-                $allowedTypes = ['image/png','image/jpeg'];
+                $allowedTypes = ['image/png', 'image/jpeg'];
 
                 $maxSize = 2 * 1024 * 1024;
 
-                if(in_array($_FILES['cover_image_path']['type'], $allowedTypes) && $_FILES['cover_image_path']['size']<= $maxSize){
+                if (in_array($_FILES['cover_image_path']['type'], $allowedTypes) && $_FILES['cover_image_path']['size'] <= $maxSize) {
 
-                    if(move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $targetDir)){
+                    if (move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $targetDir)) {
                         $uploadedFiles['cover_image_path'] = htmlspecialchars(basename($file));
                     } else {
                         $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture.";
-                    } 
+                    }
                 } else {
-                        $error['cover_image_path'] = "Type ou taille de fichier non valide pour l'image de couverture.";
-                    }
-            } elseif (isset($_FILES['cover_images_path']) && $_FILES['cover_image_path']['error'] !== UPLOAD_ERR_NO_FILE) {
-                    $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture(code: ".$_FILES['cover_image_path']['error'] . ")";
+                    $error['cover_image_path'] = "Type ou taille de fichier non valide pour l'image de couverture.";
                 }
-        }
-        if(isset($_FILES['image_path']) && is_array($_FILES['image_path']['error'])){
-            
-            $files = $_FILES['image_path'];
-            $uploadedFiles['image_path'] = [];
-            $error['image_path'] = [];
+            } elseif (isset($_FILES['cover_images_path']) && $_FILES['cover_image_path']['error'] !== UPLOAD_ERR_NO_FILE) {
+                $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture(code: " . $_FILES['cover_image_path']['error'] . ")";
+            }
 
+            //Traitement des images de diaporama
+            if (isset($_FILES['image_path']) && is_array($_FILES['image_path']['error'])) {
 
-            foreach($files['name'] as $key => $name){
-                if($files['error'][$key] === UPLOAD_ERR_OK){
+                $files                       = $_FILES['image_path'];
+                $uploadedFiles['image_path'] = [];
+                $error['image_path']         = [];
 
-                    $file = $name;
+                foreach ($files['name'] as $key => $name) {
+                    if ($files['error'][$key] === UPLOAD_ERR_OK) {
 
-                    $clearFileName = filter_var(trim($file), FILTER_SANITIZE_URL);
-                    if($clearFileName !== $file){
-                        $error['image_path'][$key] = "Le nom de fichier contient des caratères non autorisés.";
-                        continue;
-                    }
+                        $file = $name;
 
-                    $targetDir = $destinationDiapo.uniqid().'_'.basename($file);
-
-                    $allowedTypes = ['image/png','image/jpeg'];
-
-                    $maxSize = 2 * 1024 * 1024;
-
-                    if(in_array($files['type'][$key], $allowedTypes) && $files['size'][$key]<= $maxSize){
-
-                        if(move_uploaded_file($files['tmp_name'][$key], $targetDir)){
-
-                            $uploadedFiles['image_path'][] = htmlspecialchars(basename($file));
-                        } else {
-                           $error['image_path'][$key] = "Erreur lors du téléchargement de ".htmlspecialchars(basename($file)).".";
+                        $clearFileName = filter_var(trim($file), FILTER_SANITIZE_URL);
+                        if ($clearFileName !== $file) {
+                            $error['image_path'][$key] = "Le nom de fichier contient des caratères non autorisés.";
+                            continue;
                         }
-                    } else {
-                        $error['image_path'][$key] = "Type ou taille de fichier non valide pour ".htmlspecialchars(basename($file)).".";
+
+                        $targetDir = $destinationDiapo . uniqid() . '_' . basename($file);
+
+                        $allowedTypes = ['image/png', 'image/jpeg'];
+
+                        $maxSize = 2 * 1024 * 1024;
+
+                        if (in_array($files['type'][$key], $allowedTypes) && $files['size'][$key] <= $maxSize) {
+
+                            if (move_uploaded_file($files['tmp_name'][$key], $targetDir)) {
+
+                                $uploadedFiles['image_path'][] = htmlspecialchars(basename($file));
+                            } else {
+                                $error['image_path'][$key] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($file)) . ".";
+                            }
+                        } else {
+                            $error['image_path'][$key] = "Type ou taille de fichier non valide pour " . htmlspecialchars(basename($file)) . ".";
+                        }
+                    } elseif ($files['error'][$key] !== UPLOAD_ERR_NO_FILE) {
+                        $error['image_path'][$key] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($name)) . "(code : " . $files['error'][$key] . ".";
                     }
-                } elseif ($files['error'][$key] !== UPLOAD_ERR_NO_FILE){
-                    $error['image_path'][$key] = "Erreur lors du téléchargement de ".htmlspecialchars(basename($name))."(code : ".$files['error'][$key].".";
                 }
             }
         }
@@ -222,7 +223,6 @@ class EventValidator
     {
         return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
     }
-
 
     /* vérification des caractères dans le nom du fichier, utili aussi pour les input titre, nom de jeu
     if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $gameName)) {
