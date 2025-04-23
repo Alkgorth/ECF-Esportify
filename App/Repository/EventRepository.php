@@ -78,24 +78,61 @@ class EventRepository extends MainRepository
 
 
     //Création d'un évènement en base de données
+    public function persistEvent(Event $event, EventImage $eventImage){
+
+        //requête pour mettre à jour l'évènement
+        if ($event->getIdEvent() !== null) {
+            $query = $this->pdo->prepare(
+                "UPDATE event SET cover_image_path = :cover_image_path,
+                                name_event = :name_event,
+                                name_game = :name_game,
+                                fk_id_plateforme = :name_plateforme,
+                                date_hour_start = :date_hour_start,
+                                date_hour_end = :date_hour_end,
+                                nombre_de_joueurs = :nombre_de_joueurs,
+                                description = :description,
+                                visibility = :visibility,
+                                status = :status
+                                WHERE id_event = :id"
+            );
+            $query->bindValue(':id', $event->getIdEvent(), $this->pdo::PARAM_INT);
+        } else {
+            $query = $this->pdo->prepare(
+                "INSERT INTO event (cover_image_path, name_event, name_game, fk_id_plateforme, date_hour_start, date_hour_end, nombre_de_joueurs, description, visibility, fk_id_user)
+                VALUES (:cover_image_path, :name_event, :name_game, :name_plateforme, :date_hour_start, :date_hour_end, :nombre_de_joueurs, :description, :visibility, :fk_id_user)"
+            );
+            $query->bindValue(':statut', $event->getStatus(), $this->pdo::PARAM_STR);
+            
+        }
+        $query->bindValue(':cover_image_path', htmlspecialchars(trim($event->getCoverImagePath()), FILTER_SANITIZE_URL), $this->pdo::PARAM_STR);
+        $query->bindValue(':name_event', htmlspecialchars($event->getNameEvent()), $this->pdo::PARAM_STR);
+        $query->bindValue(':name_game', htmlspecialchars($event->getNameGame()), $this->pdo::PARAM_STR);
+        $query->bindValue(':name_plateforme', filter_var($event->getFkIdPlateforme(), FILTER_VALIDATE_INT), $this->pdo::PARAM_INT);
+        $query->bindValue(':date_hour_start', trim($event->getDateHourStart()->format('Y-m-d H:i:s')), $this->pdo::PARAM_STR);
+        $query->bindValue(':date_hour_end', trim($event->getDateHourEnd()->format('Y-m-d H:i:s')), $this->pdo::PARAM_STR);
+        $query->bindValue('nombre_de_joueurs', htmlspecialchars($event->getNombreDeJoueurs(), FILTER_VALIDATE_INT), $this->pdo::PARAM_INT);
+        $query->bindValue(':description', htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        $query->bindValue(':visibility', htmlspecialchars(trim($event->$this->visibility()), ENT_QUOTES, 'UTF-8'));
+        $query->bindValue('fk_id_user', htmlspecialchars($event->getFkIdUser(), FILTER_VALIDATE_INT), $this->pdo::PARAM_INT);
+
+        if ($eventImage->getFkIdEvent() !== null) {
+            $query = $this->pdo->prepare(
+                "UPDATE event_image SET image_path = :image_path, image_order = :image_order
+                WHERE id_event_image = :id"
+            );
+        } else {
+            $query = $this->pdo->prepare(
+                "INSERT INTO event_image (fk_id_event, image_path, image_order)
+                VALUES (:fk_id_event, :image_path, :image_order)"
+            );
+        }
+        
+        return $query->execute();
+    }
+
+
     public function creationEvent(Event $event, int $fk_id_user)
     {
-        try {
-            $this->pdo->beginTransaction();
-
-            $userCheck = $this->pdo->prepare("SELECT COUNT (*) FROM user WHERE id_user = :id");
-            $userCheck->bindValue(':id', $fk_id_user, $this->pdo::PARAM_INT);
-            $userCheck->execute();
-            if($userCheck->fetchColumn() === 0) {
-                throw new \Exception("L'utilisateur n'existe pas !");
-            }
-
-            $this->insertEvent($event, $fk_id_user);
-
-
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (! isset($data['cover_image_path'], $data['image_path'], $data['name_event'],
@@ -114,15 +151,6 @@ class EventRepository extends MainRepository
             $nombre_de_joueurs = filter_var($data['nombre_de_joueurs'], FILTER_VALIDATE_INT);
             $description       = htmlspecialchars(trim($data['description']), ENT_QUOTES, 'UTF-8');
             $visibility        = htmlspecialchars(trim($data['visibility']), ENT_QUOTES, 'UTF-8');
-
-
-            if ($nombre_de_joueurs === false || $nombre_de_joueurs < 10) {
-                throw new \Exception("Le nombre de joueurs doit être au minimum de 10.");
-            }
-
-            if ($fk_id_plateforme === false) {
-                throw new \Exception("La plateforme choisit ne fait pas partie de la liste proposée.");
-            }
 
             $query = $this->pdo->prepare("SELECT COUNT(*) FROM plateforme WHERE id_plateforme = :id");
             $query->bindParam(':id', $fk_id_plateforme, $this->pdo::PARAM_INT);
@@ -195,28 +223,6 @@ class EventRepository extends MainRepository
 
     }
 
-    
-
-    public function creationEvent(Event $event, string $cover_image_path, string $image_path)
-{
-    try {
-        // Démarrer la transaction
-        $this->pdo->beginTransaction();
-
-        // Insérer l'événement
-        $this->insertEvent($event);
-
-        // Insérer l'image de couverture
-        $this->insertEventImage($event->getId(), $cover_image_path, $image_path);
-
-        // Si tout est ok, valider la transaction
-        $this->pdo->commit();
-    } catch (\Exception $e) {
-        // En cas d'erreur, annuler la transaction
-        $this->pdo->rollBack();
-        throw new \Exception("Erreur lors de la création de l'événement : " . $e->getMessage());
-    }
-}
 
 private function insertEvent(Event $event)
 {
@@ -288,184 +294,6 @@ $image_path = $_POST['image_path'];
 $eventRepository = new EventRepository();
 $eventRepository->creationEvent($event, $cover_image_path, $image_path);
 
-_____________________________________________________________________________________________________________________
-
-<?php
-
-use PDO;
-
-class EventRepository
-{
-    private PDO $pdo;
-
-    public function __construct(PDO $pdo)
-    {
-        $this->pdo = $pdo;
-    }
-
-    public function creationEvent(Event $event, array $cover_image, array $images, int $fk_id_user)
-    {
-        try {
-            // Démarrer la transaction
-            $this->pdo->beginTransaction();
-
-            // Vérification de l'existence de l'utilisateur
-            $stmtUserCheck = $this->pdo->prepare("SELECT COUNT(*) FROM user WHERE id_user = :id");
-            $stmtUserCheck->bindParam(':id', $fk_id_user, PDO::PARAM_INT);
-            $stmtUserCheck->execute();
-            if ($stmtUserCheck->fetchColumn() == 0) {
-                throw new \Exception("L'utilisateur spécifié n'existe pas.");
-            }
-
-            // Récupérer l'ID de la plateforme par son nom
-            $plateformeName = $event->getPlateformeName();
-            if (!empty($plateformeName)) {
-                $stmtPlateforme = $this->pdo->prepare("SELECT id_plateforme FROM plateforme WHERE name = :name LIMIT 1");
-                $stmtPlateforme->bindParam(':name', $plateformeName, PDO::PARAM_STR);
-                $stmtPlateforme->execute();
-                $plateformeData = $stmtPlateforme->fetch();
-                if (!$plateformeData) {
-                    throw new \Exception("La plateforme spécifiée n'existe pas.");
-                }
-                $fk_id_plateforme = $plateformeData['id_plateforme'];
-                $event->setFkIdPlateforme($fk_id_plateforme);
-            } else {
-                throw new \Exception("Veuillez sélectionner une plateforme.");
-            }
-
-            // Insérer l'événement
-            $this->insertEvent($event, $fk_id_user, $cover_image['name'] ?? null);
-
-            $eventId = $event->getId();
-
-            // Traiter l'image de couverture
-            if (!empty($cover_image['name'])) {
-                $this->uploadAndInsertImage($eventId, $cover_image, 0, 'cover'); // Ordre 0 pour l'image de couverture
-            }
-
-            // Traiter les images du diaporama
-            if (!empty($images['name'][0])) {
-                foreach ($images['name'] as $key => $name) {
-                    if (!empty($name)) {
-                        $this->uploadAndInsertImage($eventId, [
-                            'name' => $name,
-                            'tmp_name' => $images['tmp_name'][$key],
-                            'size' => $images['size'][$key],
-                            'type' => $images['type'][$key],
-                            'error' => $images['error'][$key],
-                        ], $key + 1, 'slide'); // Ordre commençant à 1 pour les images du diaporama
-                    }
-                }
-            }
-
-            // Si tout est ok, valider la transaction
-            $this->pdo->commit();
-        } catch (\Exception $e) {
-            // En cas d'erreur, annuler la transaction
-            $this->pdo->rollBack();
-            throw new \Exception("Erreur lors de la création de l'événement : " . $e->getMessage());
-        }
-    }
-
-    private function insertEvent(Event $event, int $fk_id_user, ?string $cover_image_name)
-    {
-        // Validation des données pour l'événement
-        if (!isset($event->getNameEvent(), $event->getNameGame(), $event->getFkIdPlateforme(),
-            $event->getDateHourStart(), $event->getDateHourEnd(), $event->getNombreDeJoueurs(),
-            $event->getDescription())) { // Visibility est gérée différemment
-            throw new \Exception("Vous devez remplir tous les champs de l'événement.");
-        }
-
-        // Déterminer la visibilité
-        $visibility = 'public'; // Valeur par défaut
-        if (isset($event->getVisibility()) && $event->getVisibility() === 'privé') {
-            $visibility = 'privé';
-        }
-
-        // Préparer et exécuter l'insertion dans la table event
-        $query = $this->pdo->prepare("
-            INSERT INTO event (name_event, name_game, date_hour_start, date_hour_end, nombre_de_joueurs, description, visibility, fk_id_plateforme, fk_id_user, cover_image_path)
-            VALUES (:name_event, :name_game, :date_hour_start, :date_hour_end, :nombre_de_joueurs, :description, :visibility, :fk_id_plateforme, :fk_id_user, :cover_image_path)
-        ");
-
-        $query->bindParam(':name_event', $event->getNameEvent(), PDO::PARAM_STR);
-        $query->bindValue(':name_game', $event->getNameGame(), PDO::PARAM_STR);
-        $query->bindValue(':date_hour_start', $event->getDateHourStart()->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $query->bindValue(':date_hour_end', $event->getDateHourEnd()->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-        $query->bindValue(':nombre_de_joueurs', $event->getNombreDeJoueurs(), PDO::PARAM_INT);
-        $query->bindValue(':description', $event->getDescription(), PDO::PARAM_STR);
-        $query->bindParam(':visibility', $visibility, PDO::PARAM_STR);
-        $query->bindValue(':fk_id_plateforme', $event->getFkIdPlateforme(), PDO::PARAM_INT);
-        $query->bindParam(':fk_id_user', $fk_id_user, PDO::PARAM_INT);
-        $query->bindParam(':cover_image_path', $cover_image_name, PDO::PARAM_STR);
-        $query->execute();
-
-        // Récupérer l'ID de l'événement nouvellement inséré
-        $event->setId($this->pdo->lastInsertId());
-    }
-
-    private function uploadAndInsertImage(int $eventId, array $file, int $order, string $type)
-    {
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
-        $maxSize = 2 * 1024 * 1024; // 2 Mo
-
-        $fileName = $file['name'];
-        $fileTmpName = $file['tmp_name'];
-        $fileSize = $file['size'];
-        $fileType = $file['type'];
-        $fileError = $file['error'];
-
-        if ($fileError !== UPLOAD_ERR_OK) {
-            // Gérer l'erreur de téléchargement spécifique
-            error_log("Erreur de téléchargement pour " . $type . ": " . $fileError);
-            return; // Ou throw new Exception selon votre gestion des erreurs
-        }
-
-        if ($fileSize > $maxSize) {
-            error_log("Le fichier " . $fileName . " est trop volumineux.");
-            return;
-        }
-
-        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-        if (!in_array($fileType, $allowedTypes) || !in_array($fileExt, $allowedExtensions)) {
-            error_log("Type ou extension de fichier non autorisé pour " . $fileName);
-            return;
-        }
-
-        $uploadDirectory = 'uploads/';
-        $newFileName = uniqid('', true) . '.' . $fileExt;
-        $destination = $uploadDirectory . $newFileName;
-
-        if (!is_dir($uploadDirectory)) {
-            mkdir($uploadDirectory, 0755, true);
-        }
-
-        if (move_uploaded_file($fileTmpName, $destination)) {
-            $this->insertEventImage($eventId, $destination, $order);
-            if ($type === 'cover') {
-                // Pas besoin de faire autre chose pour la couverture ici, l'info est déjà dans la table event
-            }
-        } else {
-            error_log("Erreur lors du déplacement du fichier " . $fileName);
-        }
-    }
-
-    private function insertEventImage(int $eventId, string $image_path, int $order)
-    {
-        $query = $this->pdo->prepare("
-            INSERT INTO event_image (image_path, image_order, fk_id_event)
-            VALUES (:image_path, :image_order, :fk_id_event)
-        ");
-
-        $query->bindParam(':image_path', $image_path, PDO::PARAM_STR);
-        $query->bindParam(':image_order', $order, PDO::PARAM_INT);
-        $query->bindParam(':fk_id_event', $eventId, PDO::PARAM_INT);
-        $query->execute();
-    }
-}
-
-    */
+*/
 
 }
