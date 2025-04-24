@@ -114,7 +114,7 @@ class EventRepository extends MainRepository
         $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
         $queryEvent->bindValue('nombre_de_joueurs', $event->getNombreDeJoueurs(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':description', htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
-        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->getVisibility()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->getVisibility()->value), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
         
 
         $queryEvent->execute();
