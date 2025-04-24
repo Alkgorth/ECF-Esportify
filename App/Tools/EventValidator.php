@@ -136,8 +136,8 @@ class EventValidator
     //Effectue tout les contrôle sur l'image (type, taille, dimensions)
     public static function secureImage()
     {
-        $destinationCover = "../../Assets/Documentation/Images/Couverture/";
-        $destinationDiapo = "../../Assets/Documentation/Images/Diapo/";
+        $destinationCover = __DIR__ . "../../Assets/Documentation/Images/Couverture/";
+        $destinationDiapo = __DIR__ . "../../Assets/Documentation/Images/Diapo/";
         $uploadedFiles    = [];
         $error            = [];
 
@@ -151,18 +151,16 @@ class EventValidator
                 $clearFileName = filter_var(trim($file), FILTER_SANITIZE_URL);
                 if ($clearFileName !== $file) {
                     $error['cover_image_path'] = "Le nom du fichier contient des caratères non autorisés.";
-
                 }
 
                 $targetDirCover = $destinationCover . uniqid() . '_' . basename($file);
-
                 $allowedTypes = ['image/png', 'image/jpeg'];
-
+                $fileTmpPath = $_FILES['cover_image_path']['tmp_name'];
+                $fileType = mime_content_type($fileTmpPath);
                 $maxSize = 2 * 1024 * 1024;
 
-                if (in_array($_FILES['cover_image_path']['type'], $allowedTypes) && $_FILES['cover_image_path']['size'] <= $maxSize) {
-
-                    if (move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $targetDirCover)) {
+                if (in_array($fileType, $allowedTypes) && $_FILES['cover_image_path']['size'] <= $maxSize) {
+                    if (move_uploaded_file($fileTmpPath, $targetDirCover)) {
                         $uploadedFiles['cover_image_path'] = htmlspecialchars($targetDirCover);
                     } else {
                         $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture.";
@@ -193,14 +191,13 @@ class EventValidator
                         }
 
                         $targetDirDiapo = $destinationDiapo . uniqid() . '_' . basename($file);
-
                         $allowedTypes = ['image/png', 'image/jpeg'];
-
+                        $fileTmpPath = $files['tmp_name'][$key];
+                        $fileType = mime_content_type($fileTmpPath);
                         $maxSize = 2 * 1024 * 1024;
 
-                        if (in_array($files['type'][$key], $allowedTypes) && $files['size'][$key] <= $maxSize) {
-
-                            if (move_uploaded_file($files['tmp_name'][$key], $targetDirDiapo)) {
+                        if (in_array($fileType, $allowedTypes) && $files['size'][$key] <= $maxSize) {
+                            if (move_uploaded_file($fileTmpPath, $targetDirDiapo)) {
                                 $uploadedFiles['image_path'][] = htmlspecialchars($targetDirDiapo);
                             } else {
                                 $error['image_path'][$key] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($file)) . ".";
@@ -223,12 +220,13 @@ class EventValidator
         return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
     }
 
-    /* vérification des caractères dans le nom du fichier, utili aussi pour les input titre, nom de jeu
+    /* vérification des caractères dans le nom du fichier, utilisé aussi pour les input titre, nom de jeu
     if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $gameName)) {
         $errors['game_name'] = 'Le nom n\'est pas valide.';
       }
 
-      !preg_match() signifie que seuls les caractères indiqués sont autorisés, tandis que preg_match() sans ! détecte les caractères interdits
+      !preg_match() signifie que seuls les caractères indiqués sont autorisés,
+      tandis que preg_match() sans ! détecte les caractères interdits
 
 
       public static function validateImage(array $file, string $fieldName): array {

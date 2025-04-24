@@ -6,7 +6,7 @@
 ?>
 
 <main class="container mx-5">
-    <form class="m-5 p-4 text-white" method="POST">
+    <form class="m-5 p-4 text-white" method="POST" enctype="multipart/form-data">
 
     <?php if (empty($error) && isset($_POST['valider'])) {?>
       <div class="alert alert-primary" role="alert">
