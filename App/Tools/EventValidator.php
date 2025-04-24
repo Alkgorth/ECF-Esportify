@@ -26,7 +26,7 @@ class EventValidator
             $error['name_game'] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
         }
 
-        $fkIdPlateforme = $_POST['name_plateforme'];
+        $fkIdPlateforme = $event->getFkIdPlateforme();
 
         if (empty($fkIdPlateforme)) {
             $error['name_plateforme'] = "Veuillez sélectionner une plateforme.";
@@ -154,7 +154,7 @@ class EventValidator
 
                 }
 
-                $targetDir = $destinationCover . uniqid() . '_' . basename($file);
+                $targetDirCover = $destinationCover . uniqid() . '_' . basename($file);
 
                 $allowedTypes = ['image/png', 'image/jpeg'];
 
@@ -162,8 +162,8 @@ class EventValidator
 
                 if (in_array($_FILES['cover_image_path']['type'], $allowedTypes) && $_FILES['cover_image_path']['size'] <= $maxSize) {
 
-                    if (move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $targetDir)) {
-                        $uploadedFiles['cover_image_path'] = htmlspecialchars(basename($file));
+                    if (move_uploaded_file($_FILES['cover_image_path']['tmp_name'], $targetDirCover)) {
+                        $uploadedFiles['cover_image_path'] = htmlspecialchars($targetDirCover);
                     } else {
                         $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture.";
                     }
@@ -192,7 +192,7 @@ class EventValidator
                             continue;
                         }
 
-                        $targetDir = $destinationDiapo . uniqid() . '_' . basename($file);
+                        $targetDirDiapo = $destinationDiapo . uniqid() . '_' . basename($file);
 
                         $allowedTypes = ['image/png', 'image/jpeg'];
 
@@ -200,9 +200,8 @@ class EventValidator
 
                         if (in_array($files['type'][$key], $allowedTypes) && $files['size'][$key] <= $maxSize) {
 
-                            if (move_uploaded_file($files['tmp_name'][$key], $targetDir)) {
-
-                                $uploadedFiles['image_path'][] = htmlspecialchars(basename($file));
+                            if (move_uploaded_file($files['tmp_name'][$key], $targetDirDiapo)) {
+                                $uploadedFiles['image_path'][] = htmlspecialchars($targetDirDiapo);
                             } else {
                                 $error['image_path'][$key] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($file)) . ".";
                             }

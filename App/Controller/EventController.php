@@ -116,6 +116,13 @@ class EventController extends Controller
 
                 $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
+                $uploadResult = EventValidator::secureImage();
+                $uploadedCoverImage = $uploadResult['uploaded']['cover_image_path'] ?? null;
+                $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
+                $uploadErrors = $uploadResult['errors'];
+
+                $error = array_merge($error, $uploadErrors ?? []);
+
                 if (!empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
                 }
@@ -125,9 +132,19 @@ class EventController extends Controller
                 }
 
                 if (empty($error)) {
-                    $eventRepository = new EventRepository();
 
-                    //header('Location: index.php?');
+                    $event->setCoverImagePath($uploadedCoverImage);
+                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+
+                    $eventRepository = new EventRepository();
+                    $eventId = $eventRepository->persistEvent($event, $uploadedDiapoImages);
+
+                    if ($eventId) {
+                        //header('Location: index.php?');
+                        $affichage = "L'évènement à été créé avec succès !";
+                    } else {
+                        $error ['database'] = "Erreur lors de l'enregistrement !";
+                    }
                 }
             }
 
