@@ -3,13 +3,8 @@
 // indique où ce situe le fichier
 namespace App\Repository;
 
-use App\Db\Mysql;
-use App\Entity\Game;
-use App\Entity\User;
 use App\Entity\Token as TableToken;
-use App\Tools\Security;
-use App\Tools\UserValidator;
-use App\Tools\Token;
+use App\Entity\User;
 use DateInterval;
 use DateTime;
 
@@ -31,7 +26,7 @@ class UserRepository extends MainRepository
 
     public function findUserByMail(string $mail)
     {
-        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
         $query = $this->pdo->prepare('SELECT * FROM user WHERE mail = :mail');
@@ -116,10 +111,10 @@ class UserRepository extends MainRepository
 
         $query->execute();
         $newToken = [
-            'creation_date' => date('Y-m-d H:i:s'),
-            'token' => $tokenValue,
+            'creation_date'   => date('Y-m-d H:i:s'),
+            'token'           => $tokenValue,
             'expiration_date' => $expirationDateTime->format('Y-m-d H:i:s'),
-            'fk_id_user' => $idUser
+            'fk_id_user'      => $idUser,
         ];
 
         return TableToken::createAndHydrate($newToken);

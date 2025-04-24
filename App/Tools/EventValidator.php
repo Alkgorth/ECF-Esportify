@@ -26,9 +26,9 @@ class EventValidator
             $error['name_game'] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
         }
 
-        $fkIdPlateforme = $_POST['name_plateforme'];
+        $fkIdPlateforme = $event->getFkIdPlateforme();
 
-        if (empty($fkIdPlateforme)) {
+        if (empty($fkIdPlateforme) && $fkIdPlateforme !== null) {
             $error['name_plateforme'] = "Veuillez sélectionner une plateforme.";
         }
 

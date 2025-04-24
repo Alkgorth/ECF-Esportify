@@ -110,11 +110,11 @@ class EventRepository extends MainRepository
         $queryEvent->bindValue(':name_event', htmlspecialchars($event->getNameEvent()), $this->pdo::PARAM_STR);
         $queryEvent->bindValue(':name_game', htmlspecialchars($event->getNameGame()), $this->pdo::PARAM_STR);
         $queryEvent->bindValue(':name_plateforme', $event->getFkIdPlateforme(), $this->pdo::PARAM_INT);
-        $queryEvent->bindValue(':date_hour_start', $event->getDateHourStart()->format('d-m-Y H:i:s'), $this->pdo::PARAM_STR);
-        $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('d-m-Y H:i:s'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':date_hour_start', $event->getDateHourStart()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
         $queryEvent->bindValue('nombre_de_joueurs', $event->getNombreDeJoueurs(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':description', htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
-        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->$this->visibility()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->getVisibility()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
         
 
         $queryEvent->execute();
@@ -123,16 +123,22 @@ class EventRepository extends MainRepository
 
         if($event->getIdEvent() !== null && !empty ($diapoImage)) {
             $queryImage = $this->pdo->prepare(
+                "UPDATE event_image SET fk_id_event = :fk_id_event,
+                                        image_path = :image_path,
+                                        image_cover = :image_cover
+                                        WHERE id_event = :id"
+            );
+        } else {
+            $queryImage = $this->pdo->prepare(
                 "INSERT INTO event_image (fk_id_event, image_path, image_order)
                 VALUES (:fk_id_event, :image_path, :image_order)"
             );
-            
-            foreach ($diapoImage as $order => $imagePath) {
-                $queryImage->bindValue(':fk_id_event', $eventId, $this->pdo::PARAM_INT);
-                $queryImage->bindValue(':image_path', htmlspecialchars(trim($imagePath)), $this->pdo::PARAM_STR);
-                $queryImage->bindValue(':image_order', $order + 1, $this->pdo::PARAM_INT);
-                $queryImage->execute();
-            }
+        }
+        foreach ($diapoImage as $order => $imagePath) {
+            $queryImage->bindValue(':fk_id_event', $eventId, $this->pdo::PARAM_INT);
+            $queryImage->bindValue(':image_path', htmlspecialchars(trim($imagePath)), $this->pdo::PARAM_STR);
+            $queryImage->bindValue(':image_order', $order + 1, $this->pdo::PARAM_INT);
+            $queryImage->execute();
         }
         
         return $eventId;
