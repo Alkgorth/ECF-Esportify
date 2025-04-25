@@ -6,7 +6,7 @@
 ?>
 
 <main class="container mx-5">
-    <form class="m-5 p-4 text-white" method="POST">
+    <form class="m-5 p-4 text-white" method="POST" enctype="multipart/form-data">
 
     <?php if (empty($error) && isset($_POST['valider'])) {?>
       <div class="alert alert-primary" role="alert">
@@ -53,7 +53,7 @@
 
         <div class="mb-3 text-center">
             <label for="name_plateforme" class="form-label">Plateforme</label>
-            <select name="name_plateforme" id="name_plateforme">
+            <select name="fk_id_plateforme" id="fk_id_plateforme">
                 <option value="">Choisisez une plateforme</option>
                 <?php foreach ($plateformes as $plateforme): ?>
                     <option value="<?php echo $plateforme['id_plateforme'] ?>"><?php echo $plateforme['name'] ?></option>
@@ -88,8 +88,7 @@
         <div class="mb-3 text-center">
             <label for="description" class="form-label">Description</label>
             <textarea type="text" class="form-control
-            <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>" id="description" name="description" rows="5" cols="33" required>
-            </textarea>
+            <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>" id="description" name="description" rows="5" cols="33" required></textarea>
             <?php if (isset($error['description'])) {?>
                 <div class="invalid-feedback"><?php echo $error['description'] ?></div>
             <?php }?>

@@ -111,17 +111,22 @@ class EventController extends Controller
 
             if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
-                $eventErrors = EventValidator::validateEvent($event);
-                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
-
-                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
+                
+                var_dump($_POST);
 
                 $uploadResult = EventValidator::secureImage();
                 $uploadedCoverImage = $uploadResult['uploaded']['cover_image_path'] ?? null;
                 $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
                 $uploadErrors = $uploadResult['errors'];
-
                 $error = array_merge($error, $uploadErrors ?? []);
+
+                if ($uploadedCoverImage) {
+                    $event->setCoverImagePath($uploadedCoverImage);
+                }
+
+                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+                $eventErrors = EventValidator::validateEvent($event);
+                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
                 if (!empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
@@ -133,10 +138,7 @@ class EventController extends Controller
 
                 if (empty($error)) {
 
-                    $event->setCoverImagePath($uploadedCoverImage);
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
-
-                    $eventRepository = new EventRepository();
                     $eventId = $eventRepository->persistEvent($event, $uploadedDiapoImages);
 
                     if ($eventId) {
