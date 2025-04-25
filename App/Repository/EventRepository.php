@@ -86,7 +86,7 @@ class EventRepository extends MainRepository
                 "UPDATE event SET cover_image_path = :cover_image_path,
                                 name_event = :name_event,
                                 name_game = :name_game,
-                                fk_id_plateforme = :name_plateforme,
+                                fk_id_plateforme = :fk_id_plateforme,
                                 date_hour_start = :date_hour_start,
                                 date_hour_end = :date_hour_end,
                                 nombre_de_joueurs = :nombre_de_joueurs,
@@ -105,7 +105,7 @@ class EventRepository extends MainRepository
                                     date_hour_end, nombre_de_joueurs,
                                     description, visibility, fk_id_user, status)
                 VALUES (:cover_image_path, :name_event,
-                        :name_game, :name_plateforme,
+                        :name_game, :fk_id_plateforme,
                         :date_hour_start, :date_hour_end,
                         :nombre_de_joueurs, :description,
                         :visibility, :fk_id_user, :status)"
@@ -116,7 +116,7 @@ class EventRepository extends MainRepository
         $queryEvent->bindValue(':cover_image_path', htmlspecialchars(trim($event->getCoverImagePath())), $this->pdo::PARAM_STR);
         $queryEvent->bindValue(':name_event', htmlspecialchars($event->getNameEvent()), $this->pdo::PARAM_STR);
         $queryEvent->bindValue(':name_game', htmlspecialchars($event->getNameGame()), $this->pdo::PARAM_STR);
-        $queryEvent->bindValue(':name_plateforme', $event->getFkIdPlateforme(), $this->pdo::PARAM_INT);
+        $queryEvent->bindValue(':fk_id_plateforme', $event->getFkIdPlateforme(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':date_hour_start', $event->getDateHourStart()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
         $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
         $queryEvent->bindValue('nombre_de_joueurs', $event->getNombreDeJoueurs(), $this->pdo::PARAM_INT);

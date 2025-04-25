@@ -111,6 +111,8 @@ class EventController extends Controller
 
             if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
+                
+                var_dump($_POST);
 
                 $uploadResult = EventValidator::secureImage();
                 $uploadedCoverImage = $uploadResult['uploaded']['cover_image_path'] ?? null;
@@ -118,17 +120,13 @@ class EventController extends Controller
                 $uploadErrors = $uploadResult['errors'];
                 $error = array_merge($error, $uploadErrors ?? []);
 
-                var_dump($uploadedCoverImage);
-                
                 if ($uploadedCoverImage) {
                     $event->setCoverImagePath($uploadedCoverImage);
                 }
 
-                $eventErrors = EventValidator::validateEvent($event);
                 $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+                $eventErrors = EventValidator::validateEvent($event);
                 $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
-
-               
 
                 if (!empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
