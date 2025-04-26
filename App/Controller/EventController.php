@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Status;
+use App\Entity\Visibility;
 use App\Entity\EventImage;
 use App\Repository\EventRepository;
 use App\Tools\EventValidator;
@@ -111,10 +113,13 @@ class EventController extends Controller
 
             if (isset($_POST['valider'])) {
                 $event->hydrate($_POST);
+                $event->setStatus(Status::EnAttente);
                 
-                var_dump($_POST);
+                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+                $eventErrors = EventValidator::validateEvent($event);
+                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
-                $uploadResult = EventValidator::secureImage();
+                $uploadResult = EventValidator::secureImage($_FILES);
                 $uploadedCoverImage = $uploadResult['uploaded']['cover_image_path'] ?? null;
                 $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
                 $uploadErrors = $uploadResult['errors'];
@@ -123,10 +128,6 @@ class EventController extends Controller
                 if ($uploadedCoverImage) {
                     $event->setCoverImagePath($uploadedCoverImage);
                 }
-
-                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
-                $eventErrors = EventValidator::validateEvent($event);
-                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
                 if (!empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
@@ -139,6 +140,8 @@ class EventController extends Controller
                 if (empty($error)) {
 
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+
+                    var_dump($uploadedDiapoImages);
                     $eventId = $eventRepository->persistEvent($event, $uploadedDiapoImages);
 
                     if ($eventId) {
