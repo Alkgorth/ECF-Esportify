@@ -31,7 +31,7 @@
 
         <div class="mb-3 text-center">
         <label for="image_path">Choisissez les images de diaporama</label>
-        <input type="file" id="image_path" name="image_path" accept="image/png, image/jpeg" multiple/>
+        <input type="file" id="image_path" name="image_path[]" accept="image/png, image/jpeg" multiple/>
         </div>
 
         <div class="mb-3 text-center">
