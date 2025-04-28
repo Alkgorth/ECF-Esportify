@@ -33,7 +33,7 @@ class Event extends MainEntity
     protected Status $status;
     protected int $fk_id_user;
     protected ?int $fk_id_plateforme = null;
-    protected string $cover_image_path;
+    protected string $cover_image_path = '';
 
     /**
      * Get the value of id_event
