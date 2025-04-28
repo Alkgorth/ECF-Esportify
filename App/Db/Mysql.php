@@ -50,7 +50,8 @@ class Mysql
     {
 
         if (is_null($this->pdo)) {
-            $this->pdo = new \PDO('mysql:dbname=' . $this->db_name . ';charset=utf8;host=' . $this->db_host . ':' . $this->db_port, $this->db_user, $this->db_password);
+            $this->pdo = new \PDO('mysql:dbname=' . $this->db_name . ';charset=utf8;host=' . $this->db_host . ':' . $this->db_port, $this->db_user, $this->db_password,
+        [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
         }
         return $this->pdo;
     }

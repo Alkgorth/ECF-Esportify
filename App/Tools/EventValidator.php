@@ -154,8 +154,6 @@ class EventValidator
         $allowedTypes     = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
         $maxSize          = 2 * 1024 * 1024;
 
-        var_dump($_FILES['image_path']);
-
         if (! is_dir($destinationCover)) {
             if (! mkdir($destinationCover)) {
                 error_log("Erreur lors de la création du répertoire" . $destinationCover);
@@ -213,7 +211,7 @@ class EventValidator
                 }
 
                 foreach ($files['name'] as $key => $name) {
-                    $fileTmpPath = $file['tmp_name'][$key];
+                    $fileTmpPath = $files['tmp_name'][$key];
                     $fileType    = mime_content_type($fileTmpPath);
                     $fileSize    = $files['size'][$key];
                     $fileError   = $files['error'][$key];

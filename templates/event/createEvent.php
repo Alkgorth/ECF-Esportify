@@ -15,12 +15,20 @@
     <?php }?>
 
     <?php if (!empty($error)) {
-        foreach ($error as $errors) {?>
-      <div class="alert alert-danger" role="alert">
-        <?php echo $errors; ?>
-      </div>
-    <?php }
-    }?>
+            foreach ($error as $fieldName => $errors) {
+                if (is_array($errors)) {
+                    foreach ($errors as $errorMessage) {?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $errorMessage; ?>
+                        </div>
+                    <?php }
+                } else { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $errors; ?>
+                    </div>
+                <?php }
+            }
+        }?>
 
         <h1 class="text-center pb-4">Créer un évènement</h1>
 
@@ -31,7 +39,7 @@
 
         <div class="mb-3 text-center">
         <label for="image_path">Choisissez les images de diaporama</label>
-        <input type="file" id="image_path" name="image_path[]" accept="image/png, image/jpeg" multiple/>
+        <input type="file" id="image_path" name="image_path[]" accept="image/png, image/jpeg, image/jpg, image/webp" multiple/>
         </div>
 
         <div class="mb-3 text-center">

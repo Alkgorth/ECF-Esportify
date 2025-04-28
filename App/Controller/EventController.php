@@ -115,10 +115,6 @@ class EventController extends Controller
                 $event->hydrate($_POST);
                 $event->setStatus(Status::EnAttente);
                 
-                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
-                $eventErrors = EventValidator::validateEvent($event);
-                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
-
                 $uploadResult = EventValidator::secureImage($_FILES);
                 $uploadedCoverImage = $uploadResult['uploaded']['cover_image_path'] ?? null;
                 $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
@@ -128,6 +124,11 @@ class EventController extends Controller
                 if ($uploadedCoverImage) {
                     $event->setCoverImagePath($uploadedCoverImage);
                 }
+
+                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+
+                $eventErrors = EventValidator::validateEvent($event);
+                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
                 if (!empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
@@ -139,9 +140,8 @@ class EventController extends Controller
 
                 if (empty($error)) {
 
-                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connection
 
-                    var_dump($uploadedDiapoImages);
                     $eventId = $eventRepository->persistEvent($event, $uploadedDiapoImages);
 
                     if ($eventId) {
