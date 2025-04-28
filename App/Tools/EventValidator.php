@@ -167,6 +167,8 @@ class EventValidator
             }
         }
 
+        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $gameName = $_POST['name_game'];
@@ -203,11 +205,13 @@ class EventValidator
 
                 $files                       = $filesData['image_path'];
                 $uploadedFiles['image_path'] = [];
-                $error['image_path']         = [];
+                $diapoErrors         = [];
+
+                var_dump("Fichier EventValidator pour secureImage", $error);
 
                 //if (count($files['name]) > $maxDiapoImages)
                 if (is_array($filesData['image_path']['name']) && count($filesData['image_path']['name']) > $maxDiapoImages) {
-                    $error['image_path'][] = "Maximum d'image pour le diaporama dépassé, le nombre d'images autorisées est de " . $maxDiapoImages . ".";
+                    $diapoErrors[] = "Maximum d'image pour le diaporama dépassé, le nombre d'images autorisées est de " . $maxDiapoImages . ".";
                 }
 
                 foreach ($files['name'] as $key => $name) {
@@ -227,19 +231,27 @@ class EventValidator
                             if (move_uploaded_file($fileTmpPath, $targetDirDiapo)) {
                                 $uploadedFiles['image_path'][] = htmlspecialchars($targetDirDiapo);
                             } else {
-                                $error['image_path'][$key] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($name)) . ".";
+                                $diapoErrors[$key] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($name)) . ".";
                             }
                         } else {
-                            $error['image_path'][$key] = "Type ou taille de fichier non valide pour " . htmlspecialchars(basename($name)) . ".";
+                            $diapoErrors[$key] = "Type ou taille de fichier non valide pour " . htmlspecialchars(basename($name)) . ".";
                         }
+                    } elseif ($fileError !== UPLOAD_ERR_NO_FILE) {
+                        $diapoErrors[$key] = "Erreur lors du téléchargement de ". htmlspecialchars(basename($name)) . "(code : ".$fileError.").";
                     }
                 }
+
+                if (!empty($diapoErrors)) {
+                    $error['image_path'] = $diapoErrors;
+                }
+
             } elseif (isset($filesData['image_path']) && $filesData['image_path']['error'] === UPLOAD_ERR_OK) {
                 $name       = $filesData['image_path']['name'];
                 $tmp_name   = $filesData['image_path']['tmp_name'];
                 $type       = $filesData['image_path']['type'];
                 $size       = $filesData['image_path']['size'];
                 $error_code = $filesData['image_path']['error'];
+                $diapoErrors = [];
 
                 if ($error_code === UPLOAD_ERR_OK) {
                     $extension = strtolower(pathinfo($name, PATHINFO_EXTENSION));
@@ -250,11 +262,16 @@ class EventValidator
                         if (move_uploaded_file($tmp_name, $targetDirDiapo)) {
                             $uploadedFiles['image_path'][] = htmlspecialchars($targetDirDiapo);
                         } else {
-                            $error['image_path'][] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($name)) . ".";
+                            $diapoErrors[] = "Erreur lors du téléchargement de " . htmlspecialchars(basename($name)) . ".";
                         }
                     } else {
-                        $error['image_path'][] = "Type ou taille de fichier non valide pour " . htmlspecialchars(basename($name)) . ".";
+                        $diapoErrors[] = "Type ou taille de fichier non valide pour " . htmlspecialchars(basename($name)) . ".";
                     }
+                }  else if ($error_code !== UPLOAD_ERR_NO_FILE) {
+                    $diapoErrors[] = "Erreur lors du téléchargement de l'image (code: " . $error_code . ").";
+                }
+                if (!empty($diapoErrors)) {
+                    $error['image_path'] = $diapoErrors;
                 }
             }
         }
