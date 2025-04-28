@@ -121,14 +121,21 @@ class EventController extends Controller
                 $uploadErrors = $uploadResult['errors'];
                 $error = array_merge($error, $uploadErrors ?? []);
 
+                var_dump("Sortie de secureImage :", $error); //erreur contenue du tableau error avec image_path vide
                 if ($uploadedCoverImage) {
                     $event->setCoverImagePath($uploadedCoverImage);
                 }
 
                 $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
 
+                var_dump("Sortie de isFileUploaded :", $error); //erreur contenue du tableau error avec image_path vide
+                var_dump("Sortie de isFileUploaded image :", $imageErrors);
+
                 $eventErrors = EventValidator::validateEvent($event);
                 $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
+
+                var_dump("Sortie de validateEvent :", $error); //erreur contenue du tableau error avec image_path vide
+                var_dump("Sortie de validateEvent event :", $eventErrors);
 
                 if (!empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
@@ -139,7 +146,9 @@ class EventController extends Controller
                 }
 
                 if (empty($error)) {
-
+                    
+                    var_dump("Tableau \$error avant persistance :",$error);
+                    
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connection
 
                     $eventId = $eventRepository->persistEvent($event, $uploadedDiapoImages);
@@ -150,6 +159,8 @@ class EventController extends Controller
                     } else {
                         $error ['database'] = "Erreur lors de l'enregistrement !";
                     }
+                } else {
+                    var_dump("Tableau \$error n'est pas vide :", $error);
                 }
             }
 
