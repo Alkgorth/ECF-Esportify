@@ -11,6 +11,7 @@ class EventRepository extends MainRepository
     public function homeDisplay()
     {
         $query = $this->pdo->prepare('SELECT
+            e.id_event AS id,
             e.name_event AS name,
             e.name_game AS game_name,
             e.date_hour_start AS start,
