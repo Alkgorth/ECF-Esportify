@@ -95,21 +95,6 @@ class EventRepository extends MainRepository
             );
             $queryEvent->bindValue(':id', $event->getIdEvent(), $this->pdo::PARAM_INT);
             $queryEvent->bindValue(':status', $event->getStatus()->value, $this->pdo::PARAM_STR);
-            var_dump("Requête UPDATE:", $queryEvent->queryString);
-            var_dump("Paramètres UPDATE:", [
-                ':id'                => $event->getIdEvent(),
-                ':status'            => $event->getStatus()->value,
-                ':cover_image_path'  => htmlspecialchars(trim($event->getCoverImagePath())),
-                ':name_event'        => htmlspecialchars($event->getNameEvent()),
-                ':name_game'         => htmlspecialchars($event->getNameGame()),
-                ':fk_id_plateforme'  => $event->getFkIdPlateforme(),
-                ':date_hour_start'   => $event->getDateHourStart()->format('Y-m-d H:i:s'),
-                ':date_hour_end'     => $event->getDateHourEnd()->format('Y-m-d H:i:s'),
-                ':nombre_de_joueurs' => $event->getNombreDeJoueurs(),
-                ':description'       => htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'),
-                ':visibility'        => htmlspecialchars(trim($event->getVisibility()->value), ENT_QUOTES, 'UTF-8'),
-            ]);
-
         } else {
             $queryEvent = $this->pdo->prepare(
                 "INSERT INTO event (cover_image_path, name_event, name_game,
@@ -124,20 +109,6 @@ class EventRepository extends MainRepository
             );
             $queryEvent->bindValue(':status', $event->getStatus()->value, $this->pdo::PARAM_STR);
             $queryEvent->bindValue('fk_id_user', $event->getFkIdUser(), $this->pdo::PARAM_INT);
-            var_dump("Requête INSERT:", $queryEvent->queryString);
-            var_dump("Paramètres INSERT:", [
-                ':cover_image_path'  => htmlspecialchars(trim($event->getCoverImagePath())),
-                ':name_event'        => htmlspecialchars($event->getNameEvent()),
-                ':name_game'         => htmlspecialchars($event->getNameGame()),
-                ':fk_id_plateforme'  => $event->getFkIdPlateforme(),
-                ':date_hour_start'   => $event->getDateHourStart()->format('Y-m-d H:i:s'),
-                ':date_hour_end'     => $event->getDateHourEnd()->format('Y-m-d H:i:s'),
-                ':nombre_de_joueurs' => $event->getNombreDeJoueurs(),
-                ':description'       => htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'),
-                ':visibility'        => htmlspecialchars(trim($event->getVisibility()->value), ENT_QUOTES, 'UTF-8'),
-                ':fk_id_user'        => $event->getFkIdUser(),
-                ':status'            => $event->getStatus()->value,
-            ]);
         }
         $queryEvent->bindValue(':cover_image_path', htmlspecialchars(trim($event->getCoverImagePath())), $this->pdo::PARAM_STR);
         $queryEvent->bindValue(':name_event', htmlspecialchars($event->getNameEvent()), $this->pdo::PARAM_STR);
@@ -150,11 +121,8 @@ class EventRepository extends MainRepository
         $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->getVisibility()->value), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
 
         $executeResult = $queryEvent->execute();
-        var_dump("Résultat de l'exécution de la requête:", $executeResult);
-        var_dump("Erreurs PDO:", $queryEvent->errorInfo());
 
         $eventId = $this->pdo->lastInsertId();
-        var_dump("ID de l'événement inséré:", $eventId);
 
         if (! empty($uploadedDiapoImages)) {
             $queryImage = $this->pdo->prepare(
