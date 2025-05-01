@@ -100,7 +100,8 @@ class EventController extends Controller
     {
         try {
             $error = [];
-            $affichage = "Votre proposition d'évènement à bien été envoyé";
+            $affichage = "Votre proposition d'évènement à bien été envoyé.";
+            $majEvent = "Votre évènement à été mis à jour.";
 
             // if (! isset($_SESSION['user'])) {
             //     header('Location: index.php?controller=connexions&action=connexion');
@@ -111,7 +112,7 @@ class EventController extends Controller
 
             $event = new Event();
 
-            if (isset($_POST['valider'])) {
+            if (isset($_POST['valider']) || isset($_POST['modifier'])) {
                 $event->hydrate($_POST);
                 $event->setStatus(Status::EnAttente);
                 
@@ -138,15 +139,30 @@ class EventController extends Controller
                     $error = array_merge($error, $imageErrors);
                 }
 
-                if (empty($error)) {
+                if (empty($error) && isset($_POST['valider'])) {
                     
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connection
 
-                    $eventId = $eventRepository->persistEvent($event, $uploadedDiapoImages);
+                    $eventId = $eventRepository->insertEvent($event);
+                    $eventId = $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
+                    
+                    if ($eventId) {
+                        $affichage = "L'évènement à été créé avec succès !";
+                    } else {
+                        $error ['database'] = "Erreur lors de l'enregistrement !";
+                    }
+                }
+
+                if (empty($error) && isset($_POST['modifier'])) {
+
+                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+
+                    $eventId = $eventRepository->updateEvent($event);
+                    $eventId = $eventRepository->updateEventImage($eventId, $uploadedDiapoImages);
 
                     if ($eventId) {
-                        //header('Location: index.php?');
                         $affichage = "L'évènement à été créé avec succès !";
+                        //header('Location: index.php?');
                     } else {
                         $error ['database'] = "Erreur lors de l'enregistrement !";
                     }
@@ -158,6 +174,7 @@ class EventController extends Controller
             } else {
                 $this->render('event/createEvent', [
                     'affichage' => $affichage,
+                    'majEvent' => $majEvent,
                     'plateformes' => $plateformes,
                     'error'       => $error,
                 ]);
