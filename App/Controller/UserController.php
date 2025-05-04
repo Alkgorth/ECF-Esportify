@@ -47,7 +47,7 @@ class UserController extends Controller
     {
         $eventRepository = new EventRepository();
         $event = $eventRepository->homeDisplay();
-
+             
         $this->render('pages/home', [
             'events' => $event
         ]);

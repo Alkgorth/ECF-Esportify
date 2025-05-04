@@ -109,7 +109,6 @@ class EventController extends Controller
 
             $eventRepository = new EventRepository();
             $plateformes     = $eventRepository->getAllPlateformes();
-
             $event = new Event();
 
             if (isset($_POST['valider']) || isset($_POST['modifier'])) {
@@ -127,7 +126,6 @@ class EventController extends Controller
                 }
 
                 $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
-
                 $eventErrors = EventValidator::validateEvent($event);
                 $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
@@ -141,13 +139,14 @@ class EventController extends Controller
 
                 if (empty($error) && isset($_POST['valider'])) {
                     
-                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connection
+                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connexion
 
                     $eventId = $eventRepository->insertEvent($event);
-                    $eventId = $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
                     
                     if ($eventId) {
+                        $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
                         $affichage = "L'évènement à été créé avec succès !";
+                        //header('Location: index.php?');
                     } else {
                         $error ['database'] = "Erreur lors de l'enregistrement !";
                     }
@@ -157,14 +156,14 @@ class EventController extends Controller
 
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
 
-                    $eventId = $eventRepository->updateEvent($event);
-                    $eventId = $eventRepository->updateEventImage($eventId, $uploadedDiapoImages);
-
-                    if ($eventId) {
-                        $affichage = "L'évènement à été créé avec succès !";
+                    $updateEvent = $eventRepository->updateEvent($event);
+                    
+                    if ($updateEvent) {
+                        $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
+                        $affichage = $majEvent;
                         //header('Location: index.php?');
                     } else {
-                        $error ['database'] = "Erreur lors de l'enregistrement !";
+                        $error ['database'] = "Erreur lors de la mise à jour !";
                     }
                 }
             }
