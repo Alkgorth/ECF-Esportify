@@ -167,8 +167,6 @@ class EventValidator
             }
         }
 
-        
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $gameName = $_POST['name_game'];
@@ -206,8 +204,6 @@ class EventValidator
                 $files                       = $filesData['image_path'];
                 $uploadedFiles['image_path'] = [];
                 $diapoErrors         = [];
-
-                var_dump("Fichier EventValidator pour secureImage", $error);
 
                 //if (count($files['name]) > $maxDiapoImages)
                 if (is_array($filesData['image_path']['name']) && count($filesData['image_path']['name']) > $maxDiapoImages) {

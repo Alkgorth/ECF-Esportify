@@ -18,6 +18,7 @@ class EventRepository extends MainRepository
             e.date_hour_end AS end,
             e.nombre_de_joueurs AS joueurs,
             e.description AS description,
+            e.cover_image_path AS cover,
             pl.name AS plateforme_name,
             u.pseudo AS organisateur
             FROM event AS e
