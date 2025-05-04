@@ -2,10 +2,20 @@
 namespace App\Tools;
 
 use DateTimeImmutable;
+use App\Tools\ImageValidator;
 
 class EventValidator
 {
-    //Vérifie si les champs du formaulaire de création d'évènements son correctement renseignés.
+    //Constantes pour les limites de validation
+    private const MAX_TITLE_LENGHT = 100;
+    private const MAX_GAME_NAME_LENGHT = 100;
+    private const MIN_DESCRIPTION_LENGHT = 10;
+    private const MAX_DESCRIPTION_LENGHT = 500;
+    private const MIN_PLAYERS = 10;
+    private const MAX_DIAPO_IMAGES =5;
+
+
+    //Vérifie si les champs du formulaire de création d'évènements son correctement renseignés.
     public static function validateEvent($event): array
     {
         $error = [];
@@ -16,13 +26,13 @@ class EventValidator
 
         if (empty($event->getNameEvent())) {
             $error['name_event'] = "Veuillez renseigner un titre pour l'évènement !";
-        } elseif (strlen($event->getNameEvent()) > 100) {
+        } elseif (strlen($event->getNameEvent()) > self::MAX_TITLE_LENGHT) {
             $error['name_event'] = "Le titre est trop long, taille maximum autorisé 100 caractères.";
         }
 
         if (empty($event->getNameGame())) {
             $error['name_game'] = "Veuillez renseigner titre de jeux";
-        } elseif (strlen($event->getNameGame()) > 100) {
+        } elseif (strlen($event->getNameGame()) > self::MAX_GAME_NAME_LENGHT) {
             $error['name_game'] = "Le nom du jeu est trop long, taille maximum autorisé 100 caractères.";
         }
 
@@ -58,7 +68,7 @@ class EventValidator
 
         if (empty($event->getNombreDeJoueurs()) || ! is_numeric($event->getNombreDeJoueurs())) {
             $error['nombre_de_joueurs'] = "Veuillez renseigner un nombre de joueurs";
-        } elseif (intval($event->getNombreDeJoueurs()) < 10) {
+        } elseif (intval($event->getNombreDeJoueurs()) < self::MIN_PLAYERS) {
             $error['nombre_de_joueurs'] = "Le nombre de participant doit être au moins de 10 joueurs";
         }
 
@@ -68,10 +78,10 @@ class EventValidator
             $description       = EventValidator::secureInput($event->getDescription());
             $descriptionLenght = mb_strlen($description);
 
-            if ($descriptionLenght < 10) {
-                $error['description'] = "La description doit comporter au moins 10 caractères.";
-            } elseif ($descriptionLenght > 500) {
-                $error['description'] = "La description ne doit pas dépasser 500 caractères.";
+            if ($descriptionLenght < self::MIN_DESCRIPTION_LENGHT) {
+                $error['description'] = "La description doit comporter au moins" . self::MIN_DESCRIPTION_LENGHT . "caractères.";
+            } elseif ($descriptionLenght > self::MAX_DESCRIPTION_LENGHT) {
+                $error['description'] = "La description ne doit pas dépasser" . self::MAX_DESCRIPTION_LENGHT . "caractères.";
             }
 
             if (! preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $description)) {
@@ -150,9 +160,6 @@ class EventValidator
         $projectRoot      = dirname(__DIR__, 2);
         $destinationCover = $projectRoot . "/Assets/Documentation/Images/Couverture/";
         $destinationDiapo = $projectRoot . "/Assets/Documentation/Images/Diapo/";
-        $maxDiapoImages   = 5;
-        $allowedTypes     = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
-        $maxSize          = 2 * 1024 * 1024;
 
         if (! is_dir($destinationCover)) {
             if (! mkdir($destinationCover)) {
@@ -176,6 +183,17 @@ class EventValidator
             //Traitement de l'image de couverture
             if (isset($_FILES['cover_image_path']) && $filesData['cover_image_path']['error'] === UPLOAD_ERR_OK) {
 
+                $uploadResult = ImageValidator::processImage($_FILES['cover_image_path'], $destinationCover, $baseName, 'Couverture_original', 1200);
+                if ($uploadResult ['error']) {
+                    $error['cover_image_path'] = $uploadResult['error'];
+                } elseif ($uploadResult['path']) {
+                    $uploadedFiles['cover_image_path'] = htmlspecialchars($uploadResult['path']);
+                }
+            } elseif (isset($_FILES['cover_image_path']) && $_FILES['cover_image_path']['error'] !== UPLOAD_ERR_NO_FILE) {
+                $error['cover_image_path'] = ImageValidator::errorMessage($_FILES['cover_image_path']['error'], htmlspecialchars(basename($_FILES['cover_image_path']['name'])));
+            }
+
+        /*
                 $file        = $filesData['cover_image_path']['name'];
                 $extension   = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 $fileTmpPath = $filesData['cover_image_path']['tmp_name'];
@@ -197,16 +215,60 @@ class EventValidator
             } elseif (isset($filesData['cover_images_path']) && $filesData['cover_image_path']['error'] !== UPLOAD_ERR_NO_FILE) {
                 $error['cover_image_path'] = "Erreur lors du téléchargement de l'image de couverture(code: " . $filesData['cover_image_path']['error'] . ")";
             }
+        */
 
             //Traitement des images de diaporama
             if (isset($filesData['image_path']) && is_array($filesData['image_path']['error'])) {
 
-                $files                       = $filesData['image_path'];
+                $files = $_FILES['image_path'];
                 $uploadedFiles['image_path'] = [];
-                $diapoErrors         = [];
+                $diapoErrors = [];
+                $uploadedDiapoCount = 0;
 
-                //if (count($files['name]) > $maxDiapoImages)
-                if (is_array($filesData['image_path']['name']) && count($filesData['image_path']['name']) > $maxDiapoImages) {
+                if (is_array($files['name'])) {
+                    if (count($files['name']) > self::MAX_DIAPO_IMAGES) {
+                        $error['image_path'] = "Maximum d'image pour le diaporama dépassé, le nombre d'images autorisées est de " . self::MAX_DIAPO_IMAGES . ".";
+                    } else {
+                        foreach ($files['name'] as $key => $name) {
+                            if (!empty($name) && $uploadedDiapoCount < self::MAX_DIAPO_IMAGES) {
+                                $fileData = [
+                                    'name' => $name,
+                                    'type' => $files['type'][$key],
+                                    'tmp_name' => $files['tmp_name'][$key],
+                                    'error' => $files['error'][$key],
+                                    'size' => $files['size'][$key],
+                                ];
+
+                                $uploadResult = ImageValidator::processImage($fileData, $destinationDiapo, $baseName, 'Diapo_' . ($uploadedDiapoCount + 1), 800);
+                                if ($uploadResult['error']) {
+                                    $diapoErrors[] = "Erreur lors du traitement de " . htmlspecialchars(basename($name)). ": " . $uploadResult['error'];
+                                } elseif ($uploadResult['path']) {
+                                    $uploadedFiles['image_path'][] = htmlspecialchars($uploadResult['path']);
+                                    $uploadedDiapoCount++;
+                                } elseif ($fileData['error'] !== UPLOAD_ERR_NO_FILE) {
+                                    $diapoErrors[] = ImageValidator::errorMessage($fileData['error'], htmlspecialchars(basename($name)));
+                                }
+                            }
+                        }
+
+                        if (!empty($diapoErrors)) {
+                            $error['image_path'] = $diapoErrors;
+                        } elseif (empty(array_filter($files['name']))) {
+                            $error['image_path'] = "Veuillez sélectionner au moins une image pour le diaporama.";
+                        }
+                    }
+                } elseif (!empty($files['name'])) {
+                    $uploadResult = ImageValidator::processImage($_FILES['image_path'], $destinationDiapo, $baseName, 'Diapo_1', 800);
+                    if ($uploadResult['error']) {
+                        $error['image_path'] = [$uploadResult['error']];
+                    } elseif ($uploadResult['path']) {
+                        $uploadedFiles['image_path'][] = htmlspecialchars($uploadResult['path']);
+                    } elseif($_FILES['image_path']['error'] !== UPLOAD_ERR_NO_FILE) {
+                        $error['image_path'] = [ImageValidator::errorMessage($_FILES['image_path']['error'], htmlspecialchars(basename($_FILES['image_path']['name'])))];
+                    }
+                }
+                
+                /*if (is_array($filesData['image_path']['name']) && count($filesData['image_path']['name']) > $maxDiapoImages) {
                     $diapoErrors[] = "Maximum d'image pour le diaporama dépassé, le nombre d'images autorisées est de " . $maxDiapoImages . ".";
                 }
 
@@ -241,6 +303,7 @@ class EventValidator
                     $error['image_path'] = $diapoErrors;
                 }
 
+                //Traitement pour le cas où une seule image est sélectionnée pour le diaporama
             } elseif (isset($filesData['image_path']) && $filesData['image_path']['error'] === UPLOAD_ERR_OK) {
                 $name       = $filesData['image_path']['name'];
                 $tmp_name   = $filesData['image_path']['tmp_name'];
@@ -269,6 +332,7 @@ class EventValidator
                 if (!empty($diapoErrors)) {
                     $error['image_path'] = $diapoErrors;
                 }
+            */
             }
         }
         return ['uploaded' => $uploadedFiles, 'errors' => $error];
@@ -280,35 +344,9 @@ class EventValidator
         return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
     }
 
-    /* vérification des caractères dans le nom du fichier, utilisé aussi pour les input titre, nom de jeu
-    if (!preg_match('/^[a-zA-ZÀ-ÿœŒæÆ0-9\-\s\'\’\&\!\?\.\(\)\[\]:]{3,}$/', $gameName)) {
-        $errors['game_name'] = 'Le nom n\'est pas valide.';
-      }
-
-      !preg_match() signifie que seuls les caractères indiqués sont autorisés,
-      tandis que preg_match() sans ! détecte les caractères interdits
-
-
+    /*
       public static function validateImage(array $file, string $fieldName): array {
     $errors = [];
-
-    // Vérifier s'il y a une erreur d'upload
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        $errors[] = "Une erreur est survenue lors du téléchargement de l'image ($fieldName).";
-    }
-
-    // Vérifier le type de fichier
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    $fileType = mime_content_type($file['tmp_name']);
-    if (!in_array($fileType, $allowedTypes)) {
-        $errors[] = "Le fichier $fieldName doit être au format JPEG, PNG, GIF ou WEBP.";
-    }
-
-    // Vérifier la taille (max 5 Mo)
-    $maxSize = 5 * 1024 * 1024;
-    if ($file['size'] > $maxSize) {
-        $errors[] = "L'image $fieldName ne doit pas dépasser 5 Mo.";
-    }
 
     // Vérifier les dimensions de l'image
     list($width, $height) = getimagesize($file['tmp_name']);
@@ -330,6 +368,5 @@ class EventValidator
 
     return $errors;
 }
-
-      */
+*/
 }
