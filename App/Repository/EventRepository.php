@@ -34,6 +34,38 @@ class EventRepository extends MainRepository
         return $event;
     }
 
+    //Récupération d'un évènement en base de données par son id
+    public function findEventById(int $id)
+    {
+        $query = $this->pdo->prepare('SELECT
+            e.id_event AS id,
+            e.name_event AS name,
+            e.name_game AS game_name,
+            e.date_hour_start AS start,
+            e.date_hour_end AS end,
+            e.nombre_de_joueurs AS joueurs,
+            e.description AS description,
+            e.cover_image_path AS cover,
+            e.visibility AS visibility,
+            e.status AS status,
+            pl.name AS plateforme_name,
+            u.pseudo AS organisateur,
+            GROUP_CONCAT(DISTINCT ei.image_path) AS diaporama             
+            FROM event AS e
+            INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
+            INNER JOIN user u ON e.fk_id_user = u.id_user
+            INNER JOIN event_image ei ON ei.fk_id_event = e.id_event
+            WHERE e.id_event = :id
+        ');
+
+        $query->bindParam(':id', $id, $this->pdo::PARAM_INT);
+        $query->execute();
+
+        $eventDetail = $query->fetch($this->pdo::FETCH_ASSOC);
+
+        return $eventDetail;
+    }
+
     //Affichage des informations global pour un évènement
     public function findGlobal(int $id)
     {

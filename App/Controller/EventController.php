@@ -6,6 +6,7 @@ use App\Entity\Status;
 use App\Entity\Visibility;
 use App\Entity\EventImage;
 use App\Repository\EventRepository;
+use App\Repository\ImagesRepository;
 use App\Tools\EventValidator;
 
 class EventController extends Controller
@@ -50,36 +51,36 @@ class EventController extends Controller
         }
     }
 
-    /*protected function event()
-    {
-        
+    protected function event()
+    {        
         try {
+
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
 
-                
                 // Charger le jeu par un appel au repository
                 $eventRepository = new EventRepository();
-                $eventGlobal = $eventRepository->findGlobal($id); 
+                $eventDetail = $eventRepository->findEventById($id); 
 
-                $this->render('games/jeuxDetail', [
-                    'gamesDetails' => $eventGlobal
+                $this->render('event/event', [
+                    'eventDetail' => $eventDetail
 
                 ]);
             } else {
                 throw new \Exception("L'id est manquant en paramètre");
             }
+
         } catch (\Exception $e) {
             $this->render('errors/default', [
                 'error' => $e->getMessage()
             ]);
         }
-    }*/
+    }
 
-    protected function event()
+    /*protected function event()
     {
         $this->render('event/event', []);
-    }
+    }*/
 
     protected function eventGamer()
     {
