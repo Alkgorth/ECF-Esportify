@@ -25,9 +25,6 @@ class UserController extends Controller
                     case 'creationCompte':
                         $this->creationCompte();
                         break;
-                    case 'panier':
-                        $this->panier();
-                        break;
                     default:
                         throw new \Exception("Cette action n'existe pas : " . $_GET['action']);
                         break;
@@ -86,10 +83,5 @@ class UserController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-    }
-
-    protected function panier()
-    {
-        $this->render('pages/panier', []);
     }
 }

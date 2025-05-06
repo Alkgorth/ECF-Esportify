@@ -6,6 +6,7 @@ class ImageValidator {
     private const MAX_IMAGE_SIZE = 2000000;
     private const ALLOWED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
 
+    //Upload et valide un fichier image
     private static function uploadedFile(array $fileData, string $destinationDir, string $baseName, string $suffix): array
     {
         $error = null;
@@ -22,14 +23,15 @@ class ImageValidator {
             } elseif (!move_uploaded_file($fileData['tmp_name'], $targetPath)) {
                 $error = "Erreur lors du téléchargement de " . htmlspecialchars(basename($fileData['name'])). ".";
             } else {
-                $path = $targetPath;
+                $nameOfFile = $newFileName;
             }
         } elseif ($fileData['error'] !== UPLOAD_ERR_NO_FILE) {
             $error = self::errorMessage($fileData['error'], htmlspecialchars(basename($fileData['name'])));
         }
-        return ['error' => $error, 'path' => $path];
+        return ['error' => $error, 'nameOfFile' => $nameOfFile];
     }
 
+    //Redimenssionne une image
     private static function resizeImage(string $sourcePath, string $targetPath, int $newWidth): bool
     {
         $mime = mime_content_type($sourcePath);
@@ -77,15 +79,16 @@ class ImageValidator {
         return true;
     }
 
+    //Upload, valide et redimenssionne une image.
     public static function processImage(array $fileData, string $destinationDir, string $baseName, string $suffix, ?int $resizeWidth = null):array 
     {
-        $uploadedResult = self::uploadedFile($fileData, $destinationDir, $baseName, $suffix);
+        $uploadResult = self::uploadedFile($fileData, $destinationDir, $baseName, $suffix);
 
-        if($uploadedResult['error']) {
-            return $uploadedResult;
+        if($uploadResult['error']) {
+            return $uploadResult;
         }
 
-        $originalPath = $uploadedResult['path'];
+        $originalPath = $destinationDir . $uploadResult['nameOfFile'];
         $resizedPath = null;
 
         if ($resizeWidth !== null && $originalPath) {
@@ -100,11 +103,12 @@ class ImageValidator {
             if (file_exists($originalPath)) {
                 unlink($originalPath);
             }
-            return ['error' => null, 'path' => $resizedPath];
+            return ['error' => null, 'nameOfFile' => $resizedName];
         }
-        return $uploadedResult;
+        return ['error' => null, 'nameOfFile' => $uploadResult['nameOfFile']];
     }
 
+    //Retourne un message d'erreur clair en fonction de la situation.
     public static function errorMessage(int $errorCode, string $fileName): string
     {
         switch ($errorCode) {

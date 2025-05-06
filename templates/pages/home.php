@@ -3,6 +3,9 @@
 require_once _ROOTPATH_ . '\templates\head.php';
 require_once _ROOTPATH_ . '\templates\header.php';
 
+$cheminCouverture = '/Assets/Documentation/Images/Couverture/';
+$cheminDiapo = '/Assets/Documentation/Images/Diapo/';
+
 ?>
 
 <main class="">
@@ -80,8 +83,8 @@ require_once _ROOTPATH_ . '\templates\header.php';
                 <div class="row row-cols-1 row-cols-md-4 g-4 events">
                     <div class="col">
                         <div class="card h-100">
-                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?> id=derniersEvent" class="text-decoration-none text-white">
-                                <img src="<?= $event['cover'] ?>" class="card-img-top" alt="<?= $event['name'] ?>">
+                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
+                                <img src="<?= $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?= $event['name'] ?>">
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title"><?= $event['name'] ?></h5>
@@ -101,8 +104,8 @@ require_once _ROOTPATH_ . '\templates\header.php';
                 <div class="row row-cols-1 row-cols-md-4 g-4 events">
                     <div class="col">
                         <div class="card h-100">
-                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?> id=derniersEvent" class="text-decoration-none text-white">
-                                <img src="..." class="card-img-top" alt="<?= $event['name'] ?>">
+                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
+                                <img src="<?= $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?= $event['name'] ?>">
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title"><?= $event['name'] ?></h5>
