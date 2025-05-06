@@ -51,11 +51,11 @@
                                         ?>
                                     <div class="carousel-item <?= $activeClass ?>">
                                             <img src="<?php echo $cheminDiapo . trim($imageName)?>" class="img-fluid rounded d-block w-100" alt="Image du diaporama">
-                                                <?php
-                                                $first = false;
-                                                endforeach;
-                                                ?>
                                     </div>
+                                        <?php
+                                        $first = false;
+                                        endforeach;
+                                        ?>
                                 </div>
                                 
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
