@@ -4,7 +4,7 @@ require_once __DIR__.'/config_const.php';
 session_set_cookie_params([
     'lifetime' => 3600,
     'path' => '/',
-    'domain' => $_SERVER['SERVER_NAME'],
+    'domain' => APP_DOMAIN,
     'httponly' => true
 ]);
 session_start();

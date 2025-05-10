@@ -75,22 +75,6 @@
         <?php else: ?>
             <p class="alert alert-warning">L'événement demandé n'a pas été trouvé.</p>
         <?php endif; ?>
-
-        <!-- <div class="container d-flex row row-cols-2 row-cols-md-4 justify-content-center align-items-center">
-            <div class="ms-3">Test
-                <img src="
-                </*?php echo $cheminCouverture . $event['cover']*/ ?>
-                " class="card-img-top" alt="
-                </*?php echo $event['name'] */?>
-                ">
-            </div>
-            <div class="container p-4">Test
-                <div class="row row-cols-1 row-cols-md-2 align-items-center">
-                    <p>Nom event</p>
-                    <p>Plateforme</p>
-                </div>
-            </div>
-        </div> -->
     </section>
 </main>
 
