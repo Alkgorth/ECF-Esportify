@@ -44,6 +44,15 @@
                 "uriFormat": "http://esportify",
                 "action": "openExternally"
             }
+        },
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003, // correspond à xdebug.client_port
+            "pathMappings": {
+                "/c/wamp64/www/ecf-esportify": "C:/wamp64/www/ecf-esportify"
+            }
         }
     ]
 }

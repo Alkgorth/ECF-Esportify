@@ -9,7 +9,7 @@
 ?>
 
 <main>
-    <section class="container mt-5">
+    <section class="container mt-5 mb-4">
 
         <h1>Page événements visiteur</h1>
 
@@ -76,6 +76,22 @@
             <p class="alert alert-warning">L'événement demandé n'a pas été trouvé.</p>
         <?php endif; ?>
     </section>
+
+    <!-- Chat asynchrone / à rendre visible uniquement si l'utilisateur est enregistré sur l'évènement-->
+     <section class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="mb-3">
+                <label for="chatAsynchrone" class="form-label">Exprimez-vous sur l'événement*</label>
+                <textarea class="form-control" id="chatAsynchrone" rows="5" placeholder="Ecrivez votre message"></textarea>
+                <div class="form-text">
+                </div>
+            </div>
+        </div>
+    </div>
+
+     </section>
 </main>
 
 <?php
