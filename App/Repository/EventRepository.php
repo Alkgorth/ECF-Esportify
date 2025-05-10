@@ -50,7 +50,7 @@ class EventRepository extends MainRepository
             e.status AS status,
             pl.name AS plateforme_name,
             u.pseudo AS organisateur,
-            GROUP_CONCAT(DISTINCT ei.image_path) AS diaporama             
+            GROUP_CONCAT(DISTINCT ei.image_path SEPARATOR ", ") AS diaporama             
             FROM event AS e
             INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
             INNER JOIN user u ON e.fk_id_user = u.id_user

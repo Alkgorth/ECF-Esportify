@@ -9,7 +9,7 @@
 ?>
 
 <main>
-    <section class="container mt-5">
+    <section class="container mt-5 mb-4">
 
         <h1>Page événements visiteur</h1>
 
@@ -51,11 +51,11 @@
                                         ?>
                                     <div class="carousel-item <?= $activeClass ?>">
                                             <img src="<?php echo $cheminDiapo . trim($imageName)?>" class="img-fluid rounded d-block w-100" alt="Image du diaporama">
-                                                <?php
-                                                $first = false;
-                                                endforeach;
-                                                ?>
                                     </div>
+                                        <?php
+                                        $first = false;
+                                        endforeach;
+                                        ?>
                                 </div>
                                 
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
@@ -75,23 +75,23 @@
         <?php else: ?>
             <p class="alert alert-warning">L'événement demandé n'a pas été trouvé.</p>
         <?php endif; ?>
+    </section>
 
-        <!-- <div class="container d-flex row row-cols-2 row-cols-md-4 justify-content-center align-items-center">
-            <div class="ms-3">Test
-                <img src="
-                </*?php echo $cheminCouverture . $event['cover']*/ ?>
-                " class="card-img-top" alt="
-                </*?php echo $event['name'] */?>
-                ">
-            </div>
-            <div class="container p-4">Test
-                <div class="row row-cols-1 row-cols-md-2 align-items-center">
-                    <p>Nom event</p>
-                    <p>Plateforme</p>
+    <!-- Chat asynchrone / à rendre visible uniquement si l'utilisateur est enregistré sur l'évènement-->
+     <section class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="mb-3">
+                <label for="chatAsynchrone" class="form-label">Exprimez-vous sur l'événement*</label>
+                <textarea class="form-control" id="chatAsynchrone" rows="5" placeholder="Ecrivez votre message"></textarea>
+                <div class="form-text">
                 </div>
             </div>
-        </div> -->
-    </section>
+        </div>
+    </div>
+
+     </section>
 </main>
 
 <?php
