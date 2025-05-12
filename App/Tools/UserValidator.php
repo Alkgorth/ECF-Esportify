@@ -30,6 +30,9 @@ class UserValidator extends User
         }
         if ($_POST['password'] !== $_POST['passwordConfirm']) {
             $error[] = "Les mots de passe ne correspondent pas.";
+
+            // ^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}$
+            // if (preg_match('/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}$/', $password)) {
         }
         return $error;
     }
