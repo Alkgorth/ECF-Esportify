@@ -12176,7 +12176,6 @@ input.form-control:focus {
 }
 
 body {
-  height: 100vh;
   width: 100vw;
   position: relative;
   overflow: hidden;
