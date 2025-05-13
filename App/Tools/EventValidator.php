@@ -3,6 +3,7 @@ namespace App\Tools;
 
 use DateTimeImmutable;
 use App\Tools\ImageValidator;
+use App\Tools\Security;
 
 class EventValidator
 {
@@ -75,7 +76,7 @@ class EventValidator
         if (empty($event->getDescription())) {
             $error['description'] = "Veuillez apporter une description à l'évènement";
         } else {
-            $description       = EventValidator::secureInput($event->getDescription());
+            $description       = Security::secureInput($event->getDescription());
             $descriptionLenght = mb_strlen($description);
 
             if ($descriptionLenght < self::MIN_DESCRIPTION_LENGHT) {
@@ -250,9 +251,5 @@ class EventValidator
         return ['uploaded' => $uploadedFiles, 'errors' => $error];
     }
 
-    //Sécurisation des champs pouvant être envoyé par un utilisateur.
-    public static function secureInput(string $input): string
-    {
-        return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
-    }
+
 }
