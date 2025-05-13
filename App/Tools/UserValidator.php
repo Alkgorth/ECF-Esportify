@@ -4,9 +4,12 @@ namespace App\Tools;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Tools\Security;
 
 class UserValidator extends User
 {
+    private const MIN_PASSWORD_LENGHT = 12;
+
     public static function validate(User $user): array
     {
         $error = [];
@@ -27,12 +30,19 @@ class UserValidator extends User
         }
         if(empty($user->getPassword())){
             $error[] = "Veuillez renseigner un mot de passe";
+        } else {
+            $password = Security::secureInput($user->getPassword());
+            $passwordLenght = mb_strlen($password);
+            
+            if ($passwordLenght < self::MIN_PASSWORD_LENGHT){
+                $error[] = "Le mot de passe doit contenir au moins" . self::MIN_PASSWORD_LENGHT . "caractères.";
+            }
+            if (preg_match('/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}$/', $password)){
+                $error[] = "Le mot de passe doit contenir au moins un caractère spécial.";
+            }
         }
         if ($_POST['password'] !== $_POST['passwordConfirm']) {
             $error[] = "Les mots de passe ne correspondent pas.";
-
-            // ^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}$
-            // if (preg_match('/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}$/', $password)) {
         }
         return $error;
     }
