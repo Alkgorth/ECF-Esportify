@@ -96,6 +96,6 @@
 
 <?php
 
-    require_once _ROOTPATH_ . '\templates\footer.php';
+require_once _ROOTPATH_ . '\templates\footer.php';
 
 ?>
