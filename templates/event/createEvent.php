@@ -32,6 +32,8 @@
 
         <h1 class="text-center pb-4">Créer un évènement</h1>
 
+        <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
+
         <div class="mb-3 text-center">
         <label for="cover_image_path">Choisissez une image de couverture:</label>
         <input type="file" id="cover_image_path" name="cover_image_path" accept="image/png, image/jpeg" />

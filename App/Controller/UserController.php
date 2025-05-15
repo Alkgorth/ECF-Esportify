@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
-use App\Entity\User;
-use App\Tools\UserValidator;
 use App\Tools\SendMail;
-use App\Tools\Security;
-
+use App\Tools\UserValidator;
 
 class UserController extends Controller
 {
@@ -34,7 +31,7 @@ class UserController extends Controller
             }
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
@@ -43,10 +40,10 @@ class UserController extends Controller
     protected function home()
     {
         $eventRepository = new EventRepository();
-        $event = $eventRepository->homeDisplay();
-             
+        $event           = $eventRepository->homeDisplay();
+
         $this->render('pages/home', [
-            'events' => $event
+            'events' => $event,
         ]);
     }
 
@@ -57,6 +54,12 @@ class UserController extends Controller
             $error = [];
 
             $user = new User();
+
+            if (! empty($_POST)) {
+                if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
+                    die('Token CSRF invalide');
+                }
+            }
 
             if (isset($_POST['saveUser'])) {
                 $user->hydrate($_POST);
@@ -74,13 +77,13 @@ class UserController extends Controller
             }
 
             $this->render('pages/creationCompte', [
-                'user' => '',
+                'user'           => '',
                 'creationCompte' => 'Créer mon compte',
-                'error' => $error
+                'error'          => $error,
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
