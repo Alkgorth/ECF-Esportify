@@ -112,6 +112,12 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
             $event = new Event();
 
+            if (!empty ($_POST)) {
+                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
+                    die ('Token CSRF invalide');
+                }
+            }
+
             if (isset($_POST['valider']) || isset($_POST['modifier'])) {
                 $event->hydrate($_POST);
                 $event->setStatus(Status::EnAttente);
