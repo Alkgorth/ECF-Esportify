@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Controller;
 
-use App\Repository\UserRepository;
-use App\Entity\User;
-use App\Entity\Token as TableToken;
 use App\Repository\TokenRepository;
+use App\Repository\UserRepository;
 use App\Tools\Security;
 use App\Tools\SendMail;
 use App\Tools\Token;
@@ -44,47 +41,70 @@ class AuthController extends Controller
             }
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
 
-
     protected function connexion()
     {
 
-
         $error = [];
+
+        if (! empty($_POST)) {
+            if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
+                die('Token CSRF invalide');
+            }
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
             if (isset($_POST['mail']) && isset($_POST['password'])) {
-                $mail = $_POST['mail'];
+                $mail     = $_POST['mail'];
                 $password = $_POST['password'];
 
-                $userRepo = new UserRepository();
-                $user = $userRepo->findUserByMail($mail);
+                echo "Données du formulaire : <br>";
+                echo "Email : " . htmlspecialchars($mail) . "<br>";
+                echo "Mot de passe : " . htmlspecialchars($password) . "<br>";
 
-                if ($user && Security::verifyPassword($password, $user->getPassword())) {
-                    session_regenerate_id(true);
-                    $_SESSION['user'] = [
-                        'id' => $user->getIdUser(),
-                        'mail' => $user->getMail(),
-                        'last_name' => $user->getLastName(),
-                        'first_name' => $user->getFirstName(),
-                        'pseudo' => $user->getPseudo(),
-                        'role' => $user->getRole()
-                    ];
-                    header('Location: index.php?controller=pages&action=home');
+                $userRepo = new UserRepository();
+                $user     = $userRepo->findUserByMail($mail);
+
+                echo "<br>Résultat de findUserByMail :<br>";
+                var_dump($user);
+
+                if ($user) {
+                    if (Security::verifyPassword($password, $user->getPassword())) {
+                        session_regenerate_id(true);
+
+                        echo "<br>Données de l'utilisateur avant la session :<br>";
+                        var_dump($user);
+
+                        $_SESSION['user'] = [
+                            'id'         => $user->getIdUser(),
+                            'mail'       => $user->getMail(),
+                            'last_name'  => $user->getLastName(),
+                            'first_name' => $user->getFirstName(),
+                            'pseudo'     => $user->getPseudo(),
+                            'role'       => $user->getRole(),
+                        ];
+
+                        echo "<br>Session après initialisation :<br>";
+                        var_dump($_SESSION);
+
+                        header('Location: index.php?controller=personal&action=espacePersonnel');
+                    } else {
+                        $error[] = "Identifiant ou mot de passe incorrect";
+                    }
+
                 } else {
                     $error[] = "Identifiant ou mot de passe incorrect";
                 }
             }
         }
         $this->render('auth/connexion', [
-            'error' => $error
+            'error' => $error,
         ]);
     }
-
 
     protected function mdpOublie()
     {
@@ -95,50 +115,46 @@ class AuthController extends Controller
                 $mail = $_POST['mail'];
 
                 $userRepo = new UserRepository();
-                $user = $userRepo->findUserByMail($mail);
+                $user     = $userRepo->findUserByMail($mail);
 
                 if ($mail === $user->getMail()) {
                     $tokenGenerate = new Token();
-                    $token = $tokenGenerate->generateToken();
+                    $token         = $tokenGenerate->generateToken();
 
                     $tokenRepository = new UserRepository();
-                    $tokenTable = $tokenRepository->forgottenPassword($user, $token);
+                    $tokenTable      = $tokenRepository->forgottenPassword($user, $token);
 
                     SendMail::mailForgottenPassword($user->getLastName(), $user->getFirstName(), $user->getMail(), $tokenTable->getToken());
                 }
             }
 
             $this->render('auth/mdpOublie', [
-                'error' => $error
+                'error' => $error,
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
-
-
 
     protected function mdpReinitialise()
     {
         $this->render('auth/mdpReinitialise', []);
     }
 
-
-
     protected function reinitialiserMdp()
     {
         try {
             $error = [];
 
-            if(isset($_GET['token'])){
+            if (isset($_GET['token'])) {
                 $tokenValue = $_GET['token'];
 
                 $tokenRepo = new TokenRepository();
-                $token = $tokenRepo->findToken($tokenValue);
+                $token     = $tokenRepo->findToken($tokenValue);
 
-                if(!$token){
+                if (! $token) {
                     throw new \Exception("Le token est invalide ou a expiré.");
                 }
 
@@ -147,24 +163,24 @@ class AuthController extends Controller
                 $tokenIsValidate = new Token();
                 $tokenIsValidate->isTokenValid($token);
 
-                if(!$tokenIsValidate->isTokenValid($token)){
+                if (! $tokenIsValidate->isTokenValid($token)) {
                     throw new \Exception("Le token a expiré.");
                 }
 
                 $userRepo = new UserRepository();
-                $user = $userRepo->findOneById($userId);
+                $user     = $userRepo->findOneById($userId);
 
-                if(!$user){
+                if (! $user) {
                     throw new \Exception("Aucun utilisateur rattaché à ce mail.");
                 }
 
-                if(isset($_POST['resetPassword'])){
+                if (isset($_POST['resetPassword'])) {
 
-                    $password = $_POST['password'];
+                    $password        = $_POST['password'];
                     $passwordConfirm = $_POST['passwordConfirm'];
-                    $error = UserValidator::validatePasswords($password, $passwordConfirm);
+                    $error           = UserValidator::validatePasswords($password, $passwordConfirm);
 
-                    if(empty($error)){
+                    if (empty($error)) {
                         $user->setPassword($password);
                         $userRepo->updatePassword($user);
 
@@ -177,13 +193,12 @@ class AuthController extends Controller
                 header('Location: index.php');
             }
 
-
             $this->render('auth/reinitialiserMdp', [
-                'error' => $error
+                'error' => $error,
             ]);
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
