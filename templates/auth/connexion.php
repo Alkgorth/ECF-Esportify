@@ -1,6 +1,6 @@
 <?php
 
-require_once _ROOTPATH_ . '\templates\head.php';
+    require_once _ROOTPATH_ . '\templates\head.php';
 
 ?>
 
@@ -11,13 +11,17 @@ require_once _ROOTPATH_ . '\templates\head.php';
         <img src="" alt="Logo Esportify" class="pb-4" width="400">
     </a>
 
-    <?php foreach ($error as $errors) { ?>
+    <?php foreach ($error as $errors) {?>
         <div class="alert alert-danger" role="alert">
-            <?= $errors; ?>
+            <?php echo $errors;?>
         </div>
-    <?php } ?>
+    <?php }?>
 
     <form method="POST" class="col-sm-6 mb-3 mx-auto justify-content-center">
+
+        <!-- Input pour CSRF -->
+        <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
+
         <div class="mb-2 text-center">
             <label for="mail" class="form-label text-white">Adresse mail</label>
             <input type="email" class="form-control" id="mail" aria-describedby="emailHelp" name="mail">
