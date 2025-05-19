@@ -17,9 +17,13 @@ class EventController extends Controller
             //on mes en place une condition pour lancer le bon controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
-                    case 'event':
+                    case 'eventDetail':
                         // Pour afficher un jeu
-                        $this->event($_GET['id']);
+                        $this->eventDetail($_GET['id']);
+                        break;
+                    case 'eventGeneral':
+                        // Pour afficher un jeu
+                        $this->eventGeneral($_GET['id']);
                         break;
                     case 'eventGamer':
                         // Pour appler la méthode list(), tout les jeux
@@ -51,7 +55,7 @@ class EventController extends Controller
         }
     }
 
-    protected function event()
+    protected function eventDetail()
     {        
         try {
 
@@ -81,6 +85,11 @@ class EventController extends Controller
     {
         $this->render('event/event', []);
     }*/
+
+    protected function eventGeneral()
+    {
+        $this->render('event/eventGeneral', []);
+    }
 
     protected function eventGamer()
     {
