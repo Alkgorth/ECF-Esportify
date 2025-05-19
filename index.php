@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__.'/config_const.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_set_cookie_params([
     'lifetime' => 3600,
     'path' => '/',
@@ -25,5 +29,8 @@ use App\Entity\User;
 
 $controller = new Controller;
 $controller->route();
+
+var_dump($_COOKIE);
+var_dump($_POST);
 
 ?>

@@ -6,6 +6,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
 $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
 $cheminDiapo = '/Assets/Documentation/Images/Diapo/';
 
+var_dump($_SESSION);
 ?>
 
 <main class="">

@@ -62,10 +62,6 @@ class AuthController extends Controller
                 $mail     = $_POST['mail'];
                 $password = $_POST['password'];
 
-                echo "Données du formulaire : <br>";
-                echo "Email : " . htmlspecialchars($mail) . "<br>";
-                echo "Mot de passe : " . htmlspecialchars($password) . "<br>";
-
                 $userRepo = new UserRepository();
                 $user     = $userRepo->findUserByMail($mail);
 
@@ -76,7 +72,7 @@ class AuthController extends Controller
                     if (Security::verifyPassword($password, $user->getPassword())) {
                         session_regenerate_id(true);
 
-                        echo "<br>Données de l'utilisateur avant la session :<br>";
+                        echo "<br>Session ID après regenrate id : " . session_id() . "<br>";
                         var_dump($user);
 
                         $_SESSION['user'] = [
