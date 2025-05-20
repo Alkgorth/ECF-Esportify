@@ -1,12 +1,11 @@
 <?php
 
-require_once _ROOTPATH_ . '\templates\head.php';
-require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '\templates\head.php';
+    require_once _ROOTPATH_ . '\templates\header.php';
 
-$cheminCouverture = '/Assets/Documentation/Images/Couverture/';
-$cheminDiapo = '/Assets/Documentation/Images/Diapo/';
+    $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
+    $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
 
-var_dump($_SESSION);
 ?>
 
 <main class="">
@@ -78,53 +77,53 @@ var_dump($_SESSION);
     </section>
     <section class="section-light mt-2">
 
-        <h2 class="titleEvent">Les derniers évènements</h2>
-        <?php foreach ($events as $event) { ?>
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-4 g-4 events">
+        <h2 class="titleEvent mb-3">Les derniers évènements</h2>
+        <div class="container mb-3">
+            <div class="row row-cols-1 row-cols-md-4 g-4 events">
+                <?php foreach ($events as $event) {?>
                     <div class="col">
                         <div class="card h-100">
-                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
-                                <img src="<?= $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?= $event['name'] ?>">
+                            <a href="index.php?controller=event&action=event&id=<?php echo $event['id']?>" id=derniersEvent class="text-decoration-none text-white">
+                                <img src="<?php echo $cheminCouverture . $event['cover']?>" class="card-img-top" alt="<?php echo $event['name']?>">
                             </a>
                             <div class="card-body">
-                                <h5 class="card-title"><?= $event['name'] ?></h5>
-                                <p class="card-text"><?= $event['plateforme_name'] ?></p>
-                                <p class="card-text">Début : <?= $event['start'] ?></p>
-                                <p class="card-text">Fin : <?= $event['end'] ?></p>
-                                <p class="card-text">Joueurs inscrits : <?= $event['joueurs'] ?></p>
+                                <h5 class="card-title"><?php echo $event['name']?></h5>
+                                <p class="card-text"><?php echo $event['plateforme_name']?></p>
+                                <p class="card-text">Début : <?php echo $event['start']?></p>
+                                <p class="card-text">Fin : <?php echo $event['end']?></p>
+                                <p class="card-text">Joueurs inscrits : <?php echo $event['joueurs']?></p>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php }?>
             </div>
-        <?php } ?>
+        </div>
 
-        <?php foreach ($events as $event) { ?>
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-4 g-4 events">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-4 g-4 events">
+                <?php foreach ($events as $event) {?>
                     <div class="col">
                         <div class="card h-100">
-                            <a href="index.php?controller=event&action=event&id=<?= $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
-                                <img src="<?= $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?= $event['name'] ?>">
+                            <a href="index.php?controller=event&action=event&id=<?php echo $event['id']?>" id=derniersEvent class="text-decoration-none text-white">
+                                <img src="<?php echo $cheminCouverture . $event['cover']?>" class="card-img-top" alt="<?php echo $event['name']?>">
                             </a>
                             <div class="card-body">
-                                <h5 class="card-title"><?= $event['name'] ?></h5>
-                                <p class="card-text"><?= $event['plateforme_name'] ?></p>
-                                <p class="card-text">Début : <?= $event['start'] ?></p>
-                                <p class="card-text">Fin : <?= $event['end'] ?></p>
-                                <p class="card-text">Joueurs inscrits : <?= $event['joueurs'] ?></p>
+                                <h5 class="card-title"><?php echo $event['name']?></h5>
+                                <p class="card-text"><?php echo $event['plateforme_name']?></p>
+                                <p class="card-text">Début : <?php echo $event['start']?></p>
+                                <p class="card-text">Fin : <?php echo $event['end']?></p>
+                                <p class="card-text">Joueurs inscrits : <?php echo $event['joueurs']?></p>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php }?>
             </div>
-        <?php } ?>
+        </div>
     </section>
 </main>
 
 <?php
 
-require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '\templates\footer.php';
 
 ?>

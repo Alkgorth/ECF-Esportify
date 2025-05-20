@@ -3,8 +3,6 @@
     require_once _ROOTPATH_ . '\templates\head.php';
     require_once _ROOTPATH_ . '\templates\header.php';
 
-    var_dump($_COOKIE);
-    var_dump($_POST);
 ?>
 
 <main class="container mx-5">

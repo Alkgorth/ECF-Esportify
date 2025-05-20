@@ -57,7 +57,6 @@ class PersonalController extends Controller
                 $user = new User();
                 $user->hydrate($_POST);
                 $user->setIdUser($_SESSION['user']['id']);
-                $user->setRole($_SESSION['user']['role']);
                 $error = UserValidator::validate($user);
 
                 if (empty($error)) {
@@ -65,12 +64,10 @@ class PersonalController extends Controller
                     $userRepository->persist($user);
 
                     $_SESSION['user'] = [
-                        'id' => $user->getIdUser(),
                         'mail' => $user->getMail(),
                         'last_name' => $user->getLastName(),
                         'first_name' => $user->getFirstName(),
                         'pseudo' => $user->getPseudo(),
-                        'role' => $user->getRole()
                     ];
                 }
             }

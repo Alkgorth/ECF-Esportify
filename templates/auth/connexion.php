@@ -2,13 +2,6 @@
 
     require_once _ROOTPATH_ . '\templates\head.php';
 
-    var_dump($_COOKIE);
-    var_dump($_POST);
-    echo "<br>Résultat de findUserByMail :<br>";
-    var_dump($user);
-    echo "<br>Session après initialisation :<br>";
-    var_dump($_SESSION);
-
 ?>
 
 

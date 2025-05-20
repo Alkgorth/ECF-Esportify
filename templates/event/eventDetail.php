@@ -5,31 +5,25 @@
 
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
-
 ?>
-
 <main>
     <section class="container mt-5 mb-4">
-
         <h1>Page événements visiteur</h1>
-
         <?php if ($eventDetail): ?>
-
             <div class="row">
                 <div class="col-md-6">
-                    <img src="<?php echo $cheminCouverture . $eventDetail['cover']?>" class="img-fluid rounded" alt="<?php echo $eventDetail['name']?>">
+                    <img src="<?php echo $cheminCouverture . $eventDetail['cover']?>" 
+                    class="img-fluid rounded" alt="<?php echo $eventDetail['name']?>">
                 </div>
-
                 <div class="col-md-6">
                     <h2 class="text-center"><?php echo $eventDetail['name']?></h2>
                     <p class="lead text-center">Jeu : <?php echo $eventDetail['game_name']?></p>
-                    <p class="text-center fs-2">Plateforme : <?php echo $eventDetail['plateforme_name']?></p>
+                    <p class="text-center fs-2">Plateforme : 
+                        <?php echo $eventDetail['plateforme_name']?></p>
                 </div>
-
                 <div>
                     <p class="fs-2">Organisateur : <?php echo $eventDetail['organisateur']?></p>
                 </div>
-
                 <div class="row row-cols-1 row-cols-md-2 align-items-center">
                     <p class="text-center fs-2">Début : <?php echo $eventDetail['start']?></p>
                     <p class="text-center fs-2">Fin : <?php echo $eventDetail['end']?></p>

@@ -37,9 +37,6 @@ class UserRepository extends MainRepository
 
         $user = $query->fetch($this->pdo::FETCH_ASSOC);
 
-        echo "<br>Résultat de la requête SQL (findUserByMail) :<br>";
-        var_dump($user);
-
         if ($user) {
             return User::createAndHydrate($user);
         } else {
