@@ -42,6 +42,7 @@ class Security
                 die('Token CSRF invalide');
             }
         }
+        return $_COOKIE['csrf_token'];
     }
 
 }

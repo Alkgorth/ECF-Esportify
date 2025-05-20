@@ -8,6 +8,7 @@ use App\Entity\EventImage;
 use App\Repository\EventRepository;
 use App\Repository\ImagesRepository;
 use App\Tools\EventValidator;
+use App\Tools\Security;
 
 class EventController extends Controller
 {

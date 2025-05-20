@@ -61,9 +61,6 @@ class UserController extends Controller
                 }
             }
 
-                var_dump($_COOKIE);
-                var_dump($_POST);
-
             if (isset($_POST['saveUser'])) {
                 $user->hydrate($_POST);
                 $user->setRole('joueur');

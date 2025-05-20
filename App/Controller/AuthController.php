@@ -48,52 +48,38 @@ class AuthController extends Controller
 
     protected function connexion()
     {
-
         $error = [];
 
-        if (! empty($_POST)) {
-            if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
-                die('Token CSRF invalide');
-            }
-        }
+        if (Security::csrfToken()) {
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
-            if (isset($_POST['mail']) && isset($_POST['password'])) {
-                $mail     = $_POST['mail'];
-                $password = $_POST['password'];
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
+                if (isset($_POST['mail']) && isset($_POST['password'])) {
+                    $mail     = $_POST['mail'];
+                    $password = $_POST['password'];
 
-                $userRepo = new UserRepository();
-                $user     = $userRepo->findUserByMail($mail);
+                    $userRepo = new UserRepository();
+                    $user     = $userRepo->findUserByMail($mail);
 
-                echo "<br>Résultat de findUserByMail :<br>";
-                var_dump($user);
+                    if ($user) {
+                        if (Security::verifyPassword($password, $user->getPassword())) {
+                            session_regenerate_id(true);                            
 
-                if ($user) {
-                    if (Security::verifyPassword($password, $user->getPassword())) {
-                        session_regenerate_id(true);
+                            $_SESSION['user'] = [
+                                'id'         => $user->getIdUser(),
+                                'mail'       => $user->getMail(),
+                                'last_name'  => $user->getLastName(),
+                                'first_name' => $user->getFirstName(),
+                                'pseudo'     => $user->getPseudo(),
+                                'role'       => $user->getRole(),
+                            ];
 
-                        echo "<br>Session ID après regenrate id : " . session_id() . "<br>";
-                        var_dump($user);
-
-                        $_SESSION['user'] = [
-                            'id'         => $user->getIdUser(),
-                            'mail'       => $user->getMail(),
-                            'last_name'  => $user->getLastName(),
-                            'first_name' => $user->getFirstName(),
-                            'pseudo'     => $user->getPseudo(),
-                            'role'       => $user->getRole(),
-                        ];
-
-                        echo "<br>Session après initialisation :<br>";
-                        var_dump($_SESSION);
-
-                        header('Location: index.php?controller=personal&action=espacePersonnel');
+                            header('Location: index.php?controller=personal&action=espacePersonnel');
+                        } else {
+                            $error[] = "Identifiant ou mot de passe incorrect";
+                        }
                     } else {
                         $error[] = "Identifiant ou mot de passe incorrect";
                     }
-
-                } else {
-                    $error[] = "Identifiant ou mot de passe incorrect";
                 }
             }
         }

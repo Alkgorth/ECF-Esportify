@@ -6,7 +6,6 @@
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
 
-    var_dump($_SESSION);
 ?>
 
 <main class="">
