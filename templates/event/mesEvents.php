@@ -6,12 +6,34 @@
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
 ?>
-
+<main class="container mx-5">
    <section class="container mt-5 mb-4 row row-cols-1 text-center">
         <h1>Page mes événements</h1>
    </section>
 
    <section class="ms-5 mt-2 container row text-center justify-content-center align-items-center d-flex">
+
+       <?php if (empty($error) && isset($_POST['valider'])) {?>
+      <div class="alert alert-primary" role="alert">
+        <?php echo $affichage; ?>
+      </div>
+    <?php }?>
+
+    <?php if (!empty($error)) {
+            foreach ($error as $fieldName => $errors) {
+                if (is_array($errors)) {
+                    foreach ($errors as $errorMessage) {?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $errorMessage; ?>
+                        </div>
+                    <?php }
+                } else { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $errors; ?>
+                    </div>
+                <?php }
+            }
+        }?>
 
     <h2 class="mb-3 mt-3 d-flex">Mes évènements</h2>
     <div class="container mb-3">
@@ -33,6 +55,7 @@
                                     <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#eventModal<?php echo $event['id'] ?>">
                                         Voir détails
                                     </button>
+                                    <button type="button" class="btn btn-warning text-center">Modifier</button>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +99,7 @@
         </div>
     </div>
 </section>
-
+</main>
 
 
  

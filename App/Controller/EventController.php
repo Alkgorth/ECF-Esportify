@@ -106,6 +106,7 @@ class EventController extends Controller
         $this->render('event/eventAdmin', []);
     }
 
+    //Affichage de la page création évènement
     protected function createEvent()
     {
         try {
@@ -201,13 +202,74 @@ class EventController extends Controller
         }
     }
 
+    //affichage des évènement de l'utilisateur dans son espace personnel
     protected function mesEvents()
     {
-        $eventRepository = new EventRepository();
-        $event           = $eventRepository->myEvents();
+        try {
+            $error           = [];
+            $majEvent        = "Votre demande de mise à jour à été envoyée.";
+            $eventRepository = new EventRepository();
+            $myEvent = $eventRepository->myEvents();
+            $plateformes     = $eventRepository->getAllPlateformes();
+            $event           = new Event();
 
-        $this->render('event/mesEvents', [
-            'events' => $event,
-        ]);
+            //Ajouter controle du csrf_token
+
+            if (empty($error) && isset($_POST['modifier'])) {
+                $event->hydrate($_POST);
+                $event->setStatus(Status::EnAttente);
+
+                $uploadResult        = EventValidator::secureImage($_FILES);
+                $uploadedCoverImage  = $uploadResult['uploaded']['cover_image_path'] ?? null;
+                $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
+                $uploadErrors        = $uploadResult['errors'];
+                $error               = array_merge($error, $uploadErrors ?? []);
+
+                if ($uploadedCoverImage) {
+                    $event->setCoverImagePath($uploadedCoverImage);
+                }
+
+                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+                $eventErrors = EventValidator::validateEvent($event);
+                $error       = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
+
+                if (! empty($eventErrors)) {
+                    $error = array_merge($error, $eventErrors);
+                }
+
+                if (! empty($imageErrors)) {
+                    $error = array_merge($error, $imageErrors);
+                }
+
+                $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+
+                $updateEvent = $eventRepository->updateEvent($event);
+
+                if ($updateEvent) {
+                    $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
+                    $majEvent = "Votre demande de mise à jour à été envoyée.";
+                    //header('Location: index.php?');
+                } else {
+                    $error['database'] = "Erreur lors de la mise à jour !";
+                }
+            }
+
+            if (empty($plateformes)) {
+                throw new \Exception("Aucune donnée n'a été trouvée");
+            } else {
+                $this->render('event/mesEvents', [
+                    'majEvent'    => $majEvent,
+                    'plateformes' => $plateformes,
+                    'error'       => $error,
+                    'events'      => $myEvent,
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+
     }
 }
