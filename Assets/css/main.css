@@ -12176,9 +12176,10 @@ input.form-control:focus {
 }
 
 body {
+  min-height: 100vh;
   width: 100vw;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
   background-color: var(--esportify-grey-50);
   color: var(--esportify-white);
 }
@@ -12198,13 +12199,6 @@ main {
   padding: 5rem 0;
   -webkit-clip-path: ellipse(150% 100% at 50% 100%);
           clip-path: ellipse(150% 100% at 50% 100%);
-}
-
-.titleEvent {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
 }
 
 .events {
