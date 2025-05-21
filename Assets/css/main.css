@@ -12200,13 +12200,6 @@ main {
           clip-path: ellipse(150% 100% at 50% 100%);
 }
 
-.titleEvent {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-}
-
 .events {
   z-index: 1;
 }

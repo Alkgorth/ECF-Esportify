@@ -60,10 +60,8 @@ class AuthController extends Controller
                     $userRepo = new UserRepository();
                     $user     = $userRepo->findUserByMail($mail);
 
-                    if ($user) {
-                        if (Security::verifyPassword($password, $user->getPassword())) {
+                    if ($user && Security::verifyPassword($password, $user->getPassword())) {
                             session_regenerate_id(true);                            
-
                             $_SESSION['user'] = [
                                 'id'         => $user->getIdUser(),
                                 'mail'       => $user->getMail(),
@@ -72,11 +70,7 @@ class AuthController extends Controller
                                 'pseudo'     => $user->getPseudo(),
                                 'role'       => $user->getRole(),
                             ];
-
                             header('Location: index.php?controller=personal&action=espacePersonnel');
-                        } else {
-                            $error[] = "Identifiant ou mot de passe incorrect";
-                        }
                     } else {
                         $error[] = "Identifiant ou mot de passe incorrect";
                     }

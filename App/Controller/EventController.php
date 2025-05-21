@@ -3,12 +3,8 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Status;
-use App\Entity\Visibility;
-use App\Entity\EventImage;
 use App\Repository\EventRepository;
-use App\Repository\ImagesRepository;
 use App\Tools\EventValidator;
-use App\Tools\Security;
 
 class EventController extends Controller
 {
@@ -39,6 +35,9 @@ class EventController extends Controller
                     case 'createEvent':
                         $this->createEvent();
                         break;
+                    case 'mesEvents':
+                        $this->mesEvents();
+                        break;
                     case 'delete':
                         // Pour appler la méthode delete()
                         break;
@@ -57,7 +56,7 @@ class EventController extends Controller
     }
 
     protected function eventDetail()
-    {        
+    {
         try {
 
             if (isset($_GET['id'])) {
@@ -65,10 +64,10 @@ class EventController extends Controller
 
                 // Charger le jeu par un appel au repository
                 $eventRepository = new EventRepository();
-                $eventDetail = $eventRepository->findEventById($id); 
+                $eventDetail     = $eventRepository->findEventById($id);
 
                 $this->render('event/event', [
-                    'eventDetail' => $eventDetail
+                    'eventDetail' => $eventDetail,
 
                 ]);
             } else {
@@ -77,7 +76,7 @@ class EventController extends Controller
 
         } catch (\Exception $e) {
             $this->render('errors/default', [
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }
@@ -110,9 +109,9 @@ class EventController extends Controller
     protected function createEvent()
     {
         try {
-            $error = [];
+            $error     = [];
             $affichage = "Votre proposition d'évènement à bien été envoyé.";
-            $majEvent = "Votre évènement à été mis à jour.";
+            $majEvent  = "Votre évènement à été mis à jour.";
 
             // if (! isset($_SESSION['user'])) {
             //     header('Location: index.php?controller=connexions&action=connexion');
@@ -120,23 +119,23 @@ class EventController extends Controller
 
             $eventRepository = new EventRepository();
             $plateformes     = $eventRepository->getAllPlateformes();
-            $event = new Event();
+            $event           = new Event();
 
-            if (!empty ($_POST)) {
-                if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
-                    die ('Token CSRF invalide');
+            if (! empty($_POST)) {
+                if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
+                    die('Token CSRF invalide');
                 }
             }
 
             if (isset($_POST['valider']) || isset($_POST['modifier'])) {
                 $event->hydrate($_POST);
                 $event->setStatus(Status::EnAttente);
-                
-                $uploadResult = EventValidator::secureImage($_FILES);
-                $uploadedCoverImage = $uploadResult['uploaded']['cover_image_path'] ?? null;
+
+                $uploadResult        = EventValidator::secureImage($_FILES);
+                $uploadedCoverImage  = $uploadResult['uploaded']['cover_image_path'] ?? null;
                 $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
-                $uploadErrors = $uploadResult['errors'];
-                $error = array_merge($error, $uploadErrors ?? []);
+                $uploadErrors        = $uploadResult['errors'];
+                $error               = array_merge($error, $uploadErrors ?? []);
 
                 if ($uploadedCoverImage) {
                     $event->setCoverImagePath($uploadedCoverImage);
@@ -144,28 +143,28 @@ class EventController extends Controller
 
                 $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
                 $eventErrors = EventValidator::validateEvent($event);
-                $error = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
+                $error       = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
-                if (!empty($eventErrors)) {
+                if (! empty($eventErrors)) {
                     $error = array_merge($error, $eventErrors);
                 }
 
-                if (!empty($imageErrors)) {
+                if (! empty($imageErrors)) {
                     $error = array_merge($error, $imageErrors);
                 }
 
                 if (empty($error) && isset($_POST['valider'])) {
-                    
+
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connexion
 
                     $eventId = $eventRepository->insertEvent($event);
-                    
+
                     if ($eventId) {
                         $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
                         $affichage = "L'évènement à été créé avec succès !";
                         //header('Location: index.php?');
                     } else {
-                        $error ['database'] = "Erreur lors de l'enregistrement !";
+                        $error['database'] = "Erreur lors de l'enregistrement !";
                     }
                 }
 
@@ -174,13 +173,13 @@ class EventController extends Controller
                     $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
 
                     $updateEvent = $eventRepository->updateEvent($event);
-                    
+
                     if ($updateEvent) {
                         $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
                         $affichage = $majEvent;
                         //header('Location: index.php?');
                     } else {
-                        $error ['database'] = "Erreur lors de la mise à jour !";
+                        $error['database'] = "Erreur lors de la mise à jour !";
                     }
                 }
             }
@@ -189,8 +188,8 @@ class EventController extends Controller
                 throw new \Exception("Aucune donnée n'a été trouvée");
             } else {
                 $this->render('event/createEvent', [
-                    'affichage' => $affichage,
-                    'majEvent' => $majEvent,
+                    'affichage'   => $affichage,
+                    'majEvent'    => $majEvent,
                     'plateformes' => $plateformes,
                     'error'       => $error,
                 ]);
@@ -200,5 +199,15 @@ class EventController extends Controller
                 'error' => $e->getMessage(),
             ]);
         }
+    }
+
+    protected function mesEvents()
+    {
+        $eventRepository = new EventRepository();
+        $event           = $eventRepository->myEvents();
+
+        $this->render('event/mesEvents', [
+            'events' => $event,
+        ]);
     }
 }

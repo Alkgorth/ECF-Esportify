@@ -72,34 +72,12 @@
                 </div>
             </div>
         </div>
-
-
     </section>
+
     <section class="section-light mt-2">
 
-        <h2 class="titleEvent mb-3">Les derniers évènements</h2>
+        <h2 class="mb-3">Les derniers évènements</h2>
         <div class="container mb-3">
-            <div class="row row-cols-1 row-cols-md-4 g-4 events">
-                <?php foreach ($events as $event) {?>
-                    <div class="col">
-                        <div class="card h-100">
-                            <a href="index.php?controller=event&action=event&id=<?php echo $event['id']?>" id=derniersEvent class="text-decoration-none text-white">
-                                <img src="<?php echo $cheminCouverture . $event['cover']?>" class="card-img-top" alt="<?php echo $event['name']?>">
-                            </a>
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo $event['name']?></h5>
-                                <p class="card-text"><?php echo $event['plateforme_name']?></p>
-                                <p class="card-text">Début : <?php echo $event['start']?></p>
-                                <p class="card-text">Fin : <?php echo $event['end']?></p>
-                                <p class="card-text">Joueurs inscrits : <?php echo $event['joueurs']?></p>
-                            </div>
-                        </div>
-                    </div>
-                <?php }?>
-            </div>
-        </div>
-
-        <div class="container">
             <div class="row row-cols-1 row-cols-md-4 g-4 events">
                 <?php foreach ($events as $event) {?>
                     <div class="col">

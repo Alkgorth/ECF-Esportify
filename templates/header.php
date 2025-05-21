@@ -47,7 +47,7 @@
                     </a>
                     <ul class="list-unstyled fw-normal pb-1 small dropdown-menu">
                         <li><a href="/index.php?controller=personal&action=espacePersonnel" class="dropdown-item">Données personnelles</a></li>
-                        <li><a href="#" class="dropdown-item">Mes événements</a></li>
+                        <li><a href="index.php?controller=event&action=mesEvents" class="dropdown-item">Mes événements</a></li>
                         <li><a href="#" class="dropdown-item">Mon historique</a></li>
                     </ul>
                 </li>
