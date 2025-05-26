@@ -6,12 +6,12 @@
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
 ?>
-<main class="container mx-5">
-   <section class="container mt-5 mb-4 row row-cols-1 text-center">
-        <h1>Page mes événements</h1>
-   </section>
+<main class="container">
+   <header class="container mt-5 mb-4 row row-cols-1 text-center">
+        <h1>Page mes évènements</h1>
+   </header>
 
-   <section class="ms-5 mt-2 container row text-center justify-content-center align-items-center d-flex">
+   <section class="ms-5 mt-2 container row">
 
        <?php if (empty($error) && isset($_POST['valider'])) {?>
       <div class="alert alert-primary" role="alert">
@@ -35,9 +35,9 @@
             }
         }?>
 
-    <h2 class="mb-3 mt-3 d-flex">Mes évènements</h2>
+    <h2 class="mb-3 mt-3 text-center">Évènements suggérés</h2>
     <div class="container mb-3">
-        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-4 g-4 events">
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-4 g-4 events justify-content-center align-items-center d-flex">
             <?php foreach ($events as $event) {?>
                 <div class="col">
                     <div class="card h-100">

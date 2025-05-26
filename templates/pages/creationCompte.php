@@ -5,7 +5,7 @@
 
 ?>
 
-<main class="container mx-5">
+<main class="container">
     <h1>Page Création Compte</h1>
     <form class="m-5 p-4 text-white" method="POST">
         <h1 class="text-center pb-4">Créer mon compte</h1>

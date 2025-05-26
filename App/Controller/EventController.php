@@ -66,7 +66,7 @@ class EventController extends Controller
                 $eventRepository = new EventRepository();
                 $eventDetail     = $eventRepository->findEventById($id);
 
-                $this->render('event/event', [
+                $this->render('event/eventDetail', [
                     'eventDetail' => $eventDetail,
 
                 ]);

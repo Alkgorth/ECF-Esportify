@@ -14,6 +14,7 @@ class EventValidator
     private const MAX_DESCRIPTION_LENGHT = 500;
     private const MIN_PLAYERS = 10;
     private const MAX_DIAPO_IMAGES =5;
+    //Définir les const destinationCover Dir Diapo ici
 
 
     //Vérifie si les champs du formulaire de création d'évènements son correctement renseignés.
