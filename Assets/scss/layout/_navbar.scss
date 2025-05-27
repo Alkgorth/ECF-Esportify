@@ -2,6 +2,11 @@ nav {
   font-family: var(--esportify-font-menus);
   background-color: var(--esportify-grey-5);
   box-shadow: var(--esportify-box-shadow);
+  border: 2px solid blue;
+}
+
+ul {
+  border: 2px solid yellow;
 }
 
 .navbar-nav .nav-link,
@@ -11,8 +16,14 @@ nav {
   color: var(--esportify-white);
 }
 
-.navbar {
-  position: fixed;
+// .navbar {
+//   position: fixed;
+//   transition: var(--transition-speed);
+//   overflow: hidden;
+// }
+
+.barreNav {
+   position: fixed;
   transition: var(--transition-speed);
   overflow: hidden;
 }
@@ -24,6 +35,7 @@ nav {
 
 .nav-item {
   width: 100%;
+  border: 2px solid red;
 }
 
 .nav-item:last-child {
@@ -121,7 +133,7 @@ input.form-control:focus {
 }
 
 @media only screen and (max-width: 600px) {
-  .navbar {
+  .barreNav {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -132,7 +144,7 @@ input.form-control:focus {
     display: flex;
   }
 
-  .navbar.visible {
+  .barreNav.visible {
     position: fixed;
     top: 0;
     left: 0;
@@ -143,21 +155,21 @@ input.form-control:focus {
     display: block;
   }
 
-  .navabar.visible .navbar-nav {
+  .barreNav.visible .navbar-nav {
     flex-direction: column;
     width: 8rem;
     height: auto;
   }
 
-  .navbar:hover {
+  .barreNav:hover {
     width: 16rem;
   }
 
-  .navbar:hover .nav-text {
+  .barreNav:hover .nav-text {
     display: inline;
   }
 
-  .navbar:hover .logo-text {
+  .barreNav:hover .logo-text {
     margin-left: 5rem;
     left: 0px;
   }
@@ -171,7 +183,7 @@ input.form-control:focus {
     z-index: 9999;
   }
 
-  .navbar.visible .nav-burger {
+  .barreNav.visible .nav-burger {
     visibility: hidden;
   }
 
@@ -179,7 +191,7 @@ input.form-control:focus {
     visibility: hidden;
   }
 
-  .navbar.visible .logo {
+  .barreNav.visible .logo {
     visibility: visible;
   }
 
@@ -191,27 +203,27 @@ input.form-control:focus {
     visibility: hidden;
   }
 
-  .navbar.visible .nav-item {
+  .barreNav.visible .nav-item {
     visibility: visible;
   }
 }
 
 @media only screen and (min-width: 601px) {
-  .navbar {
+  .barreNav {
     top: 0;
     width: 5rem;
     height: 100vh;
   }
 
-  .navbar:hover {
+  .barreNav:hover {
     width: 16rem;
   }
 
-  .navbar:hover .nav-text {
+  .barreNav:hover .nav-text {
     display: inline;
   }
 
-  .navbar:hover .logo-text {
+  .barreNav:hover .logo-text {
     margin-left: 5rem;
     left: 0px;
   }

@@ -4,7 +4,8 @@
 
 ?>
 <header>
-    <nav class="navbar z-3" id="navbar">
+    <!-- <nav class="navbar z-3 barreNav" id="navbar"> -->
+         <nav class="barreNav z-3" id="navbar">
         <ul class="navbar-nav flex-shrink-0 list-unstyled ps-0 flex-grow-1 d-flex flex-column h-100">
             <li class="nav-item logo">
                 <a href="/index.php?controller=pages&action=home" class="nav-link d-flex p-3 m-3 border-bottom">
@@ -12,18 +13,7 @@
                     <img src="../Assets/Documentation/Images/Logo-Bannière/Logo_Esportify.png" alt="Logo Esportify">
                 </a>
             </li>
-
-            <li class="mb-1 ms-3 nav-item">
-                <a href="#" class="nav-link ">
-                    <form class="d-flex " role="search">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="2.5em" height="2.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search">
-                            <path class="color-first color-second" d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                        </svg>
-                        <input class="form-control nav-text me-2" type="search" placeholder="Search" aria-label="Search">
-                    </form>
-                </a>
-            </li>
-
+            
             <li class="mb-1 ms-3 dropdown nav-item">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="1.5em" height="1.5em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar2-week">
