@@ -5,6 +5,7 @@ use App\Entity\Event;
 use App\Entity\Status;
 use App\Repository\EventRepository;
 use App\Tools\EventValidator;
+use App\Tools\Security;
 
 class EventController extends Controller
 {
@@ -117,70 +118,66 @@ class EventController extends Controller
             // if (! isset($_SESSION['user'])) {
             //     header('Location: index.php?controller=connexions&action=connexion');
             // }
+            if (Security::csrfToken()) {
 
-            $eventRepository = new EventRepository();
-            $plateformes     = $eventRepository->getAllPlateformes();
-            $event           = new Event();
+                $eventRepository = new EventRepository();
+                $plateformes     = $eventRepository->getAllPlateformes();
+                $event           = new Event();
 
-            if (! empty($_POST)) {
-                if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
-                    die('Token CSRF invalide');
-                }
-            }
+                if (isset($_POST['valider']) || isset($_POST['modifier'])) {
+                    $event->hydrate($_POST);
+                    $event->setStatus(Status::EnAttente);
 
-            if (isset($_POST['valider']) || isset($_POST['modifier'])) {
-                $event->hydrate($_POST);
-                $event->setStatus(Status::EnAttente);
+                    $uploadResult        = EventValidator::secureImage($_FILES);
+                    $uploadedCoverImage  = $uploadResult['uploaded']['cover_image_path'] ?? null;
+                    $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
+                    $uploadErrors        = $uploadResult['errors'];
+                    $error               = array_merge($error, $uploadErrors ?? []);
 
-                $uploadResult        = EventValidator::secureImage($_FILES);
-                $uploadedCoverImage  = $uploadResult['uploaded']['cover_image_path'] ?? null;
-                $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
-                $uploadErrors        = $uploadResult['errors'];
-                $error               = array_merge($error, $uploadErrors ?? []);
-
-                if ($uploadedCoverImage) {
-                    $event->setCoverImagePath($uploadedCoverImage);
-                }
-
-                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
-                $eventErrors = EventValidator::validateEvent($event);
-                $error       = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
-
-                if (! empty($eventErrors)) {
-                    $error = array_merge($error, $eventErrors);
-                }
-
-                if (! empty($imageErrors)) {
-                    $error = array_merge($error, $imageErrors);
-                }
-
-                if (empty($error) && isset($_POST['valider'])) {
-
-                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connexion
-
-                    $eventId = $eventRepository->insertEvent($event);
-
-                    if ($eventId) {
-                        $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
-                        $affichage = "L'évènement à été créé avec succès !";
-                        //header('Location: index.php?');
-                    } else {
-                        $error['database'] = "Erreur lors de l'enregistrement !";
+                    if ($uploadedCoverImage) {
+                        $event->setCoverImagePath($uploadedCoverImage);
                     }
-                }
 
-                if (empty($error) && isset($_POST['modifier'])) {
+                    $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+                    $eventErrors = EventValidator::validateEvent($event);
+                    $error       = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
 
-                    $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+                    if (! empty($eventErrors)) {
+                        $error = array_merge($error, $eventErrors);
+                    }
 
-                    $updateEvent = $eventRepository->updateEvent($event);
+                    if (! empty($imageErrors)) {
+                        $error = array_merge($error, $imageErrors);
+                    }
 
-                    if ($updateEvent) {
-                        $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
-                        $affichage = $majEvent;
-                        //header('Location: index.php?');
-                    } else {
-                        $error['database'] = "Erreur lors de la mise à jour !";
+                    if (empty($error) && isset($_POST['valider'])) {
+
+                        $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connexion
+
+                        $eventId = $eventRepository->insertEvent($event);
+
+                        if ($eventId) {
+                            $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
+                            $affichage = "L'évènement à été créé avec succès !";
+                            //header('Location: index.php?');
+                        } else {
+                            $error['database'] = "Erreur lors de l'enregistrement !";
+                        }
+                    }
+
+                    if (empty($error) && isset($_POST['modifier'])) {
+
+                        $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+
+                        $updateEvent = $eventRepository->updateEvent($event);
+
+                        if ($updateEvent) {
+                            $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
+                            $affichage = $majEvent;
+                            //header('Location: index.php?');
+                        } else {
+                            $error['database'] = "Erreur lors de la mise à jour !";
+                        }
                     }
                 }
             }
@@ -213,10 +210,22 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
 
-            //Ajouter controle du csrf_token
+            // if (! isset($_SESSION['user'])) {
+            //     header('Location: index.php?controller=connexions&action=connexion');
+            // }
 
-            if (empty($error) && isset($_POST['modifier'])) {
+            //Ajouter controle du csrf_token
+            if (Security::csrfToken()) {
+
+            if (isset($_POST['saveUpdate'])) {
                 $event->hydrate($_POST);
+
+                if (!empty($_POST['id_event'])) {
+                    $event->setIdEvent((int) $_POST['id_event']);
+                } else {
+                    $error['id_event'] = "L'identifiant de l'évènement est manquant";
+                };
+
                 $event->setStatus(Status::EnAttente);
 
                 $uploadResult        = EventValidator::secureImage($_FILES);
@@ -248,11 +257,12 @@ class EventController extends Controller
                 if ($updateEvent) {
                     $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
                     $majEvent = "Votre demande de mise à jour à été envoyée.";
-                    //header('Location: index.php?');
+                    header('Location: index.php?controller=event&action=mesEvents');
                 } else {
                     $error['database'] = "Erreur lors de la mise à jour !";
                 }
             }
+        }
 
             if (empty($plateformes)) {
                 throw new \Exception("Aucune donnée n'a été trouvée");
