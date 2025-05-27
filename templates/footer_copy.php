@@ -1,4 +1,4 @@
-<footer>
+<footer class="m-4">
   <div class="row d-flex justify-content-center">
     <div class="d-flex justify-content-center col-md-12 col-3 flex-md-row flex-column">
       <p class="px-4 text-nowrap">À propos</p>

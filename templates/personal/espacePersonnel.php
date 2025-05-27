@@ -5,7 +5,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
 ?>
 
-<main class="container mx-5">
+<main class="container">
   <section class="container justify-content-center align-items-center d-flex">
     <h1 class="m-4">Page Espace Personnel Joueur</h1>
   </section>

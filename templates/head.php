@@ -11,12 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani&family=Roboto&display=swap" rel="stylesheet">
     <!-- Links CSS -->
     <link rel="stylesheet" href="..\node_modules\bootstrap-icons\font\bootstrap-icons.min.css">
-    <link rel="stylesheet" href="..\Assets\css\main.css">
+    <link rel="stylesheet" href="../Assets/css/main.css">
     <!-- Links Chart -->
      
     <title>Esportify</title>
-
-
 </head>
 
 <body>

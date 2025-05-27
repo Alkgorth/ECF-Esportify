@@ -4,9 +4,10 @@
     "bootstrap-icons": "^1.11.3"
   },
   "devDependencies": {
-    "sass": "^1.83.4"
+    "sass": "^1.89.0"
   },
   "scripts": {
-    "sass": "sass Assets/scss/main.scss:Assets/css/main.css --no-source-map"
+    "sass": "sass Assets/scss/main.scss Assets/css/main.css",
+    "watch": "sass --watch Assets/scss/main.scss:Assets/css/main.css"
   }
 }

@@ -5,7 +5,7 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
 ?>
 
-<main class="container mx-5">
+<main class="container">
   <section>
     <h1>Page Espace Personnel Admin</h1>
   </section>

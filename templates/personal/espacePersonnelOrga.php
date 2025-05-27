@@ -5,7 +5,7 @@
 
 ?>
 
-<main class="container mx-5">
+<main class="container">
     <section>
         <h1>Page Espace Personnel Orga</h1>
     </section>

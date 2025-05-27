@@ -1,16 +1,16 @@
 @use "../../node_modules/bootstrap/scss/bootstrap" as *;
-@use "components/banner";
-@use "components/button";
-@use "components/card";
-@use "components/loader";
-@use "components/messages";
-@use "components/scrollTop";
-@use "layout/navbar";
-@use "layout/body";
-@use "layout/titles";
-@use "pages/home";
-@use "pages/events";
-
+@forward "components/banner";
+@forward "components/button";
+@forward "components/card";
+@forward "components/loader";
+@forward "components/messages";
+@forward "components/scrollTop";
+@forward "layout/body";
+@forward "layout/footer";
+@forward "layout/navbar";
+@forward "layout/titles";
+@forward "pages/events";
+@forward "pages/home";
 
 :root {
   font-size: 16px;

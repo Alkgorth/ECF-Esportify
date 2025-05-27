@@ -48,7 +48,6 @@ class ImageValidator {
                 break;
             default:
                 return false;
-                break;
         }
 
         if (!$image) {
@@ -64,14 +63,14 @@ class ImageValidator {
         switch ($mime) {
             case 'image/jpeg':
             case 'image/jpg':
+            case 'image/webp':
                 imagejpeg($newImage, $targetPath, 80);
                 break;
             case 'image/png':
                 imagepng($newImage, $targetPath, 9);
                 break;
-            case 'image/webp':
-                imagewebp($newImage, $targetPath, 80);
-                break;
+            default:
+                return false;
         }
 
         imagedestroy($image);
@@ -89,23 +88,25 @@ class ImageValidator {
         }
 
         $originalPath = $destinationDir . $uploadResult['nameOfFile'];
-        $resizedPath = null;
+        $errorMsg = null;
+        $nameOfFile = $uploadResult['nameOfFile'];
 
-        if ($resizeWidth !== null && $originalPath) {
+        if ($resizeWidth !== null && !empty($originalPath)) {
             $resizedName = pathinfo($originalPath, PATHINFO_FILENAME). '_resized.' . pathinfo($originalPath, PATHINFO_EXTENSION);
             $resizedPath = $destinationDir . $resizedName;
+
             if (!self::resizeImage($originalPath, $resizedPath, $resizeWidth)) {
-                if (file_exists($originalPath)) {
-                    unlink($originalPath);
-                }
-                return ['error' => "Erreur lord du redimensionnement de l'image.", 'path'=>null];
+                $errorMsg = "Erreur lors du redimensionnement de l'image.";
             }
+
             if (file_exists($originalPath)) {
                 unlink($originalPath);
             }
-            return ['error' => null, 'nameOfFile' => $resizedName];
+
+            $nameOfFile = $resizedName;
         }
-        return ['error' => null, 'nameOfFile' => $uploadResult['nameOfFile']];
+
+        return ['error' => $errorMsg, 'nameOfFile' => $nameOfFile ];
     }
 
     //Retourne un message d'erreur clair en fonction de la situation.
