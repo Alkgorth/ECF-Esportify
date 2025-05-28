@@ -26,7 +26,7 @@
         <!-- Carrousel -->
         <div class="container">
             <div id="carouselExampleRide" class="carousel slide mx-auto justify-content-center col-8" data-bs-ride="true">
-                <div class="carousel-inner mb-2">
+                <div class="carousel-inner mb-2 zoneCarousel">
                     <div class="carousel-item active">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="d-block w-100" alt="Gameuse victoire">
                     </div>
