@@ -11,12 +11,12 @@
     z-index: 1;
 }
 
-.carousel-inner {
+.zoneCarousel {
     display: flex;
     align-items: center;
 }
 
-.carousel-inner img{
+.zoneCarousel img{
     width: auto;
     max-height: 350px;
     object-fit: cover;
