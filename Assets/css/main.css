@@ -12067,13 +12067,9 @@ svg {
 }
 
 .logo {
-  font-weight: bold;
-  text-transform: uppercase;
   margin-bottom: 1rem;
   text-align: center;
   background: var(--esportify-grey-25);
-  font-size: 1.5rem;
-  letter-spacing: 0.3ch;
 }
 
 .myBurger {
@@ -12089,6 +12085,10 @@ svg {
 }
 
 .logo-text {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.25rem;
+  letter-spacing: 0.3ch;
   display: inline;
   position: absolute;
   left: -999px;

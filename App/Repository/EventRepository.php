@@ -1,6 +1,5 @@
 <?php
 
-// indique où ce situe le fichier
 namespace App\Repository;
 
 use App\Entity\Event;
@@ -236,7 +235,7 @@ class EventRepository extends MainRepository
     public function persistEvent(Event $event, array $uploadedDiapoImages = [])
     {
 
-        //requête pour mettre à jour l'évènement
+        //Requête pour mettre à jour l'évènement
         if ($event->getIdEvent() !== null) {
             $queryEvent = $this->pdo->prepare(
                 "UPDATE event SET cover_image_path = :cover_image_path,
@@ -299,9 +298,9 @@ class EventRepository extends MainRepository
         return $eventId;
     }
 
+    // Requête qui supprimer l'évènement
     public function deleteEvent(int $id)
     {
-        // requête qui supprime l'évènement
         $query = $this->pdo->prepare("DELETE FROM event WHERE id_event = :id");
         $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
         return $query->execute();

@@ -13,7 +13,7 @@ class UserController extends Controller
     public function route(): void
     {
         try {
-            //on mes en place une condition pour lancer le bon controller
+            //On meT en place une condition pour lancer le bon controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     case 'home':
@@ -36,7 +36,6 @@ class UserController extends Controller
         }
     }
 
-    // controller=page&action=home
     protected function home()
     {
         $eventRepository = new EventRepository();
@@ -47,7 +46,6 @@ class UserController extends Controller
         ]);
     }
 
-    // controller=page&action=creationCompte
     protected function creationCompte()
     {
         try {

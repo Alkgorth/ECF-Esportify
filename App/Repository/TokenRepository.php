@@ -1,6 +1,5 @@
 <?php
 
-// indique où ce situe le fichier
 namespace App\Repository;
 
 
@@ -10,6 +9,7 @@ use DateTime;
 
 class TokenRepository extends MainRepository
 {
+    // Récupération du token en BDD
     public function findToken($tokenValue)
     {
         $query = $this->pdo->prepare('SELECT * FROM tokens WHERE token = :token AND expiration_date > NOW()');
@@ -25,6 +25,7 @@ class TokenRepository extends MainRepository
         
     }
 
+    //Suppression du token en BDD
     public function deleteToken(string $tokenValue)
     {
         $query = $this->pdo->prepare('DELETE FROM tokens WHERE token = :token');

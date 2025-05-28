@@ -87,64 +87,56 @@ class UserValidator extends User
         return false;
     }
 
+    // Déconnecte l'utilisateur si la session a expiré
     public static function timerActivity(): bool {
         if (isset($_SESSION['user']['last_activity']) && (time() - $_SESSION['user']['last_activity'] > 1800)) { 
-            self::logout(); // Déconnecte l'utilisateur si la session a expiré
+            self::logout();
         }
         return false;
     }
     
+    // Détruit la session et supprime les cookies de session
     public static function logout(): void {
-        // Détruit la session et supprime les cookies de session
         session_unset();
         session_destroy();
     }
 
+    // Vérification si un utilisateur est en Session et de son rôle
     public static function isJoueur(): bool
     {
-        // on vérifie si il y a un user en session, puis on vérifie si cette utilisateur a le rôle user
         return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'joueur';
     }
 
+    // Vérification si un utilisateur est en Session et de son rôle
     public static function isOrga(): bool
     {
-        // on vérifie si il y a un admin en session, puis on vérifie si cette utilisateur a le rôle admin
         return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'organisateur';
     }
 
+    // Vérification si un utilisateur est en Session et de son rôle
     public static function isAdmin(): bool
     {
-        // on vérifie si il y a un admin en session, puis on vérifie si cette utilisateur a le rôle admin
         return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'administrateur';
     }
 
         /*
     public static function isLoggedIn(): bool {
-        // Vérifie si la session est définie et si l'ID de l'utilisateur est présent
+        Vérifie si la session est définie et si l'ID de l'utilisateur est présent
         if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
             return false;
         }
     
-        // Vérifie l'expiration de session (exemple : 30 minutes d'inactivité)
-        if (isset($_SESSION['user']['last_activity']) && (time() - $_SESSION['user']['last_activity'] > 1800)) { 
-            self::logout(); // Déconnecte l'utilisateur si la session a expiré
-            return false;
-        }
-    
-        // Met à jour le timestamp de la dernière activité
-        $_SESSION['user']['last_activity'] = time();
-    
-        // Vérifie le rôle de l'utilisateur en récupérant les rôles depuis la base de données
+        Vérifie le rôle de l'utilisateur en récupérant les rôles depuis la base de données
         return self::isRoleValid($_SESSION['user']['role'] ?? '');
     }
     
     private static function isRoleValid(string $role): bool {
-        // Récupère les rôles autorisés depuis la base de données (exemple)
-        $rolesAutorises = Database::getRolesAutorises(); // Remplacez par votre logique
+        Récupère les rôles autorisés depuis la base de données (exemple)
+        $rolesAutorises = Database::getRolesAutorises(); Remplacez par votre logique
     
-        // Vérifie si le rôle est valide
+        Vérifie si le rôle est valide
         if (!in_array($role, $rolesAutorises)) {
-            // Journalisation ou gestion des erreurs
+            Journalisation ou gestion des erreurs
             error_log("Rôle invalide détecté : " . $role);
             return false;
         }

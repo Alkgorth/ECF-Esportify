@@ -1,6 +1,5 @@
 <?php
 
-// indique où ce situe le fichier
 namespace App\Repository;
 
 class PlateformeRepository extends MainRepository
