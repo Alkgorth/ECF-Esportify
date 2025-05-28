@@ -12,19 +12,16 @@ class EventController extends Controller
     public function route(): void
     {
         try {
-            //on mes en place une condition pour lancer le bon controller
+            //On met en place une condition pour lancer le bon controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     case 'eventDetail':
-                        // Pour afficher un jeu
                         $this->eventDetail($_GET['id']);
                         break;
                     case 'eventGeneral':
-                        // Pour afficher un jeu
                         $this->eventGeneral($_GET['id']);
                         break;
                     case 'eventGamer':
-                        // Pour appler la méthode list(), tout les jeux
                         $this->eventGamer();
                         break;
                     case 'eventOrga':
@@ -115,9 +112,10 @@ class EventController extends Controller
             $affichage = "Votre proposition d'évènement à bien été envoyé.";
             $majEvent  = "Votre évènement à été mis à jour.";
 
-            // if (! isset($_SESSION['user'])) {
-            //     header('Location: index.php?controller=connexions&action=connexion');
-            // }
+            if (! isset($_SESSION['user'])) {
+                header('Location: index.php?controller=connexions&action=connexion');
+            }
+
             if (Security::csrfToken()) {
 
                 $eventRepository = new EventRepository();
@@ -152,14 +150,14 @@ class EventController extends Controller
 
                     if (empty($error) && isset($_POST['valider'])) {
 
-                        $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1); //Retirer le ?? 1 pour éviter la suggestion d'event hors connexion
+                        $event->setFkIdUser($_SESSION['user']['id_user']);
 
                         $eventId = $eventRepository->insertEvent($event);
 
                         if ($eventId) {
                             $eventRepository->insertEventImage($eventId, $uploadedDiapoImages);
                             $affichage = "L'évènement à été créé avec succès !";
-                            //header('Location: index.php?');
+                            header('Location: index.php?');
                         } else {
                             $error['database'] = "Erreur lors de l'enregistrement !";
                         }
@@ -174,7 +172,7 @@ class EventController extends Controller
                         if ($updateEvent) {
                             $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
                             $affichage = $majEvent;
-                            //header('Location: index.php?');
+                            header('Location: index.php?');
                         } else {
                             $error['database'] = "Erreur lors de la mise à jour !";
                         }
@@ -199,7 +197,7 @@ class EventController extends Controller
         }
     }
 
-    //affichage des évènement de l'utilisateur dans son espace personnel
+    //Affichage des évènement de l'utilisateur dans son espace personnel
     protected function mesEvents()
     {
         try {
@@ -211,11 +209,10 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
 
-            // if (! isset($_SESSION['user'])) {
-            //     header('Location: index.php?controller=connexions&action=connexion');
-            // }
+            if (! isset($_SESSION['user'])) {
+                header('Location: index.php?controller=connexions&action=connexion');
+            }
 
-            //Ajouter controle du csrf_token
             if (Security::csrfToken()) {
 
             if (isset($_POST['saveUpdate'])) {

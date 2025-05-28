@@ -11971,6 +11971,12 @@ textarea.form-control-lg {
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   min-height: 100vh;
   width: 100vw;
@@ -12009,9 +12015,14 @@ ul li a span {
 }
 
 .barreNav {
+  height: 100%;
   position: fixed;
+  top: 0;
+  left: 0;
   transition: var(--transition-speed);
-  overflow: hidden;
+  z-index: 999;
+  overflow: auto;
+  width: 250px;
 }
 
 ul {
@@ -12067,13 +12078,8 @@ svg {
 }
 
 .logo {
-  font-weight: bold;
-  text-transform: uppercase;
   margin-bottom: 1rem;
   text-align: center;
-  background: var(--esportify-grey-25);
-  font-size: 1.5rem;
-  letter-spacing: 0.3ch;
 }
 
 .myBurger {
@@ -12089,6 +12095,10 @@ svg {
 }
 
 .logo-text {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.25rem;
+  letter-spacing: 0.3ch;
   display: inline;
   position: absolute;
   left: -999px;
@@ -12204,13 +12214,28 @@ svg {
   color: black;
 }
 
-.section-light {
+.sectionBasse {
   background: linear-gradient(180deg, rgb(141, 142, 142) 40%, rgb(66, 69, 70) 100%);
   min-height: 100vh;
   width: 100%;
   padding: 3rem 0;
   -webkit-clip-path: ellipse(150% 100% at 50% 100%);
           clip-path: ellipse(150% 100% at 50% 100%);
+}
+
+.banniere {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  background-color: transparent;
+}
+
+.banniere img {
+  max-width: 100%;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .events {
@@ -12229,10 +12254,42 @@ svg {
      object-fit: cover;
 }
 
+.miniatures-wrapper {
+  width: 100%;
+  max-width: 66%; /* Aligne avec col-8 du carrousel */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.miniature-thumb {
+  flex: 1 1 calc(20% - 1rem);
+  max-width: calc(20% - 1rem);
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.miniature-thumb:hover {
+  transform: scale(1.05);
+}
+
+.miniature-thumb img {
+  width: 100%;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+  border-radius: 0.5rem;
+}
+
 @media only screen and (min-width: 601px) {
   .sectionHaute {
     padding: 2vw 0;
-    padding-left: 15vw;
+    padding-left: 5vw;
   }
 }
 :root {

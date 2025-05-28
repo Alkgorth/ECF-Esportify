@@ -15,7 +15,7 @@ class AdminController extends Controller
     public function route(): void
     {
         try {
-            //on mes en place une condition pour lancer le bon controller
+            //On mes en place une condition pour lancer le bon controller
             if (isset($_GET['action'])) {
                 switch ($_GET['action']) {
                     case 'gestionEvent':

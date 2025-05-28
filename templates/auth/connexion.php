@@ -4,7 +4,6 @@
 
 ?>
 
-
 <div class="container-fluid px-5 mt-4 row d-flex justify-content-center">
     <h1 class="text-center pb-2">Connexion</h1>
     <a href="../index.php" class="text-center">

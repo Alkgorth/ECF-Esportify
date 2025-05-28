@@ -1,6 +1,5 @@
 <?php
 
-// indique où ce situe le fichier
 namespace App\Repository;
 
 use App\Entity\Token as TableToken;
@@ -10,9 +9,9 @@ use DateTime;
 
 class UserRepository extends MainRepository
 {
+    // Récupèration de l'utilisateur
     public function findOneById(int $id)
     {
-        // requête qui récupère l'utilisateur
         $query = $this->pdo->prepare("SELECT * FROM user WHERE id_user = :id");
         $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
         $query->execute();
@@ -44,9 +43,9 @@ class UserRepository extends MainRepository
         }
     }
 
+    // Requête pour Insèrer ou Update l'utilisateur
     public function persist(User $user)
     {
-        // requête qui insère l'utilisateur
         if ($user->getIdUser() !== null) {
             $query = $this->pdo->prepare(
                 "UPDATE user SET last_name = :last_name, first_name = :first_name, mail = :mail,
@@ -73,7 +72,6 @@ class UserRepository extends MainRepository
 
     public function delete(int $id)
     {
-        // requête qui supprime l'utilisateur
         $query = $this->pdo->prepare("DELETE FROM user WHERE id_user = :id");
         $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
         return $query->execute();
