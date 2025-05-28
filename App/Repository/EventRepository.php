@@ -298,4 +298,12 @@ class EventRepository extends MainRepository
 
         return $eventId;
     }
+
+    public function deleteEvent(int $id)
+    {
+        // requête qui supprime l'évènement
+        $query = $this->pdo->prepare("DELETE FROM event WHERE id_event = :id");
+        $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
+        return $query->execute();
+    }
 }

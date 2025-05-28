@@ -205,6 +205,7 @@ class EventController extends Controller
         try {
             $error           = [];
             $majEvent        = "Votre demande de mise à jour à été envoyée.";
+            $deleteEvent = "L'évènement à bien été supprimé !";
             $eventRepository = new EventRepository();
             $myEvent = $eventRepository->myEvents();
             $plateformes     = $eventRepository->getAllPlateformes();
@@ -266,14 +267,20 @@ class EventController extends Controller
 
             if (empty($plateformes)) {
                 throw new \Exception("Aucune donnée n'a été trouvée");
-            } else {
+            }
+            
+            if (isset($_POST['delete'])){
+                $eventRepository->deleteEvent($_POST['id_event']);
+                header('Location: index.php?controller=event&action=mesEvents');
+            }
+
                 $this->render('event/mesEvents', [
+                    'deleteEvent' => $deleteEvent,
                     'majEvent'    => $majEvent,
                     'plateformes' => $plateformes,
                     'error'       => $error,
                     'events'      => $myEvent,
                 ]);
-            }
 
         } catch (\Exception $e) {
             $this->render('errors/default', [
