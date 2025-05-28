@@ -5,12 +5,12 @@
 ?>
 <header>
 
-         <nav class="navbar barreNav z-3" id="navbar">
+    <nav class="navbar barreNav z-3" id="navbar">
         <ul class="navbar-nav flex-shrink-0 list-unstyled ps-0 flex-grow-1 d-flex flex-column h-100">
             <li class="nav-item liItem logo">
-                <a href="/index.php?controller=pages&action=home" class="nav-link d-flex ps-1 ms-1 mt-3 border-bottom myLink">
+                <a href="/index.php?controller=pages&action=home" class="nav-link d-flex ps-1 ms-1  border-bottom myLink">
                     <span class="logo-text">Esportify</span>
-                    <img src="../Assets/Documentation/Images/Logo-Bannière/Logo_Esportify.png" alt="Logo Esportify" class="pe-2">
+                    <img src="../Assets/Documentation/Images/Logo-Bannière/Logo-01.png" alt="Logo Esportify" class="pe-2">
                 </a>
             </li>
             

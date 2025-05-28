@@ -10,8 +10,8 @@
 
 <main>
     <section class="container mt-4 sectionHaute">
-        <div class="banniere container-fluid">
-            <img src="../../Assets/Documentation/Images/Logo-Bannière/Banniere_Esportify.png" alt="bannière esportify">
+        <div class="banniere container-fluid text-center">
+            <img src="../../Assets/Documentation/Images/Logo-Bannière/Banniere-01.png" alt="bannière esportify" class="img-fluid banniere-img">
         </div>
         <div class="container p-4">
             <p class="text-align-center fs-4">
@@ -53,20 +53,22 @@
                 </button>
 
                 <!-- Miniatures -->
-                <div class="d-flex flex-nowrap justify-content-center col-8 mx-auto miniature">
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="0">
+                <!-- <div class="d-flex flex-nowrap justify-content-center col-8 mx-auto miniature"> -->
+                <div class="d-flex flex-wrap justify-content-center gap-2 mt-3 miniature-wrapper">
+
+                    <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="0">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid w-100" alt="Image 1">
                     </div>
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="1">
+                    <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="1">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="img-fluid w-100" alt="Image 2">
                     </div>
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="2">
+                    <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="2">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid w-100" alt="Image 3">
                     </div>
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="3">
+                    <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="3">
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid w-100" alt="Image 4">
                     </div>
-                    <div class="col-3 mx-2" data-bs-target="#carouselExample" data-bs-slide-to="4">
+                    <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="4">
                         <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid w-100" alt="Image 5">
                     </div>
                 </div>
@@ -74,7 +76,7 @@
         </div>
     </section>
 
-    <section class="section-light mt-2">
+    <section class="sectionBasse mt-2">
 
         <h2 class="mb-4 text-center">Les derniers évènements</h2>
         <div class="container mb-3">
