@@ -7,7 +7,7 @@
 <div class="container-fluid px-5 mt-4 row d-flex justify-content-center">
     <h1 class="text-center pb-2">Connexion</h1>
     <a href="../index.php" class="text-center">
-        <img src="" alt="Logo Esportify" class="pb-4" width="400">
+        <img src="../../Assets/Documentation/Images/Logo-Bannière/Logo-02.png" alt="Logo Esportify" class="pb-4" width="400">
     </a>
 
     <?php foreach ($error as $errors) {?>

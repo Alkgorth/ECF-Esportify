@@ -5,10 +5,6 @@ nav {
   border: 2px solid blue;
 }
 
-ul {
-  border: 2px solid yellow;
-}
-
 ul li,
 ul li a,
 ul li svg,
@@ -19,8 +15,6 @@ ul li a span{
 .barreNav {
   height: 100%;
   position: fixed;
-  top: 0;
-  left: 0;
   transition: var(--transition-speed);
   z-index: 999;
   overflow: auto;
@@ -28,6 +22,7 @@ ul li a span{
 }
 
 ul {
+  border: 2px solid yellow;
   padding: 0;
   margin: 0;
 }
@@ -132,7 +127,7 @@ svg {
     display: block;
   }
 
-  .barreNav.visible .navbar-nav {
+  .barreNav.visible ul {
     flex-direction: column;
     width: 8rem;
     height: auto;
@@ -142,7 +137,7 @@ svg {
     width: 16rem;
   }
 
-  .barreNav:hover .nav-text {
+  .barreNav:hover .mySpan {
     display: inline;
   }
 
@@ -160,7 +155,7 @@ svg {
     z-index: 9999;
   }
 
-  .barreNav.visible .nav-burger {
+  .barreNav.visible .myBurger {
     visibility: hidden;
   }
 
@@ -196,7 +191,7 @@ svg {
     width: 16rem;
   }
 
-  .barreNav:hover .nav-text {
+  .barreNav:hover .mySpan {
     display: inline;
   }
 

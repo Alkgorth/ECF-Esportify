@@ -14,6 +14,7 @@
 
 :root {
   font-size: 16px;
+    --esportify-white: #fbf1ff;
     --esportify-blue: #36fef6;
     --esportify-green: #bffe88;
     --esportify-dark: #2e434a;
@@ -21,11 +22,16 @@
     --esportify-grey-50: #4d5152;
     --esportify-grey-25: #424546;
     --esportify-grey-5: #2b2e2f;
-    --esportify-white: #fbf1ff;
     --esportify-font-subtitles: "Rajdhani", sans-serif;
     --esportify-font-menus: "Orbitron", sans-serif;
     --esportify-font-texts: "Roboto", sans-serif;
     --esportify-text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
     --esportify-box-shadow: 5px 0 20px rgba(196, 192, 192, 0.4);
     --transition-speed: 600ms;
+
+
+    
+    
+    // --transition-speed: 0.3s ease;
+
   }
