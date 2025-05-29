@@ -10,7 +10,7 @@
             <li class="nav-item liItem logo">
                 <a href="/index.php?controller=pages&action=home" class="nav-link d-flex ps-1 ms-1  border-bottom myLink">
                     <span class="logo-text">Esportify</span>
-                    <img src="../Assets/Documentation/Images/Logo-Bannière/Logo-01.png" alt="Logo Esportify" class="pe-2">
+                    <img src="../Assets/Documentation/Images/Logo-Bannière/Logo-02.png" alt="Logo Esportify" class="pe-2">
                 </a>
             </li>
             

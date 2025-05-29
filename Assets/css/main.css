@@ -12003,10 +12003,6 @@ nav {
   border: 2px solid blue;
 }
 
-ul {
-  border: 2px solid yellow;
-}
-
 ul li,
 ul li a,
 ul li svg,
@@ -12017,8 +12013,6 @@ ul li a span {
 .barreNav {
   height: 100%;
   position: fixed;
-  top: 0;
-  left: 0;
   transition: var(--transition-speed);
   z-index: 999;
   overflow: auto;
@@ -12026,6 +12020,7 @@ ul li a span {
 }
 
 ul {
+  border: 2px solid yellow;
   padding: 0;
   margin: 0;
 }
@@ -12126,7 +12121,7 @@ svg {
     transition: var(--transition-speed);
     display: block;
   }
-  .barreNav.visible .navbar-nav {
+  .barreNav.visible ul {
     flex-direction: column;
     width: 8rem;
     height: auto;
@@ -12134,7 +12129,7 @@ svg {
   .barreNav:hover {
     width: 16rem;
   }
-  .barreNav:hover .nav-text {
+  .barreNav:hover .mySpan {
     display: inline;
   }
   .barreNav:hover .logo-text {
@@ -12149,7 +12144,7 @@ svg {
     margin-bottom: 1.5rem;
     z-index: 9999;
   }
-  .barreNav.visible .nav-burger {
+  .barreNav.visible .myBurger {
     visibility: hidden;
   }
   .logo {
@@ -12177,7 +12172,7 @@ svg {
   .barreNav:hover {
     width: 16rem;
   }
-  .barreNav:hover .nav-text {
+  .barreNav:hover .mySpan {
     display: inline;
   }
   .barreNav:hover .logo-text {
@@ -12236,6 +12231,7 @@ svg {
   height: auto;
   -o-object-fit: contain;
      object-fit: contain;
+  border-radius: 1.5rem;
 }
 
 .events {
@@ -12256,7 +12252,7 @@ svg {
 
 .miniatures-wrapper {
   width: 100%;
-  max-width: 66%; /* Aligne avec col-8 du carrousel */
+  max-width: 66%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -12294,6 +12290,7 @@ svg {
 }
 :root {
   font-size: 16px;
+  --esportify-white: #fbf1ff;
   --esportify-blue: #36fef6;
   --esportify-green: #bffe88;
   --esportify-dark: #2e434a;
@@ -12301,7 +12298,6 @@ svg {
   --esportify-grey-50: #4d5152;
   --esportify-grey-25: #424546;
   --esportify-grey-5: #2b2e2f;
-  --esportify-white: #fbf1ff;
   --esportify-font-subtitles: "Rajdhani", sans-serif;
   --esportify-font-menus: "Orbitron", sans-serif;
   --esportify-font-texts: "Roboto", sans-serif;
