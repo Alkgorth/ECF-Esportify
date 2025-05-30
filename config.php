@@ -2,8 +2,8 @@
 
 return [
     'db_name' => 'esportify_bdd',
-    'db_user' => 'root',
-    'db_password' => '',
+    'db_user' => 'esportify',
+    'db_password' => 'LeMotDePasse',
     'db_port' => '3306',
-    'db_host' => 'localhost'
+    'db_host' => 'db'
 ];
