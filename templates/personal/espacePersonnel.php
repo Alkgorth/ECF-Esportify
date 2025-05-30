@@ -1,7 +1,7 @@
 <?php
 
-require_once _ROOTPATH_ . '\templates\head.php';
-require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
 ?>
 
@@ -9,10 +9,16 @@ require_once _ROOTPATH_ . '\templates\header.php';
   <section class="container justify-content-center align-items-center d-flex">
     <h1 class="m-4">Page Espace Personnel Joueur</h1>
   </section>
-  
+
   <section class="container row text-center justify-content-center align-items-center d-flex">
     <div class="d-grid gap-2 d-md-block mt-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=mesEvents" role="button">Mes évènements</a>
+    </div>
+  </section>
+
+  <section class="container row text-center justify-content-center align-items-center d-flex">
+    <div class="d-grid gap-2 d-md-block mt-2">
+      <a class="btn btn-primary" href="index.php?controller=event&action=createEventKs" role="button">Soumettre un évènement</a>
     </div>
   </section>
 
@@ -20,17 +26,17 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
     <form class="m-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnel">
 
-      <?php if (empty($error) && isset($_POST['saveUser'])) { ?>
+      <?php if (empty($error) && isset($_POST['saveUser'])) {?>
         <div class="alert alert-primary" role="alert">
-          <?= $affichage; ?>
+          <?php echo $affichage;?>
         </div>
-      <?php } ?>
+      <?php }?>
 
-      <?php foreach ($error as $errors) { ?>
+      <?php foreach ($error as $errors) {?>
         <div class="alert alert-danger" role="alert">
-          <?= $errors; ?>
+          <?php echo $errors;?>
         </div>
-      <?php } ?>
+      <?php }?>
 
       <h1 class="text-center pb-4">Espace personnel</h1>
 
@@ -39,22 +45,22 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
       <div class="mb-3 text-center">
         <label for="last_name" class="form-label">Nom</label>
-        <input type="text" class="form-control" id="last_name" name="last_name" value="<?= htmlspecialchars($_SESSION['user']['last_name']) ?>">
+        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name'])?>">
 
       </div>
       <div class="mb-3 text-center">
         <label for="first_name" class="form-label">Prénom</label>
-        <input type="text" class="form-control" id="first_name" name="first_name" value="<?= htmlspecialchars($_SESSION['user']['first_name']) ?>">
+        <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name'])?>">
       </div>
 
       <div class="mb-3 text-center">
         <label for="pseudo" class="form-label">Pseudo</label>
-        <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?= htmlspecialchars($_SESSION['user']['pseudo']) ?>">
+        <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?php echo htmlspecialchars($_SESSION['user']['pseudo'])?>">
       </div>
 
       <div class="mb-3 text-center">
         <label for="mail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="mail" name="mail" value="<?= htmlspecialchars($_SESSION['user']['mail']) ?>">
+        <input type="email" class="form-control" id="mail" name="mail" value="<?php echo htmlspecialchars($_SESSION['user']['mail'])?>">
 
       </div>
       <div class="mb-3 text-center">
@@ -83,6 +89,6 @@ require_once _ROOTPATH_ . '\templates\header.php';
 
 <?php
 
-require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '/templates/footer.php';
 
 ?>

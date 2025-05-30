@@ -1,7 +1,7 @@
 <?php
 
-    require_once _ROOTPATH_ . '\templates\head.php';
-    require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
 ?>
 
@@ -59,7 +59,7 @@
         <div class="text-center">
             <button type="submit" name="saveUser" class="btn btn-warning m-4">Valider</button>
         </div>
-        
+
         <div class="text-center">
             <button type="submit" name="delete" class="btn btn-dark m-4">Supprimer mon compte</button>
         </div>
@@ -70,6 +70,6 @@
 
 <?php
 
-    require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '/templates/footer.php';
 
 ?>

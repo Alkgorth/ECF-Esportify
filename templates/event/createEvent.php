@@ -1,7 +1,7 @@
 <?php
 
-    require_once _ROOTPATH_ . '\templates\head.php';
-    require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
 ?>
 
@@ -14,21 +14,21 @@
       </div>
     <?php }?>
 
-    <?php if (!empty($error)) {
+    <?php if (! empty($error)) {
             foreach ($error as $fieldName => $errors) {
                 if (is_array($errors)) {
-                    foreach ($errors as $errorMessage) {?>
+                foreach ($errors as $errorMessage) {?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo $errorMessage; ?>
                         </div>
                     <?php }
-                } else { ?>
+                            } else {?>
                     <div class="alert alert-danger" role="alert">
                         <?php echo $errors; ?>
                     </div>
                 <?php }
-            }
-        }?>
+                        }
+                }?>
 
         <h1 class="text-center pb-4">Créer un évènement</h1>
 
@@ -129,6 +129,6 @@
 
 <?php
 
-    require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '/templates/footer.php';
 
 ?>

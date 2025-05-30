@@ -1,7 +1,7 @@
 <?php
 
-    require_once _ROOTPATH_ . '\templates\head.php';
-    require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
@@ -84,15 +84,15 @@
                 <?php foreach ($events as $event) {?>
                     <div class="col">
                         <div class="card h-100">
-                            <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id']?>" id=derniersEvent class="text-decoration-none text-white">
-                                <img src="<?php echo $cheminCouverture . $event['cover']?>" class="card-img-top" alt="<?php echo $event['name']?>">
+                            <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
+                                <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?php echo $event['name'] ?>">
                             </a>
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $event['name']?></h5>
-                                <p class="card-text"><?php echo $event['plateforme_name']?></p>
-                                <p class="card-text">Début : <?php echo $event['start']?></p>
-                                <p class="card-text">Fin : <?php echo $event['end']?></p>
-                                <p class="card-text">Joueurs inscrits : <?php echo $event['joueurs']?></p>
+                                <h5 class="card-title"><?php echo $event['name'] ?></h5>
+                                <p class="card-text"><?php echo $event['plateforme_name'] ?></p>
+                                <p class="card-text">Début :                                                              <?php echo $event['start'] ?></p>
+                                <p class="card-text">Fin :                                                           <?php echo $event['end'] ?></p>
+                                <p class="card-text">Joueurs inscrits :                                                                        <?php echo $event['joueurs'] ?></p>
                             </div>
                         </div>
                     </div>
@@ -104,6 +104,6 @@
 
 <?php
 
-    require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '/templates/footer.php';
 
 ?>

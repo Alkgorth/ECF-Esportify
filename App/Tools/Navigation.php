@@ -16,4 +16,10 @@ class Navigation
         return '';
     }
 
+    // fonction pour ne plus avoir à ré-écrire le chemin et s'occuper des \ ou / 
+    public function path(string ...$parts): string
+    {
+        return implode(DIRECTORY_SEPARATOR, $parts);
+    }
+
 }

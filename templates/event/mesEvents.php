@@ -1,7 +1,7 @@
 <?php
 
-    require_once _ROOTPATH_ . '\templates\head.php';
-    require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
@@ -19,21 +19,21 @@
         </div>
         <?php }?>
 
-        <?php if (!empty($error)) {
+        <?php if (! empty($error)) {
                 foreach ($error as $fieldName => $errors) {
                     if (is_array($errors)) {
-                        foreach ($errors as $errorMessage) {?>
+                    foreach ($errors as $errorMessage) {?>
                             <div class="alert alert-danger" role="alert">
                                 <?php echo $errorMessage; ?>
                             </div>
                         <?php }
-                    } else { ?>
+                                } else {?>
                         <div class="alert alert-danger" role="alert">
                             <?php echo $errors; ?>
                         </div>
                     <?php }
-                }
-            }?>
+                            }
+                    }?>
 
         <h2 class="mb-3 mt-3 text-center">Évènements suggérés</h2>
         <div class="container mb-3 cardEvent">
@@ -46,10 +46,10 @@
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $event['name'] ?></h5>
-                                    <p class="card-text">Début : <?php echo $event['start'] ?></p>
-                                    <p class="card-text">Fin : <?php echo $event['end'] ?></p>
-                                    <p class="card-text">Joueurs inscrits : <?php echo $event['joueurs'] ?></p>
-                                    <p class="card-text">Status : <?php echo $event['status'] ?></p>
+                                    <p class="card-text">Début :                                                                  <?php echo $event['start'] ?></p>
+                                    <p class="card-text">Fin :                                                               <?php echo $event['end'] ?></p>
+                                    <p class="card-text">Joueurs inscrits :                                                                            <?php echo $event['joueurs'] ?></p>
+                                    <p class="card-text">Status :                                                                  <?php echo $event['status'] ?></p>
                                 <div class="row mt-4">
                                     <div class="text-center col-12">
                                         <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#eventModal<?php echo $event['id'] ?>">
@@ -65,7 +65,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="eventModalLabel<?php echo $event['id'] ?>">Détails de l'événement : <?php echo $event['name'] ?></h1>
+                                    <h1 class="modal-title fs-5" id="eventModalLabel<?php echo $event['id'] ?>">Détails de l'événement :<?php echo $event['name'] ?></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
@@ -79,21 +79,21 @@
                                             </div>
                                         <?php }?>
 
-                                        <?php if (!empty($error)) {
-                                            foreach ($error as $fieldName => $errors) {
-                                                if (is_array($errors)) {
+                                        <?php if (! empty($error)) {
+                                                foreach ($error as $fieldName => $errors) {
+                                                    if (is_array($errors)) {
                                                     foreach ($errors as $errorMessage) {?>
                                                         <div class="alert alert-danger" role="alert">
                                                             <?php echo $errorMessage; ?>
                                                         </div>
                                                     <?php }
-                                                } else { ?>
+                                                            } else {?>
                                                     <div class="alert alert-danger" role="alert">
                                                         <?php echo $errors; ?>
                                                     </div>
                                                 <?php }
-                                            }
-                                        }?>
+                                                        }
+                                                }?>
 
                                         <!-- Input pour CSRF -->
                                         <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
@@ -133,9 +133,9 @@
                                             <label for="name_plateforme" class="form-label">Plateforme</label>
                                             <select name="fk_id_plateforme" id="fk_id_plateforme">
                                                 <?php foreach ($plateformes as $plateforme): ?>
-                                                <option value="<?= $plateforme['id_plateforme'] ?>">
-                                                    <?= $plateforme['id_plateforme'] == $event['plateforme_name'] ? 'selected' : '' ?>>
-                                                    <?= htmlspecialchars($plateforme['name']) ?>
+                                                <option value="<?php echo $plateforme['id_plateforme']?>">
+                                                    <?php echo $plateforme['id_plateforme'] == $event['plateforme_name'] ? 'selected' : ''?>>
+                                                    <?php echo htmlspecialchars($plateforme['name'])?>
                                                 </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -159,7 +159,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="nombre_de_joueurs" class="form-label">Nombre de joueurs</label>
-                                            <input type="number" class="form-control <?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
+                                            <input type="number" class="form-control                                                                                     <?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
                                                 id="nombre_de_joueurs"
                                                 name="nombre_de_joueurs"
                                                 min="10"
@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea class="form-control <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
+                                            <textarea class="form-control                                                                          <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
                                                 id="description"
                                                 name="description"
                                                 rows="5" cols="33"
@@ -212,7 +212,7 @@
                         </div>
                     </div>
 
-                    
+
                             <!-- Modal de confirmation de suppression -->
                             <div class="modal fade" id="confirmDeleteModal<?php echo $event['id']; ?>" tabindex="-1" aria-labelledby="confirmDeleteLabel<?php echo $event['id']; ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -244,9 +244,9 @@
 </main>
 
 
- 
+
 <?php
 
-    require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '/templates/footer.php';
 
 ?>
