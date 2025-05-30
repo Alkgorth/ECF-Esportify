@@ -23,7 +23,7 @@ services:
       MYSQL_USER: esportify
       MYSQL_PASSWORD: LeMotDePasse
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - db_data:/var/lib/mysql
 

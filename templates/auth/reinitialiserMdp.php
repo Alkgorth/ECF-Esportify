@@ -1,6 +1,6 @@
 <?php
 
-require_once _ROOTPATH_ . '\templates\head.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
 
 ?>
 
@@ -13,17 +13,17 @@ require_once _ROOTPATH_ . '\templates\head.php';
     <form method="POST" class="col-sm-6 mb-3 mx-auto justify-content-center">
         <div class="mb-3 text-center">
             <label for="password" class="form-label text-white">Nouveau mot de passe</label>
-            <input type="password" class="form-control" <?= (isset($errors['password']) ? 'is-invalid' : '') ?> id="password" name="password">
-            <?php if (isset($errors['password'])) { ?>
-                <div class="invalid-feedback"><?= $errors['password'] ?></div>
-            <?php } ?>
+            <input type="password" class="form-control" <?php echo (isset($errors['password']) ? 'is-invalid' : '')?> id="password" name="password">
+            <?php if (isset($errors['password'])) {?>
+                <div class="invalid-feedback"><?php echo $errors['password']?></div>
+            <?php }?>
         </div>
         <div class="mb-3 text-center">
             <label for="passwordConfirm" class="form-label text-white">Confirmer mot de passe</label>
-            <input type="password" class="form-control" <?= (isset($errors['passwordConfirm']) ? 'is-invalid' : '') ?> id="passwordConfirm" name="passwordConfirm">
-            <?php if (isset($errors['passwordConfirm'])) { ?>
-                <div class="invalid-feedback"><?= $errors['passwordConfirm'] ?></div>
-            <?php } ?>
+            <input type="password" class="form-control" <?php echo (isset($errors['passwordConfirm']) ? 'is-invalid' : '')?> id="passwordConfirm" name="passwordConfirm">
+            <?php if (isset($errors['passwordConfirm'])) {?>
+                <div class="invalid-feedback"><?php echo $errors['passwordConfirm']?></div>
+            <?php }?>
         </div>
 
         <div class="d-flex justify-content-center">

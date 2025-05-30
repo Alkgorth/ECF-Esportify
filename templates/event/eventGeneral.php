@@ -1,7 +1,7 @@
 <?php
 
-    require_once _ROOTPATH_ . '\templates\head.php';
-    require_once _ROOTPATH_ . '\templates\header.php';
+    require_once _ROOTPATH_ . '/templates/head.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
@@ -16,6 +16,6 @@
 
 <?php
 
-    require_once _ROOTPATH_ . '\templates\footer.php';
+    require_once _ROOTPATH_ . '/templates/footer.php';
 
 ?>

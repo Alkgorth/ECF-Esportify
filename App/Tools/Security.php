@@ -7,7 +7,7 @@ use App\Repository\UserRepository;
 //These must be at the top of your script, not inside a function
 
 //Load Composer's autoloader
-require 'vendor\autoload.php';
+require 'vendor/autoload.php';
 
 class Security
 {
