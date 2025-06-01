@@ -83,6 +83,7 @@ class EventRepository extends MainRepository
             INNER JOIN user u ON e.fk_id_user = u.id_user
             INNER JOIN event_image ei ON ei.fk_id_event = e.id_event
             WHERE e.id_event = :id
+            GROUP BY e.id_event
         ');
 
         $query->bindParam(':id', $id, $this->pdo::PARAM_INT);
@@ -94,34 +95,37 @@ class EventRepository extends MainRepository
     }
 
     //Affichage des informations global pour un évènement
-    public function findGlobal(int $id)
+    public function findGlobal()
     {
 
         $query = $this->pdo->prepare('SELECT
+            e.id_event AS id,
             e.name_event AS name,
             e.name_game AS game_name,
             e.date_hour_start AS start,
             e.date_hour_end AS end,
-            e.nombrede_joueurs AS joueurs,
+            e.nombre_de_joueurs AS joueurs,
             e.description AS description,
             e.visibility AS visibilite,
+            e.cover_image_path AS cover,
             pl.name AS plateforme,
             u.pseudo AS organisateur,
+            GROUP_CONCAT(DISTINCT ei.image_path SEPARATOR ", ") AS diaporama
             FROM event AS e
             INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
             INNER JOIN user u ON e.fk_id_user = u.id_user
-            WHERE e.id_event = :id
+            LEFT JOIN event_image ei ON ei.fk_id_event = e.id_event
+            WHERE e.status = :status_valide
+            GROUP BY e.id_event
           ');
 
-        $query->bindParam(':id', $id, $this->pdo::PARAM_INT);
+        $statusValide = 'validé';
+        $query->bindParam(':status_valide', $statusValide, $this->pdo::PARAM_STR);
 
         $query->execute();
-        $global = $query->fetch($this->pdo::FETCH_ASSOC);
-        if ($global) {
+        $events = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
-            return $global;
-        }
-        return false;
+            return $events;
     }
 
     //Récupération de toutes les plateformes en base de données

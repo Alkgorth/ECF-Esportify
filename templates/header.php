@@ -22,7 +22,7 @@
                     <span class="nav-text mySpan">Événements</span>
                 </a>
                 <ul class="list-unstyled fw-normal pb-1 small dropdown-menu">
-                    <li><a href="#" class="dropdown-item">Tous les événements</a></li>
+                    <li><a href="/index.php?controller=event&action=eventGeneral" class="dropdown-item">Tous les événements</a></li>
                     <li><a href="#" class="dropdown-item">À venir</a></li>
                     <li><a href="#" class="dropdown-item">En cours</a></li>
                 </ul>
