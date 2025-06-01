@@ -19,7 +19,7 @@ class EventController extends Controller
                         $this->eventDetail($_GET['id']);
                         break;
                     case 'eventGeneral':
-                        $this->eventGeneral($_GET['id']);
+                        $this->eventGeneral();
                         break;
                     case 'eventGamer':
                         $this->eventGamer();
@@ -79,14 +79,22 @@ class EventController extends Controller
         }
     }
 
-    /*protected function event()
-    {
-        $this->render('event/event', []);
-    }*/
-
     protected function eventGeneral()
     {
-        $this->render('event/eventGeneral', []);
+        try {
+            $eventRepository = new EventRepository();
+            $allEvent = $eventRepository->findGlobal();
+
+
+            $this->render('event/eventGeneral', [
+                'allEvent' => $allEvent,
+            ]);
+
+        } catch (\Exception $e) {
+            $this->render('error/default', [
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     protected function eventGamer()

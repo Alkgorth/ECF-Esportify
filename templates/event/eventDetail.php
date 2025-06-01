@@ -17,18 +17,17 @@
                 </div>
                 <div class="col-md-6">
                     <h2 class="text-center"><?php echo $eventDetail['name'] ?></h2>
-                    <p class="lead text-center">Jeu :                                                      <?php echo $eventDetail['game_name'] ?></p>
-                    <p class="text-center fs-2">Plateforme :
-                        <?php echo $eventDetail['plateforme_name'] ?></p>
+                    <p class="lead text-center">Jeu :<?php echo $eventDetail['game_name'] ?></p>
+                    <p class="text-center fs-2">Plateforme :<?php echo $eventDetail['plateforme_name'] ?></p>
                 </div>
                 <div>
-                    <p class="fs-2">Organisateur :                                                   <?php echo $eventDetail['organisateur'] ?></p>
+                    <p class="fs-2">Organisateur :<?php echo $eventDetail['organisateur'] ?></p>
                 </div>
                 <div class="row row-cols-1 row-cols-md-2 align-items-center">
-                    <p class="text-center fs-2">Début :                                                         <?php echo $eventDetail['start'] ?></p>
-                    <p class="text-center fs-2">Fin :                                                      <?php echo $eventDetail['end'] ?></p>
+                    <p class="text-center fs-2">Début :<?php echo $eventDetail['start'] ?></p>
+                    <p class="text-center fs-2">Fin :<?php echo $eventDetail['end'] ?></p>
                 </div>
-                    <p>Nombre de joueurs inscrits :                                                    <?php echo $eventDetail['joueurs'] ?></p>
+                    <p>Nombre de joueurs inscrits :<?php echo $eventDetail['joueurs'] ?></p>
                     <p class="mt-3"><?php echo nl2br($eventDetail['description']) ?></p>
 
                     <?php if (! empty($eventDetail['diaporama'])): ?>
@@ -62,9 +61,7 @@
                                 </button>
                             </div>
                         </div>
-                        <?php endif; ?>
-
-                </div>
+                    <?php endif; ?>
             </div>
         <?php else: ?>
             <p class="alert alert-warning">L'événement demandé n'a pas été trouvé.</p>

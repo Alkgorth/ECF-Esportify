@@ -90,9 +90,9 @@
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $event['name'] ?></h5>
                                 <p class="card-text"><?php echo $event['plateforme_name'] ?></p>
-                                <p class="card-text">Début :                                                              <?php echo $event['start'] ?></p>
-                                <p class="card-text">Fin :                                                           <?php echo $event['end'] ?></p>
-                                <p class="card-text">Joueurs inscrits :                                                                        <?php echo $event['joueurs'] ?></p>
+                                <p class="card-text">Début :<?php echo $event['start'] ?></p>
+                                <p class="card-text">Fin :<?php echo $event['end'] ?></p>
+                                <p class="card-text">Joueurs inscrits :<?php echo $event['joueurs'] ?></p>
                             </div>
                         </div>
                     </div>
