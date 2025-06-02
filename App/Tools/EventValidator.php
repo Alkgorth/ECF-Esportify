@@ -14,8 +14,8 @@ class EventValidator
     private const MAX_DESCRIPTION_LENGHT = 500;
     private const MIN_PLAYERS = 10;
     private const MAX_DIAPO_IMAGES =5;
-    //Définir les const destinationCover Dir Diapo ici
-
+    private const DIR_COUVERTURE = "/Assets/Documentation/Images/Couverture/";
+    private const DIR_DIAPORAMA = "/Assets/Documentation/Images/Diapo/";
 
     //Vérifie si les champs du formulaire de création d'évènements son correctement renseignés.
     public static function validateEvent($event): array
@@ -160,8 +160,8 @@ class EventValidator
         $error            = [];
         $uploadedFiles    = [];
         $projectRoot      = dirname(__DIR__, 2);
-        $destinationCover = $projectRoot . "/Assets/Documentation/Images/Couverture/";
-        $destinationDiapo = $projectRoot . "/Assets/Documentation/Images/Diapo/";
+        $destinationCover = $projectRoot . self::DIR_COUVERTURE;
+        $destinationDiapo = $projectRoot . self::DIR_DIAPORAMA;
 
         if (! is_dir($destinationCover)) {
             if (! mkdir($destinationCover)) {

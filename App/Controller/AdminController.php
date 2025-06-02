@@ -40,7 +40,18 @@ class AdminController extends Controller
 
     protected function gestionEvent()
     {
-        $this->render('admin/gestionEvent', []);
+        try {
+
+            if(isset($_SESSION['user']['role']) === 'administrateur'){
+
+            }
+
+            $this->render('admin/gestionEvent', []);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
     }
 
     protected function gestionDroits()

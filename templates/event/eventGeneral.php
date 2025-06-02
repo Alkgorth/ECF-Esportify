@@ -13,8 +13,25 @@
 
     </section>
 <section class="container ">
+
+    <?php if (! empty($error)) {
+            foreach ($error as $fieldName => $errors) {
+                if (is_array($errors)) {
+                foreach ($errors as $errorMessage) {?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $errorMessage; ?>
+                        </div>
+                    <?php }
+                            } else {?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $errors; ?>
+                    </div>
+                <?php }
+                        }
+                }?>
+
     <div class="card mb-3 contauner-fluid col-10">
-        <?php foreach ($events as $event) {?>
+        <?php foreach ($allEvent as $event) {?>
     <div class="row g-0">
         <div class="col-md-4">
             <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="img-fluid rounded-start" alt="<?php echo $event['name'] ?>">
