@@ -31,16 +31,16 @@
                         <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="d-block w-100" alt="Gameuse victoire">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="d-block w-100" alt="...">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="d-block w-100" alt="Gameuse Ingame">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="d-block w-100" alt="...">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="d-block w-100" alt="Team Gamers">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="d-block w-100" alt="...">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="d-block w-100" alt="Team Gamers">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="d-block w-100" alt="...">
+                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="d-block w-100" alt="Team Gamers">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
@@ -57,19 +57,19 @@
                 <div class="d-flex flex-wrap justify-content-center gap-2 mt-3 miniature-wrapper">
 
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="0">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid w-100" alt="Image 1">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid w-100" alt="Miniature Gameuse victoire">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="1">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="img-fluid w-100" alt="Image 2">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="img-fluid w-100" alt="Miniature Gameuse Ingame">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="2">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid w-100" alt="Image 3">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid w-100" alt="Miniature Team Gamers">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="3">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid w-100" alt="Image 4">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid w-100" alt="Miniature Team Gamers">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="4">
-                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid w-100" alt="Image 5">
+                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid w-100" alt="Miniature Team Gamers">
                     </div>
                 </div>
             </div>
