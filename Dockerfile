@@ -1,8 +1,13 @@
 FROM php:8.3.14-apache
 
 # Mise à jour du packet
-RUN apt-get update && \
-    docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+        libfreetype-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        libwebp-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install gd pdo pdo_mysql
 
 # Copie de mes sources dans le conteneur (le workdir)
 # Ne pas commenter sinon crée l'erreur :  => ERROR [app stage-0 4/4] RUN composer install / plus nécéssaire avec ce que l'on a fait dans le docker-compose sur app->volumes
@@ -13,6 +18,3 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # On installe les dépendences php du projet
 RUN composer install
-
-
-
