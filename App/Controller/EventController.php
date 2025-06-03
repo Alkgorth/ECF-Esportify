@@ -83,7 +83,7 @@ class EventController extends Controller
     {
         try {
             $eventRepository = new EventRepository();
-            $allEvent = $eventRepository->findGlobal();
+            $allEvent = $eventRepository->findValidate();
 
 
             $this->render('event/eventGeneral', [

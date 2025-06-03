@@ -40,7 +40,28 @@ class AdminController extends Controller
 
     protected function gestionEvent()
     {
-        $this->render('admin/gestionEvent', []);
+        try {
+
+            // if(isset($_SESSION['user']['role']) === 'administrateur'){
+
+                $eventRepository = new EventRepository();
+                $allEvent = $eventRepository->findEventAdmin();
+
+            // } else {
+            //     throw new \Exception("Vous n'êtes pas autorisé à accéder à cette page");
+            //     // header('Location: index.php?');
+            // }
+
+            $this->render('admin/gestionEvent', [
+                'allEvent' => $allEvent,
+            ]);
+
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+        
     }
 
     protected function gestionDroits()
