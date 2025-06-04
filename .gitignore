@@ -1,5 +1,6 @@
 # Ignore les dépendances Node.js
 /node_modules
+/vendor
 
 #Fichier temporaire pour test PHP
 /testsCode.php
