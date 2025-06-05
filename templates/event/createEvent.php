@@ -37,7 +37,7 @@
 
         <div class="mb-3 text-center">
         <label for="cover_image_path">Choisissez une image de couverture:</label>
-        <input type="file" id="cover_image_path" name="cover_image_path" accept="image/png, image/jpeg" />
+        <input type="file" id="cover_image_path" name="cover_image_path" accept="image/png, image/jpeg" autocomplete="off"/>
         </div>
 
         <div class="mb-3 text-center">
@@ -55,8 +55,12 @@
         </div>
         <div class="mb-3 text-center">
             <label for="name_game" class="form-label">Nom du jeux</label>
+            
             <input type="text" class="form-control
             <?php echo(isset($error['name_game']) ? 'is-invalid' : '') ?>" id="name_game" name="name_game" required>
+
+            <div id="suggestions" class="suggestions-list"></div>
+            
             <?php if (isset($error['name_game'])) {?>
                 <div class="invalid-feedback"><?php echo $error['name_game'] ?></div>
             <?php }?>

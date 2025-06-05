@@ -18,7 +18,7 @@
 
   <section class="container row text-center justify-content-center align-items-center d-flex">
     <div class="d-grid gap-2 d-md-block mt-2">
-      <a class="btn btn-primary" href="index.php?controller=event&action=createEventKs" role="button">Soumettre un évènement</a>
+      <a class="btn btn-primary" href="index.php?controller=event&action=createEvent" role="button">Soumettre un évènement</a>
     </div>
   </section>
 

@@ -1,6 +1,8 @@
 # Ignore les dépendances Node.js
 /node_modules
 /vendor
+/.env
+Assets/js/prod.env.js
 
 #Fichier temporaire pour test PHP
 /testsCode.php
