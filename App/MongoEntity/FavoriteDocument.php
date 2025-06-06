@@ -4,8 +4,8 @@ namespace App\MongoEntity;
 
 class FavoriteDocument extends MongoMainEntity
 {
-    private $id_user;
-    private $events = [];
+    private string $id_user;
+    private string $events;
 
     public function getIdUser()
     {
@@ -15,18 +15,16 @@ class FavoriteDocument extends MongoMainEntity
     public function setIdUser(string $id_user): void
     {
         $this->id_user = $id_user;
-
     }
 
-        public function getEvents(): array
+        public function getEvents(): string
     {
         return $this->events;
     }
 
-    public function setEvents(array $events): void
+    public function setEvents(string $events): void
     {
         $this->events = $events;
-
     }
 
 }

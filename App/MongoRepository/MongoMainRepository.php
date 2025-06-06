@@ -11,7 +11,7 @@ class MongoMainRepository
 
     public function __construct()
     {
-        $mongo = MongoConnector::getInstance();
+        $mongo = MongoConnector::getInstance('esportify_mongo');
         $this->db = $mongo->getDb();
     }
 
