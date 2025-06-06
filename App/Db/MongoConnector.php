@@ -6,8 +6,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 use MongoDB\Client;
 use MongoDB\Database;
 
- 
-
 class MongoConnector
 {
     private $mongo_host;
@@ -20,7 +18,7 @@ class MongoConnector
 
     private function __construct()
     {
-        $conf = require_once _ROOTPATH_ . '/mongoConfig.php';
+        $conf = require_once __DIR__ . '/../../mongoConfig.php';
         
         if (isset($conf['mongo_name'])) {
             $this->mongo_name = $conf['mongo_name'];
@@ -67,7 +65,8 @@ class MongoConnector
     {
         if(is_null($this->mongo_client)) {
             if (!empty($this->mongo_user) && !empty($this->mongo_password)) {
-                $uri = "mongodb://{$this->mongo_user}:{$this->mongo_password}@{$this->mongo_host}:{$this->mongo_port}";
+                $authSource = $this->mongo_authSource ?? 'admin';
+                $uri = "mongodb://{$this->mongo_user}:{$this->mongo_password}@{$this->mongo_host}:{$this->mongo_port}/?authSource={$authSource}&authMechanism=SCRAM-SHA-1";
             } else {
                 $uri = "mongodb://{$this->mongo_host}:{$this->mongo_port}";
             }

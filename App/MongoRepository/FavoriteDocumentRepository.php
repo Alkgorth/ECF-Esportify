@@ -21,7 +21,6 @@ class FavoriteDocumentRepository extends MongoMainRepository
         if (!$result) {
             return null;
             }
-
         return FavoriteDocument::createAndHydrate($result->getArrayCopy());
     }
 
@@ -33,7 +32,6 @@ class FavoriteDocumentRepository extends MongoMainRepository
         foreach ($documents as $doc) {
             $entities[] = FavoriteDocument::createAndHydrate($doc->getArrayCopy());
         }
-
         return $entities;
     }
 }
