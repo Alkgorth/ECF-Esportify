@@ -4,8 +4,8 @@ namespace App\MongoEntity;
 
 class FavoriteDocument extends MongoMainEntity
 {
-    private string $id_user;
-    private string $events;
+    private string $id_user = '';
+    private string $events = '';
 
     public function getIdUser()
     {

@@ -85,7 +85,6 @@ class EventController extends Controller
             $eventRepository = new EventRepository();
             $allEvent = $eventRepository->findValidate();
 
-
             $this->render('event/eventGeneral', [
                 'allEvent' => $allEvent,
             ]);
