@@ -157,7 +157,7 @@ class EventController extends Controller
 
                     if (empty($error) && isset($_POST['valider'])) {
 
-                        $event->setFkIdUser($_SESSION['user']['id_user']);
+                        $event->setFkIdUser($_SESSION['user']['id']);
 
                         $eventId = $eventRepository->insertEvent($event);
 
