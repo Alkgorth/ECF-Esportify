@@ -24,6 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../Assets/js/script.js"></script>
   <script src="../Assets/js/apiScript.js" type="module"></script>
+  <script src="../Assets/js/filterEvent.js" type="module"></script>
 
 </body>
 </html>
