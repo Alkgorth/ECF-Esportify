@@ -3,7 +3,7 @@
 return [
     'mongo_host' => 'mongodb',
     'mongo_port' => '27017',
-    'mongo_name' => 'esportify_mongo',
+    'mongo_name' => 'Test_collection',
     'mongo_user' => 'MonUtilisateur',
     'mongo_password' => 'MonMotDePasse'
 ];

@@ -12,13 +12,17 @@
 
     <section class="container row text-center justify-content-center align-items-center d-flex">
     <div class="d-grid gap-2 d-md-block mt-2">
-      <a class="btn btn-primary" href="index.php?controller=event&action=mesEvents" role="button">Mes évènements</a>
+      <a class="btn btn-primary" href="index.php?controller=event&action=eventAdmin" role="button">Mes évènements</a>
     </div>
-  </section>
+ 
 
-  <section class="container row text-center justify-content-center align-items-center d-flex">
+  
     <div class="d-grid gap-2 d-md-block mt-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=createEvent" role="button">Soumettre un évènement</a>
+    </div>
+>
+    <div class="d-grid gap-2 d-md-block mt-2">
+      <a class="btn btn-primary" href="#" role="button">Mon historique</a>
     </div>
   </section>
 

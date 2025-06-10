@@ -34,7 +34,7 @@ class EventRepository extends MainRepository
     }
 
     //Afficher les évènements de l'utilisateur
-    public function myEvents()
+    public function myEvents(int $userId): array
     {
         $query = $this->pdo->prepare('SELECT
             e.id_event AS id,
@@ -48,17 +48,19 @@ class EventRepository extends MainRepository
             e.visibility AS visibility,
             e.status AS status,
             pl.name AS plateforme_name,
+            u.id_user AS user_id_db,
             u.pseudo AS organisateur,
             GROUP_CONCAT(DISTINCT ei.image_path SEPARATOR ", ") AS diaporama 
             FROM event AS e
             INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
             INNER JOIN user u ON e.fk_id_user = u.id_user
             LEFT JOIN event_image ei ON ei.fk_id_event = e.id_event
-            WHERE e.fk_id_user = u.id_user
+            WHERE e.fk_id_user = :userId
             GROUP BY e.id_event
+            ORDER BY e.date_hour_start DESC
         ');
 
-        $query->execute();
+        $query->execute([':userId' => $userId]);
 
         $event = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
