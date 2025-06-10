@@ -208,17 +208,22 @@ class EventController extends Controller
     protected function mesEvents()
     {
         try {
+            
+            if (! isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
+                header('Location: index.php?controller=connexions&action=connexion');
+                exit();
+            }
+
+            $userId = $_SESSION['user']['id'];
+
             $error           = [];
             $majEvent        = "Votre demande de mise à jour à été envoyée.";
-            $deleteEvent = "L'évènement à bien été supprimé !";
+            $deleteEvent     = "L'évènement à bien été supprimé !";
             $eventRepository = new EventRepository();
-            $myEvent = $eventRepository->myEvents();
+            $myEvent = $eventRepository->myEvents($userId);
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
 
-            if (! isset($_SESSION['user'])) {
-                header('Location: index.php?controller=connexions&action=connexion');
-            }
 
             if (Security::csrfToken()) {
 
@@ -255,36 +260,47 @@ class EventController extends Controller
                     $error = array_merge($error, $imageErrors);
                 }
 
-                $event->setFkIdUser($_SESSION['user']['id_user'] ?? 1);
+                $event->setFkIdUser($userId);
 
-                $updateEvent = $eventRepository->updateEvent($event);
-
-                if ($updateEvent) {
-                    $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
-                    $majEvent = "Votre demande de mise à jour à été envoyée.";
-                    header('Location: index.php?controller=event&action=mesEvents');
+                if (empty($error)){
+                    $updateEvent = $eventRepository->updateEvent($event);
+                    
+                    if ($updateEvent) {
+                        $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
+                        $majEvent = "Votre demande de mise à jour à été envoyée.";
+                        header('Location: index.php?controller=event&action=mesEvents');
+                    } else {
+                        $error['database'] = "Erreur lors de la mise à jour !";
+                    }
                 } else {
-                    $error['database'] = "Erreur lors de la mise à jour !";
+                    $myEvent = $eventRepository->myEvents($userId);
                 }
+
             }
         }
 
-            if (empty($plateformes)) {
-                throw new \Exception("Aucune donnée n'a été trouvée");
-            }
-            
-            if (isset($_POST['delete'])){
-                $eventRepository->deleteEvent($_POST['id_event']);
+        if (isset($_POST['delete']) && Security::csrfToken()){
+            if (!empty($_POST['id_event'])) {
+                $eventIdToDelete = (int) $_POST['id_event'];
+                $eventRepository->deleteEvent($eventIdToDelete);
                 header('Location: index.php?controller=event&action=mesEvents');
+                exit();
+            } else {
+                $error['delete'] = "L'évènement à supprimer n'a pas été trouvé.";
             }
+        }
 
-                $this->render('event/mesEvents', [
-                    'deleteEvent' => $deleteEvent,
-                    'majEvent'    => $majEvent,
-                    'plateformes' => $plateformes,
-                    'error'       => $error,
-                    'events'      => $myEvent,
-                ]);
+        if (empty($plateformes)) {
+            throw new \Exception("Aucune donnée n'a été trouvée");
+        }
+
+        $this->render('event/mesEvents', [
+            'deleteEvent' => $deleteEvent,
+            'majEvent'    => $majEvent,
+            'plateformes' => $plateformes,
+            'error'       => $error,
+            'events'      => $myEvent,
+        ]);
 
         } catch (\Exception $e) {
             $this->render('errors/default', [
