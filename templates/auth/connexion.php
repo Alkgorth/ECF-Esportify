@@ -23,7 +23,7 @@
 
         <div class="mb-2 text-center">
             <label for="mail" class="form-label text-white">Adresse mail</label>
-            <input type="email" class="form-control" id="mail" aria-describedby="emailHelp" name="mail">
+            <input type="email" class="form-control input-form" id="mail" aria-describedby="emailHelp" name="mail">
             <div id="emailHelp" class="form-text">Nous ne partagerons jamais votre e-mail avec quelqu'un d'autre.</div>
         </div>
         <div class="mb-2 text-center">
@@ -32,19 +32,19 @@
         </div>
 
         <div class="d-flex justify-content-center p-2">
-            <button type="submit" class="btn btn-warning mb-2" name="connexion">Connexion</button>
+            <button type="submit" class="btn bouton-valider mb-2" name="connexion">Connexion</button>
         </div>
 
         <div>
             <div class="text-center">
-                <button class="mb-3 btn btn-dark text-center">
-                    <a href="index.php?controller=auth&action=mdpOublie" class="text-white">Mot de passe oublié</a>
+                <button class="mb-3 btn btn-dark text-center bouton-supprimer">
+                    <a href="index.php?controller=auth&action=mdpOublie" class="texte-bouton">Mot de passe oublié</a>
                 </button>
             </div>
 
             <div class="text-center">
-                <button class="mb-3 btn btn-dark text-center">
-                    <a href="index.php?controller=pages&action=creationCompte" class="text-white">Créer un compte</a>
+                <button class="mb-3 btn btn-dark text-center bouton-annuler">
+                    <a href="index.php?controller=pages&action=creationCompte" class="texte-bouton">Créer un compte</a>
                 </button>
             </div>
         </div>
