@@ -10,21 +10,23 @@
         <h1>Page Espace Personnel Orga</h1>
     </section>
 
-  <section class="container row text-center justify-content-center align-items-center d-flex">
-    <div class="d-grid gap-2 d-md-block mt-2">
+  <section class="container row-col text-center justify-content-center align-items-center d-flex">
+    <div class="d-grid gap-2 d-md-block mt-2 me-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=mesEvents" role="button">Mes évènements</a>
     </div>
-  </section>
 
-  <section class="container row text-center justify-content-center align-items-center d-flex">
-    <div class="d-grid gap-2 d-md-block mt-2">
+    <div class="d-grid gap-2 d-md-block mt-2 me-2 ms-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=createEvent" role="button">Soumettre un évènement</a>
+    </div>
+
+    <div class="d-grid gap-2 d-md-block mt-2 ms-2">
+      <a class="btn btn-primary" href="#" role="button">Mon historique</a>
     </div>
   </section>
 
   <section class="container">
 
-    <form class="m-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnelOrga">
+    <form class="me-5 ms-5 mb-5 p-4 text-white" method="POST" action="index.php?controller=personal&action=espacePersonnelOrga">
 
       <?php if (empty($error) && isset($_POST['saveUser'])) {?>
         <div class="alert alert-primary" role="alert">
