@@ -7,12 +7,12 @@
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
 ?>
 
-<main>
+<main class="eventGeneral">
     <section class="container mt-5 mb-4">
         <h1>Page événements générale</h1>
 
     </section>
-<section class="container ">
+<section class="container">
 
     <?php if (!empty($error)) : ?>
         <div class="alert alert-danger" role="alert">
@@ -39,23 +39,24 @@
         <button data-filter="joueurs" class="btn btn-outline-primary">Nombre de joueurs</button>
     </div>
 
-    <div id="events-container">
+    <div class="container ms-4">
+    <div id="events-container" class="container-fluid ms-4">
         <?php foreach ($allEvent as $event) {?>
-            <div class="card mb-3 container-fluid col-10 event-card"
+            <div class="card mb-3 col-10 event-card carte"
                 data-start="<?php echo (new DateTime($event['start']))->format('Y-m-d H:i') ?>"
                 data-organisateur="<?php echo htmlspecialchars(strtolower($event['organisateur'])) ?>"
                 data-joueurs="<?php echo (int)$event['joueurs'] ?>">
-                <div class="row g-0">
-                    <div class="col-md-4">
+                <div class="row g-0 ">
+                    <div class="col-md-4 image-carte">
                         <img src="<?php echo htmlspecialchars($cheminCouverture . $event['cover']) ?>" class="img-fluid rounded-start" alt="<?php echo htmlspecialchars($event['name']) ?>">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
+                        <div class="card-body carteTexte">
                             <h5 class="card-title"><?php echo htmlspecialchars($event['name']) ?></h5>
-                            <p class="card-text"><small class="text-muted">Jeu : <?php echo htmlspecialchars($event['game_name']) ?></small></p>
-                            <p class="card-text"><small class="text-muted">Plateforme : <?php echo htmlspecialchars($event['plateforme']) ?></small></p>
-                            <p class="card-text"><small class="text-muted">Début : <?php echo (new DateTime($event['start']))->format('d/m/Y H:i') ?><br>Fin : <?php echo (new DateTime($event['end']))->format('d/m/Y H:i') ?></small></p>
-                            <p class="card-text"><small class="text-muted">Joueurs : <?php echo htmlspecialchars($event['joueurs']) ?></small></p>
+                            <p class="card-text"><small>Jeu : <?php echo htmlspecialchars($event['game_name']) ?></small></p>
+                            <p class="card-text"><small>Plateforme : <?php echo htmlspecialchars($event['plateforme']) ?></small></p>
+                            <p class="card-text"><small>Début : <?php echo (new DateTime($event['start']))->format('d/m/Y H:i') ?><br>Fin : <?php echo (new DateTime($event['end']))->format('d/m/Y H:i') ?></small></p>
+                            <p class="card-text"><small>Joueurs : <?php echo htmlspecialchars($event['joueurs']) ?></small></p>
 
                             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>" aria-expanded="false" aria-controls="collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>">
                                 Voir les détails
@@ -65,7 +66,7 @@
                 </div>
 
 
-                <div class="collapse" id="collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>">
+                <div class="collapse carteTexte" id="collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>">
                     <div class="card-footer">
                         <p class="card-text"><strong>Description : </strong><?php echo nl2br(htmlspecialchars($event['description'])) ?></p>
                         <p class="card-text"><strong>Organisateur : </strong><?php echo htmlspecialchars($event['organisateur']) ?></p>
@@ -111,6 +112,7 @@
                 </div>
             </div>
         <?php }?>
+    </div>
     </div>
 </section>
 </main>

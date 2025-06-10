@@ -1,0 +1,16 @@
+.carte {
+    background-color: var(--esportify-grey-50);
+    border: 2px solid var(--esportify-green);
+}
+
+.carte img {
+    box-shadow: 5px 0px 10px var(--esportify-grey-25);
+}
+
+.image-carte {
+    border-right: 2px solid var(--esportify-grey-25);
+}
+
+.carteTexte {
+    color: var(--esportify-white);
+}

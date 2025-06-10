@@ -83,11 +83,11 @@
             <div class="row row-cols-1 row-cols-md-4 g-4 events">
                 <?php foreach ($events as $event) {?>
                     <div class="col">
-                        <div class="card h-100">
+                        <div class="card h-100 carte">
                             <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
                                 <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?php echo $event['name'] ?>">
                             </a>
-                            <div class="card-body">
+                            <div class="card-body carteTexte">
                                 <h5 class="card-title"><?php echo $event['name'] ?></h5>
                                 <p class="card-text"><?php echo $event['plateforme_name'] ?></p>
                                 <p class="card-text">Début :<?php echo $event['start'] ?></p>
