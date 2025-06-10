@@ -49,7 +49,7 @@
                             <p class="card-text"><small class="text-muted">Début :<?php echo(new DateTime($event['start']))->format('d/m/Y H:i') ?><br>Fin :<?php echo(new DateTime($event['end']))->format('d/m/Y H:i') ?></small></p>
                             <p class="card-text"><small class="text-muted">Joueurs :<?php echo htmlspecialchars($event['joueurs']) ?></small></p>
 
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>" aria-expanded="false" aria-controls="collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>">
+                            <button class="btn bouton-valider" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>" aria-expanded="false" aria-controls="collapseEventDetail_<?php echo htmlspecialchars($event['id']) ?>">
                                 Voir les détails
                             </button>
                         </div>
@@ -98,7 +98,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#eventModal<?php echo $event['id'] ?>">Modifier</button>
+                        <button type="button" class="btn bouton-valider text-center" data-bs-toggle="modal" data-bs-target="#eventModal<?php echo $event['id'] ?>">Modifier</button>
                     </div>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="nombre_de_joueurs" class="form-label">Nombre de joueurs</label>
-                                            <input type="number" class="form-control                                                                                     <?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
+                                            <input type="number" class="form-control<?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
                                                 id="nombre_de_joueurs"
                                                 name="nombre_de_joueurs"
                                                 min="10"
@@ -213,7 +213,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea class="form-control                                                                          <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
+                                            <textarea class="form-control<?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
                                                 id="description"
                                                 name="description"
                                                 rows="5" cols="33"
@@ -241,8 +241,8 @@
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" name="saveUpdate" class="btn btn-primary">Sauvegarder modifications</button>
-                                            <button type="button" class="btn btn-dark m-4"
+                                            <button type="submit" name="saveUpdate" class="btn bouton-valider">Sauvegarder modifications</button>
+                                            <button type="button" class="btn bouton-supprimer m-4"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#confirmDeleteModal<?php echo $event['id']; ?>">
                                                 Supprimer l'évènement
@@ -270,9 +270,9 @@
                                             <!-- Pour envoyer l'ID de l'évènement à supprimer -->
                                             <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
                                             <input type="hidden" name="id_event" value="<?php echo $event['id']; ?>">
-                                            <button type="submit" name="delete" class="btn btn-danger">Oui, supprimer</button>
+                                            <button type="submit" name="delete" class="btn bouton-valider">Oui, supprimer</button>
                                             </form>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                            <button type="button" class="btn bouton-supprimer" data-bs-dismiss="modal">Annuler</button>
                                         </div>
                                     </div>
                                 </div>
