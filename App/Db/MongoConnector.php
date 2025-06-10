@@ -64,9 +64,11 @@ class MongoConnector
     public function getClient(): Client
     {
         if(is_null($this->mongo_client)) {
+
             if (!empty($this->mongo_user) && !empty($this->mongo_password)) {
-                $authSource = $this->mongo_authSource ?? 'admin';
-                $uri = "mongodb://{$this->mongo_user}:{$this->mongo_password}@{$this->mongo_host}:{$this->mongo_port}/?authSource={$authSource}&authMechanism=SCRAM-SHA-1";
+
+                $uri = "mongodb://{$this->mongo_user}:{$this->mongo_password}@{$this->mongo_host}:{$this->mongo_port}";
+
             } else {
                 $uri = "mongodb://{$this->mongo_host}:{$this->mongo_port}";
             }

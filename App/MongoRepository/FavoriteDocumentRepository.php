@@ -9,19 +9,20 @@ class FavoriteDocumentRepository extends MongoMainRepository
 {
     protected function getFavoriteCollection(): Collection
     {
-        return $this->getCollection('favorite');
+        return $this->getCollection('Test_collection');
     }
 
-    public function findUserById(string $idUser): ?FavoriteDocument
+    public function findUserByName(string $name): ?FavoriteDocument
     {
-        $result = $this->getFavoriteCollection()->findOne([
-            'id_user' => $idUser
-        ]);
+        $result = $this->getFavoriteCollection()->find();
 
-        if (!$result) {
-            return null;
+        if ($result) {
+            foreach ($result as $document) {
+                var_dump($document->nom);
             }
-        return FavoriteDocument::createAndHydrate($result->getArrayCopy());
+        }
+        die;
+        return FavoriteDocument::createAndHydrate($result);
     }
 
     public function findAll(): array
@@ -30,7 +31,7 @@ class FavoriteDocumentRepository extends MongoMainRepository
         $entities = [];
 
         foreach ($documents as $doc) {
-            $entities[] = FavoriteDocument::createAndHydrate($doc->getArrayCopy());
+            $entities[] = FavoriteDocument::createAndHydrate($doc);
         }
         return $entities;
     }
