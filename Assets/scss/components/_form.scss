@@ -1,3 +1,28 @@
 .input-form {
-    
+    background-color: var(--esportify-grey-75);
+    border: 2px solid var(--esportify-grey-25) !important;
+    border-radius: 20px !important;
+    font-family: var(--esportify-font-menus);
+    font-weight: 600;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.label-form {
+    font-family: var(--esportify-font-menus);
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.checkbox-form {
+    font-family: var(--esportify-font-menus);
+}
+
+.texte-input {
+    color: var(--esportify-white);
+    font-family: var(--esportify-font-menus);
 }

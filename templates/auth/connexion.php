@@ -6,8 +6,8 @@
 
 <div class="container-fluid px-5 mt-4 row d-flex justify-content-center">
     <h1 class="text-center pb-2">Connexion</h1>
-    <a href="../index.php" class="text-center">
-        <img src="../../Assets/Documentation/Images/Logo-Bannière/Logo-02.png" alt="Logo Esportify" class="pb-4" width="400">
+    <a href="../index.php" class="text-center ">
+        <img src="../../Assets/Documentation/Images/Logo-Bannière/Logo-02.png" alt="Logo Esportify" class="mb-4" width="400">
     </a>
 
     <?php foreach ($error as $errors) {?>
@@ -22,13 +22,13 @@
         <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
 
         <div class="mb-2 text-center">
-            <label for="mail" class="form-label text-white">Adresse mail</label>
+            <label for="mail" class="form-label texte-input">Adresse mail</label>
             <input type="email" class="form-control input-form" id="mail" aria-describedby="emailHelp" name="mail">
             <div id="emailHelp" class="form-text">Nous ne partagerons jamais votre e-mail avec quelqu'un d'autre.</div>
         </div>
         <div class="mb-2 text-center">
-            <label for="password" class="form-label text-white">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <label for="password" class="form-label texte-input">Mot de passe</label>
+            <input type="password" class="form-control input-form" id="password" name="password">
         </div>
 
         <div class="d-flex justify-content-center p-2">
