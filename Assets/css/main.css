@@ -11965,6 +11965,39 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.bouton-valider {
+  background-color: var(--esportify-blue);
+  border: 2px solid var(--esportify-green);
+  text-align: center;
+  color: var(--esportify-dark);
+  font-family: var(--esportify-font-texts);
+  box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-75);
+  border-radius: 1.5rem;
+}
+
+.bouton-supprimer {
+  background-color: var(--esportify-green);
+  border: 2px solid var(--esportify-blue);
+  text-align: center;
+  box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-75);
+  border-radius: 1.5rem;
+  font-family: var(--esportify-font-texts);
+}
+
+.texte-bouton {
+  color: var(--esportify-dark);
+  text-decoration: none;
+}
+
+.bouton-annuler {
+  background-color: var(--esportify-grey-75);
+  border: 2px solid var(--esportify-green);
+  text-align: center;
+  box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-25);
+  border-radius: 1.5rem;
+  font-family: var(--esportify-font-texts);
+}
+
 .carte {
   background-color: var(--esportify-grey-50);
   border: 2px solid var(--esportify-green);
@@ -12017,7 +12050,6 @@ nav {
   font-family: var(--esportify-font-menus);
   background-color: var(--esportify-grey-5);
   box-shadow: var(--esportify-box-shadow);
-  border: 2px solid blue;
 }
 
 ul li,
@@ -12037,14 +12069,12 @@ ul li a span {
 }
 
 ul {
-  border: 2px solid yellow;
   padding: 0;
   margin: 0;
 }
 
 .liItem {
   width: 100%;
-  border: 2px solid red;
 }
 
 .liItem:last-child {
@@ -12090,7 +12120,8 @@ svg {
 }
 
 .logo {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
   text-align: center;
 }
 

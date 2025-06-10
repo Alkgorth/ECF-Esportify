@@ -107,7 +107,7 @@
                             </div>
                         <?php endif; ?>
                         
-                        <button class="btn btn-primary" type="submit">S'inscrire</button>
+                        <button class="btn btn-primary mb-3 inscription" type="submit">S'inscrire</button>
                         </div>
                 </div>
             </div>

@@ -2,7 +2,6 @@ nav {
   font-family: var(--esportify-font-menus);
   background-color: var(--esportify-grey-5);
   box-shadow: var(--esportify-box-shadow);
-  border: 2px solid blue;
 }
 
 ul li,
@@ -22,14 +21,12 @@ ul li a span{
 }
 
 ul {
-  border: 2px solid yellow;
   padding: 0;
   margin: 0;
 }
 
 .liItem {
   width: 100%;
-  border: 2px solid red;
 }
 
 .liItem:last-child {
@@ -75,7 +72,8 @@ svg {
 }
 
 .logo {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
   text-align: center;
   // background: var(--esportify-grey-25);
 }

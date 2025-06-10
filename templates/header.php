@@ -8,11 +8,12 @@
     <nav class="navbar barreNav z-3" id="navbar">
         <ul class="navbar-nav flex-shrink-0 list-unstyled ps-0 flex-grow-1 d-flex flex-column h-100">
             <li class="nav-item liItem logo">
-                <a href="/index.php?controller=pages&action=home" class="nav-link d-flex ps-1 ms-1  border-bottom myLink">
+                <a href="/index.php?controller=pages&action=home" class="nav-link d-flex ps-1 ms-1   myLink">
                     <span class="logo-text">Esportify</span>
                     <img src="../Assets/Documentation/Images/Logo-Bannière/Logo-02.png" alt="Logo Esportify" class="pe-2">
                 </a>
             </li>
+            <li class="border-bottom mb-3"></li>
             
             <li class="mb-1 ms-1 dropdown nav-item liItem">
                 <a href="#" class="nav-link dropdown-toggle myLink" data-bs-toggle="dropdown" aria-expanded="false">
