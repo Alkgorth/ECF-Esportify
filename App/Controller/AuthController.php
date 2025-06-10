@@ -70,12 +70,20 @@ class AuthController extends Controller
                                 'pseudo'     => $user->getPseudo(),
                                 'role'       => $user->getRole(),
                             ];
-                            if (isset($_SESSION['user']) && isset($_SESSION['user']['administrateur'])) {
-                                header('Location: index.php?controller=personal&action=espacePersonnelAdmin');
-                            } elseif (isset($_SESSION['user']) && isset($_SESSION['user']['organisateur'])) {
-                                header('Location: index.php?controller=personal&action=espacePersonnelOrga');
-                            } else {
-                                header('Location: index.php?controller=personal&action=espacePersonnel');
+
+                            if (isset($_SESSION['user']['role'])) {
+                                $userRole = $_SESSION['user']['role'];
+
+                                if ($userRole === 'administrateur') {
+                                    header('Location: index.php?controller=personal&action=espacePersonnelAdmin');
+                                    exit;
+                                } elseif ($userRole === 'organisateur') {
+                                    header('Location: index.php?controller=personal&action=espacePersonnelOrga');
+                                    exit;
+                                } elseif ($userRole === 'joueur') {
+                                    header('Location: index.php?controller=personal&action=espacePersonnel');
+                                    exit;
+                                }
                             }
                     } else {
                         $error[] = "Identifiant ou mot de passe incorrect";
