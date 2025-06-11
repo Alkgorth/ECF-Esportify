@@ -1,7 +1,7 @@
 <?php
 
     require_once _ROOTPATH_ . '/templates/head.php';
-    require_once _ROOTPATH_ . '/templates/header.php';
+    // require_once _ROOTPATH_ . '/templates/header.php';
 
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
@@ -48,7 +48,9 @@
                 data-joueurs="<?php echo (int)$event['joueurs'] ?>">
                 <div class="row g-0 ">
                     <div class="col-md-4 image-carte">
-                        <img src="<?php echo htmlspecialchars($cheminCouverture . $event['cover']) ?>" class="img-fluid rounded-start" alt="<?php echo htmlspecialchars($event['name']) ?>">
+                        <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
+                            <img src="<?php echo htmlspecialchars($cheminCouverture . $event['cover']) ?>" class="img-fluid rounded-start" alt="<?php echo htmlspecialchars($event['name']) ?>">
+                        </a>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body carteTexte">
@@ -107,8 +109,8 @@
                             </div>
                         <?php endif; ?>
                         
-                        <button class="btn btn-primary mb-3 inscription" type="submit">S'inscrire</button>
-                        </div>
+                        <button class="btn btn-primary mb-3 inscription" type="submit" name="inscription">S'inscrire</button>
+                    </div>
                 </div>
             </div>
         <?php }?>
