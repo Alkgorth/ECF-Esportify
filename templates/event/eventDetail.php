@@ -62,6 +62,9 @@
                             </div>
                         </div>
                     <?php endif; ?>
+                <div class="d-flex mt-4">
+                    <button class="btn btn-primary mb-3 inscription mx-auto" type="submit" name="inscription">S'inscrire</button>
+                </div>
             </div>
         <?php else: ?>
             <p class="alert alert-warning">L'événement demandé n'a pas été trouvé.</p>
