@@ -11,6 +11,12 @@
     border-right: 2px solid var(--esportify-grey-25);
 }
 
-.carteTexte {
+.carteTitre {
+    font-family: var(--esportify-font-texts);
     color: var(--esportify-white);
+}
+
+.carteTexte {
+    
+    font-family: var(--esportify-font-subtitles);
 }
