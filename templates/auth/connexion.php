@@ -32,19 +32,16 @@
         </div>
 
         <div class="d-flex justify-content-center p-2">
-            <button type="submit" class="btn bouton-valider mb-2" name="connexion">Connexion</button>
+            <button type="submit" class="btn bouton-valider mb-2 me-4" name="connexion">Connexion</button>
+            <button class="btn bouton-annuler mb-3 ms-4">
+                    <a href="index.php?controller=pages&action=creationCompte" class="texte-bouton">Créer un compte</a>
+            </button>
         </div>
 
         <div>
             <div class="text-center">
                 <button class="mb-3 btn btn-dark text-center bouton-supprimer">
                     <a href="index.php?controller=auth&action=mdpOublie" class="texte-bouton">Mot de passe oublié</a>
-                </button>
-            </div>
-
-            <div class="text-center">
-                <button class="mb-3 btn btn-dark text-center bouton-annuler">
-                    <a href="index.php?controller=pages&action=creationCompte" class="texte-bouton">Créer un compte</a>
                 </button>
             </div>
         </div>
