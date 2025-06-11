@@ -26,7 +26,7 @@ CREATE TABLE `plateforme`(
 
 CREATE TABLE `event`(
    `id_event` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `name_event` varchar(255) NOT NULL,
+   `name_event` varchar(255) NOT NULL UNIQUE,
    `name_game` varchar(255) NOT NULL,
    `date_hour_start` datetime NOT NULL,
    `date_hour_end` datetime NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `event`(
    `status` ENUM ('en attente', 'validé', 'refusé', 'annulé') NOT NULL DEFAULT 'en attente',
    `fk_id_user` int(11) UNSIGNED NOT NULL,
    `fk_id_plateforme` int(11) UNSIGNED NOT NULL,
-    `cover_image_path` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+   `cover_image_path` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
    FOREIGN KEY(fk_id_user) REFERENCES user(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY(fk_id_plateforme) REFERENCES plateforme(id_plateforme) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

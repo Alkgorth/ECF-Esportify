@@ -2,10 +2,19 @@
     background-color: var(--esportify-blue);
     border: 2px solid var(--esportify-green);
     text-align: center;
-    color: var(--esportify-dark);
-    font-family: var(--esportify-font-texts);
     box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-75);
     border-radius: 1.5rem;
+    font-family: var(--esportify-font-texts);
+    color: var(--esportify-dark);
+}
+
+.bouton-annuler {
+    background-color: var(--esportify-grey-75);
+    border: 2px solid var(--esportify-green);
+    text-align: center;
+    box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-75);
+    border-radius: 1.5rem;
+    font-family: var(--esportify-font-texts);
 }
 
 .bouton-supprimer {
@@ -25,16 +34,6 @@
 
 .bouton-filtre {
 
-}
-
-.bouton-annuler {
-    background-color: var(--esportify-grey-75);
-    border: 2px solid var(--esportify-green);
-    text-align: center;
-    box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-25);
-    border-radius: 1.5rem;
-    font-family: var(--esportify-font-texts);
-    
 }
 
 .inscription {
