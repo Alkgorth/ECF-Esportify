@@ -1,3 +1,5 @@
+import { Button } from "bootstrap";
+
 console.log("Je suis chargé");
 
 //Affichage du menu en -600px
@@ -40,28 +42,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Récupération bouton inscription joueur à un évènement
 
-const inscription = document.getElementById("inscription");
+const inscriptionButtons = document.querySelectorAll(".bouton-inscription");
 
-inscription.addEventListener("click", async(e) => {
-  e.preventDefault();
-  const url = `http://esportify:8000/index.php?controller=subscription&action=subscribe&id=${$event['id']}`;
+inscriptionButtons.forEach(button => {
+  button.addEventListener("click", async(e) => {
+    e.preventDefault();
 
-  try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({eventId}),
-      });
+    const eventId = button.dataset.eventId;
+console.log(eventId);
+    const url = `http://esportify:8000/index.php?controller=subscription&action=subscribe&id=${eventId}`;
+    try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({eventId: eventId}),
+        });
 
-      const result = await response.json();
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert ("Erreur lors de l'inscription ! " + errorData.message || `HTTP-Error: ${response.status}`);
+          return;
+        }
 
-      if (result.success) {
-        alert("Vous êtes insrit à l'évènement !");
-      }
-      
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'évènement : ", error);
-  }
-})
+        const result = await response.json();
+    
+        if (result.success) {
+          alert("Vous êtes insrit à l'évènement !");
+        } else {
+          alert("Erreur : " + result.message || "Inscription impossible.");
+        }
+    
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'évènement : ", error);
+      alert("Une erreur inattendue est survenue. Veuillez réessayer.")
+    }
+  });
+});

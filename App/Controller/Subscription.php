@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\MongoRepository\MongoUserRepository;
 use App\MongoRepository\MongoEventRepository;
-
+use App\Repository\EventRepository;
 use Exception;
 
 class SubscriptionController extends Controller
@@ -34,12 +34,48 @@ class SubscriptionController extends Controller
     private function subscribe(int $event_id)
     {
         $userId = $_SESSION['user']['id'];
+        $userName = $_SESSION['user']['pseudo'];
 
         if (!isset($userId)) {
             throw new Exception("User not authenticatided");
         }
 
-        $eventRepository = new MongoEventRepository();
-        $userRepository = new MongoUserRepository();
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $eventId = $data['eventId'] ?? null;
+
+        $eventRepository = new EventRepository();
+        $event = $eventRepository->findOneById($eventId);
+
+        if (!$event) {
+            throw new Exception("Événement introuvable.");
+        }
+
+        $eventData = [
+            'id' => $event['id'],
+            'name' => $event['name'],
+            'start' => $event['start'],
+            'end' => $event['end'],
+            'joueurs' => $event['joueurs'],
+            'status' => $event['status'],
+        ];
+
+        $userData = [
+            'id' => $userId,
+            'pseudo' => $userName,
+        ];
+
+        $eventMongoRepository = new MongoEventRepository();
+        $eventMongoRepository->addUserToEvent($eventData['id'], $userData);
+        
+        $userMongoRepository = new MongoUserRepository();
+        $userMongoRepository->addEventToUser($userData['id'], $eventData);
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Inscription réussie.'
+        ]);
+        exit;
     }
 }
