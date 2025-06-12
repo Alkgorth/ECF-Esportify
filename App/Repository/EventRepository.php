@@ -103,7 +103,6 @@ class EventRepository extends MainRepository
     //Affichage des informations global pour un évènement
     public function findValidate()
     {
-
         $query = $this->pdo->prepare('SELECT
             e.id_event AS id,
             e.name_event AS name,
@@ -123,6 +122,7 @@ class EventRepository extends MainRepository
             LEFT JOIN event_image ei ON ei.fk_id_event = e.id_event
             WHERE e.status = :status_valide
             GROUP BY e.id_event
+            ORDER BY e.date_hour_start DESC
           ');
 
         $statusValide = 'validé';
@@ -131,7 +131,7 @@ class EventRepository extends MainRepository
         $query->execute();
         $events = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
-            return $events;
+        return $events;
     }
 
     public function findEventAdmin()

@@ -87,12 +87,12 @@
                             <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
                                 <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?php echo $event['name'] ?>">
                             </a>
-                            <div class="card-body carteTexte">
-                                <h5 class="card-title"><?php echo $event['name'] ?></h5>
-                                <p class="card-text"><?php echo $event['plateforme_name'] ?></p>
-                                <p class="card-text">Début :<?php echo $event['start'] ?></p>
-                                <p class="card-text">Fin :<?php echo $event['end'] ?></p>
-                                <p class="card-text">Joueurs inscrits :<?php echo $event['joueurs'] ?></p>
+                            <div class="card-body">
+                                <h5 class="card-title carteTitre"><?php echo $event['name'] ?></h5>
+                                <p class="card-text carteTexte"><?php echo $event['plateforme_name'] ?></p>
+                                <p class="card-text carteTexte">Début :<?php echo $event['start'] ?></p>
+                                <p class="card-text carteTexte">Fin :<?php echo $event['end'] ?></p>
+                                <p class="card-text carteTexte">Joueurs inscrits :<?php echo $event['joueurs'] ?></p>
                             </div>
                         </div>
                     </div>

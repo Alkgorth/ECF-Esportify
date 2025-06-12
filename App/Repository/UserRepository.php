@@ -16,6 +16,7 @@ class UserRepository extends MainRepository
         $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
         $query->execute();
         $user = $query->fetch($this->pdo::FETCH_ASSOC);
+
         if ($user) {
             return User::createAndHydrate($user);
         } else {
@@ -29,11 +30,27 @@ class UserRepository extends MainRepository
             return false;
         }
         $query = $this->pdo->prepare('SELECT * FROM user WHERE mail = :mail');
-
         $query->bindValue(':mail', htmlspecialchars($mail), $this->pdo::PARAM_STR);
-
         $query->execute();
+        $user = $query->fetch($this->pdo::FETCH_ASSOC);
 
+        if ($user) {
+            return User::createAndHydrate($user);
+        } else {
+            return false;
+        }
+    }
+
+    // Récupère un utilisateur par son pseudo
+    public function findUserByPseudo(int $id)
+    {
+                $query = $this->pdo->prepare("SELECT 
+                    id_user, pseudo
+                    FROM user
+                    WHERE id_user = :id
+                    ");
+        $query->bindValue(':id', $id, $this->pdo::PARAM_INT);
+        $query->execute();
         $user = $query->fetch($this->pdo::FETCH_ASSOC);
 
         if ($user) {

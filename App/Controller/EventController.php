@@ -86,24 +86,23 @@ class EventController extends Controller
             $allEvent = $eventRepository->findValidate();
 
             $userId = $_SESSION['user']['id'];
-            
-            
-
+ var_dump($userId);
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inscription'])) {
-                if (!isset($_SESSION['user'])) {
+                if (!isset($$userId)) {
                     header('Location: index.php?controller=connexions&action=connexion');
                     exit;
-                } elseif (!empty($_POST['id_event'])) {
-                    
-                    $inscription = (int) $_POST['id_event'];
+                } elseif (!empty($allEvent['id'])) {
+ var_dump($allEvent['id']);
+
+                    $inscription = (int) $allEvent['id'];
                     $eventRepository->inscriptionEvent($inscription);
                     exit;
                 } else {
                     $error [] = "L'inscription à cette évènement n'est pas possible.";
                 }                
             }
+            
 
-            var_dump($_POST['id_event']);
             $this->render('event/eventGeneral', [
                 'allEvent' => $allEvent,
             ]);
