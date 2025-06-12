@@ -100,7 +100,7 @@ class EventRepository extends MainRepository
         return $eventDetail;
     }
 
-    //Affichage des informations global pour un évènement
+    //Affichage des informations global pour un évènement au statut validé
     public function findValidate()
     {
         $query = $this->pdo->prepare('SELECT

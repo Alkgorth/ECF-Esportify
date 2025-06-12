@@ -37,3 +37,31 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 });
+
+// Récupération bouton inscription joueur à un évènement
+
+const inscription = document.getElementById("inscription");
+
+inscription.addEventListener("click", async(e) => {
+  e.preventDefault();
+  const url = `http://esportify:8000/index.php?controller=subscription&action=subscribe&id=${$event['id']}`;
+
+  try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({eventId}),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("Vous êtes insrit à l'évènement !");
+      }
+      
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'évènement : ", error);
+  }
+})
