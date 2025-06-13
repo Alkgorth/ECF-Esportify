@@ -67,10 +67,10 @@ class SubscriptionController extends Controller
         ];
 
         $eventMongoRepository = new MongoEventRepository();
-        $eventMongoRepository->addUserToEvent($eventData['id'], $userData);
+        $eventMongoRepository->addUserToEvent($eventData, $userData['id']);
         
         $userMongoRepository = new MongoUserRepository();
-        $userMongoRepository->addEventToUser($userData['id'], $eventData);
+        $userMongoRepository->addEventToUser($userData[], $eventData['id']);
 
         echo json_encode([
             'success' => true,
