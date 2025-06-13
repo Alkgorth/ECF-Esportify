@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Tools\UserValidator;
-use App\Tools\SendMail;
-use App\Tools\Security;
 
 class PersonalController extends Controller
 {

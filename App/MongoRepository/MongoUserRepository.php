@@ -9,7 +9,7 @@ class MongoUserRepository extends MongoMainRepository
 {
     public function addEventToUser(array $userData, string $eventData): void
     {
-        $this->getCollection('Users')->updateOne(
+        $this->getCollection('Users')->insertOne(
             ['id' => $userData['id']],
             ['pseudo' => $userData['pseudo']],
             // ['$addToSet' => ['events' => $eventData]],

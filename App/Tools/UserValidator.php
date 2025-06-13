@@ -73,20 +73,6 @@ class UserValidator extends User
         }
     }
 
-    public static function isLoggedIn(?string $roleConnected = null): bool
-    {
-        if (isset($_SESSION['user']) &&
-            isset($_SESSION['user']['id_user']))
-            {
-
-            if ($roleConnected !== null) {
-                return $_SESSION['user']['role'] === $roleConnected;
-        }
-            return true;
-    }
-        return false;
-    }
-
     // Déconnecte l'utilisateur si la session a expiré
     public static function timerActivity(): bool {
         if (isset($_SESSION['user']['last_activity']) && (time() - $_SESSION['user']['last_activity'] > 1800)) { 
@@ -118,30 +104,4 @@ class UserValidator extends User
     {
         return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'administrateur';
     }
-
-        /*
-    public static function isLoggedIn(): bool {
-        Vérifie si la session est définie et si l'ID de l'utilisateur est présent
-        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
-            return false;
-        }
-    
-        Vérifie le rôle de l'utilisateur en récupérant les rôles depuis la base de données
-        return self::isRoleValid($_SESSION['user']['role'] ?? '');
-    }
-    
-    private static function isRoleValid(string $role): bool {
-        Récupère les rôles autorisés depuis la base de données (exemple)
-        $rolesAutorises = Database::getRolesAutorises(); Remplacez par votre logique
-    
-        Vérifie si le rôle est valide
-        if (!in_array($role, $rolesAutorises)) {
-            Journalisation ou gestion des erreurs
-            error_log("Rôle invalide détecté : " . $role);
-            return false;
-        }
-        return true;
-    }
-        */
-
 }

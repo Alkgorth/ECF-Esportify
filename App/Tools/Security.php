@@ -30,11 +30,20 @@ class Security
     }
 
     //Vérification si un utilisateur est enregistré en session
-    public static function isLogged(): bool
+    public static function isLoggedIn(?string $roleConnected = null): bool
     {
-        return isset($_SESSION['user']);
-    }
+        if (isset($_SESSION['user']) &&
+            isset($_SESSION['user']['id_user']))
+            {
 
+            if ($roleConnected !== null) {
+                return $_SESSION['user']['role'] === $roleConnected;
+        }
+            return true;
+    }
+        return false;
+    }
+    
     public static function csrfToken()
     {
         if (! empty($_POST)) {
