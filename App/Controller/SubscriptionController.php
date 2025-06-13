@@ -12,6 +12,8 @@ class SubscriptionController extends Controller
 {
     public function route(): void
     {
+        header('Content-Type: application/json');
+
         try {
             //On met en place une condition pour lancer le bon controller
             if (isset($_GET['action'])) {
@@ -43,6 +45,15 @@ class SubscriptionController extends Controller
                 exit;
             }
 
+                        // 2. Vérification CSRF (NOUVEAU ET CORRECTEMENT IMPLÉMENTÉ)
+            // Récupère le token du header 'X-CSRF-TOKEN' envoyé par le JavaScript
+            $csrfTokenFromRequest = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+            if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                http_response_code(403); // Forbidden
+                echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                exit;
+            }
+
             $userId = $_SESSION['user']['id'];
             $userName = $_SESSION['user']['pseudo'];
 
@@ -68,11 +79,11 @@ class SubscriptionController extends Controller
 
             $eventData = [
                 'id' => (int)$event['id'],
-                'name' => $event['name'],
-                'start' => $event['start'],
-                'end' => $event['end'],
-                'joueurs' => (int)$event['joueurs'],
-                'status' => $event['visibility'],
+                'name_event' => $event['name'],
+                'date_start' => $event['start'],
+                'date_end' => $event['end'],
+                'nombre_de_joueurs' => (int)$event['joueurs'],
+                'status' => $event['status'],
             ];
 
             $userData = [
@@ -91,14 +102,22 @@ class SubscriptionController extends Controller
                 exit;
             }
             */
-            $userMongoRepository->addEventToUser($userData, $eventData['id']);
+            $userMongoRepository->addEventToUser($userData, $eventData);
             $eventMongoRepository->addUserToEvent($eventData, $userData['pseudo']);
 
+            $successUserUpdate = $userMongoRepository->addEventToUser($userData, $eventData);
+            $successEventUpdate = $eventMongoRepository->addUserToEvent($eventData, $userData['pseudo']);
+
+            if ($successUserUpdate && $successEventUpdate) {
             http_response_code(200);
             echo json_encode([
                 'success' => true,
                 'message' => 'Inscription réussie.'
             ]);
+            } else {
+                http_response_code(500); 
+                echo json_encode(['success' => false, 'message' => 'Échec de l\'enregistrement des données dans la base de données.']);
+            }
             exit;
 
         } catch (\Exception $e) {
