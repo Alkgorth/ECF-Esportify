@@ -109,7 +109,9 @@
                                 </div>
                             <?php endif; ?>
                             <div class="d-flex">
-                            <button class="btn btn-primary mb-3 bouton-inscription mx-auto" type="button" name="inscription" data-event-id="<?php echo htmlspecialchars($event['id']) ?>">S'inscrire</button>
+                                <!-- Input pour CSRF -->
+                                <input type="hidden" id="csrfTokenInput" name="csrf_token" value="<?php echo htmlspecialchars($_COOKIE['csrf_token'] ?? ''); ?>">
+                                <button class="btn btn-primary mb-3 bouton-inscription mx-auto" type="button" name="inscription" data-event-id="<?php echo htmlspecialchars($event['id']) ?>">S'inscrire</button>
                             </div>
                         </div>
                     </div>

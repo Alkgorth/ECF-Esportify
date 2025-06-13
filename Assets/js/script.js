@@ -42,7 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
 
   const inscriptionButtons = document.querySelectorAll(".bouton-inscription");
-  console.log("Nombre de bouton trouvés :", inscriptionButtons.length);
+  const csrfTokenInput = document.getElementById('csrfTokenInput');
+  const csrfToken = csrfTokenInput ? csrfTokenInput.value : null
+
+  if (!csrfToken) {
+    console.error("Jeton CSRF introuvable dans l'input hidden. Sécurité de l'application compromise.");
+  }
 
   inscriptionButtons.forEach(button => {
     button.addEventListener("click", async(e) => {
@@ -58,12 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': csrfToken,
             },
             body: JSON.stringify({eventId: eventId}),
           });
 
           if (!response.ok) {
             const errorData = await response.json();
+            console.error("Erreur HTTP ou réponse non JSON:", response.status, errorDetails);
+            alert(`Erreur du serveur (${response.status}) : ${errorDetails.substring(0, 100)}...`);
             alert ("Erreur lors de l'inscription ! " + errorData.message || `HTTP-Error: ${response.status}`);
             return;
           }
