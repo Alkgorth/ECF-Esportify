@@ -30,9 +30,18 @@ class Security
     }
 
     //Vérification si un utilisateur est enregistré en session
-    public static function isLogged(): bool
+    public static function isLoggedIn(?string $roleConnected = null): bool
     {
-        return isset($_SESSION['user']);
+        if (isset($_SESSION['user']) &&
+            isset($_SESSION['user']['id']))
+            {
+
+            if ($roleConnected !== null) {
+                return $_SESSION['user']['role'] === $roleConnected;
+        }
+            return true;
+    }
+        return false;
     }
 
     public static function csrfToken()
@@ -45,4 +54,33 @@ class Security
         return $_COOKIE['csrf_token'];
     }
 
+        public static function getCsrfToken(): string
+    {
+        if (!isset($_COOKIE['csrf_token'])) {
+            $token = bin2hex(random_bytes(32));
+            // Assure-toi que le cookie est défini avec les mêmes paramètres que dans index.php
+            // Ajuste lifetime, path, httponly, samesite si nécessaire
+            setcookie('csrf_token', $token, [
+                'lifetime' => 3600, // 1 heure
+                'path' => '/',
+                'httponly' => true,
+                'samesite' => 'Lax' // Ou 'Strict' si tu es sûr des implications
+            ]);
+            $_COOKIE['csrf_token'] = $token; // Pour que la valeur soit immédiatement disponible
+        }
+        return $_COOKIE['csrf_token'];
+    }
+
+    /**
+     * Vérifie le token CSRF reçu d'une requête (par ex. depuis un header ou le corps).
+     * @param string $tokenFromRequest Le token reçu de la requête.
+     * @return bool Vrai si le token est valide, Faux sinon.
+     */
+    public static function checkCsrfToken(string $tokenFromRequest): bool
+    {
+        // On vérifie que le cookie existe et que les tokens correspondent
+        return isset($_COOKIE['csrf_token']) && hash_equals($_COOKIE['csrf_token'], $tokenFromRequest);
+    }
 }
+
+

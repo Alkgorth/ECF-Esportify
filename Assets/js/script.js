@@ -1,5 +1,3 @@
-import { Button } from "bootstrap";
-
 console.log("Je suis chargé");
 
 //Affichage du menu en -600px
@@ -41,42 +39,56 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Récupération bouton inscription joueur à un évènement
+document.addEventListener("DOMContentLoaded", () => {
 
-const inscriptionButtons = document.querySelectorAll(".bouton-inscription");
+  const inscriptionButtons = document.querySelectorAll(".bouton-inscription");
+  const csrfTokenInput = document.getElementById('csrfTokenInput');
+  const csrfToken = csrfTokenInput ? csrfTokenInput.value : null
 
-inscriptionButtons.forEach(button => {
-  button.addEventListener("click", async(e) => {
-    e.preventDefault();
+  if (!csrfToken) {
+    console.error("Jeton CSRF introuvable dans l'input hidden. Sécurité de l'application compromise.");
+  }
 
-    const eventId = button.dataset.eventId;
-console.log(eventId);
-    const url = `http://esportify:8000/index.php?controller=subscription&action=subscribe&id=${eventId}`;
-    try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({eventId: eventId}),
-        });
+  inscriptionButtons.forEach(button => {
+    button.addEventListener("click", async(e) => {
+      e.preventDefault();
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          alert ("Erreur lors de l'inscription ! " + errorData.message || `HTTP-Error: ${response.status}`);
-          return;
-        }
+      const eventId = button.dataset.eventId;
 
-        const result = await response.json();
-    
-        if (result.success) {
-          alert("Vous êtes insrit à l'évènement !");
-        } else {
-          alert("Erreur : " + result.message || "Inscription impossible.");
-        }
-    
-    } catch (error) {
-      console.error("Erreur lors de la récupération de l'évènement : ", error);
-      alert("Une erreur inattendue est survenue. Veuillez réessayer.")
-    }
+      console.log("ID de l'évènement cliqué :", eventId);
+      
+      const url = `http://esportify:8000/index.php?controller=subscription&action=subscribe`;
+      try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({eventId: eventId}),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Erreur HTTP ou réponse non JSON:", response.status, errorDetails);
+            alert(`Erreur du serveur (${response.status}) : ${errorDetails.substring(0, 100)}...`);
+            alert ("Erreur lors de l'inscription ! " + errorData.message || `HTTP-Error: ${response.status}`);
+            return;
+          }
+
+          const result = await response.json();
+      
+          if (result.success) {
+            alert("Vous êtes inscrit à l'évènement !");
+            //Ajouter changement du bouton en désinscription
+          } else {
+            alert("Erreur : " + result.message || "Inscription impossible.");
+          }
+      
+      } catch (error) {
+        console.error("Erreur lors de la récupération de l'évènement : ", error);
+        alert("Une erreur inattendue est survenue. Veuillez réessayer.")
+      }
+    });
   });
 });
