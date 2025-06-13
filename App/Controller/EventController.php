@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Status;
 use App\Repository\EventRepository;
+use App\Repository\UserRepository;
 use App\Tools\EventValidator;
 use App\Tools\Security;
 
@@ -79,32 +80,15 @@ class EventController extends Controller
         }
     }
 
+    //Affichage des events validé, renommée en displayValid()
     protected function eventGeneral()
     {
         try {
             $eventRepository = new EventRepository();
-            $allEvent = $eventRepository->findValidate();
-
-            $userId = $_SESSION['user']['id'];
- var_dump($userId);
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inscription'])) {
-                if (!isset($$userId)) {
-                    header('Location: index.php?controller=connexions&action=connexion');
-                    exit;
-                } elseif (!empty($allEvent['id'])) {
- var_dump($allEvent['id']);
-
-                    $inscription = (int) $allEvent['id'];
-                    $eventRepository->inscriptionEvent($inscription);
-                    exit;
-                } else {
-                    $error [] = "L'inscription à cette évènement n'est pas possible.";
-                }                
-            }
-            
+            $allEvents = $eventRepository->findValidate();            
 
             $this->render('event/eventGeneral', [
-                'allEvent' => $allEvent,
+                'allEvents' => $allEvents,
             ]);
 
         } catch (\Exception $e) {

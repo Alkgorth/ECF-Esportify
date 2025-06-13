@@ -7,12 +7,17 @@ use MongoDB\Collection;
 
 class MongoEventRepository extends MongoMainRepository
 {
-    public function addUserEvent(string $eventId, array $userData): void
+    public function addUserToEvent(array $eventData, array $userData): void
     {
         $this->getCollection('Events')->updateOne(
-            ['id' => $eventId],
+            ['id' => $eventData['id']],
+            ['name' => $eventData['name']],
+            ['start' => $eventData['start']],
+            ['end' => $eventData['end']],
+            ['joueurs' => $eventData['joueurs']],
+            ['status' => $eventData['status']],
             // ['$addToSet' => ['joueurs' => $userData]],
-            ['joueurs' => $userData],
+            ['joueurs' => $userData['pseudo']],
             ['upsert' => true]
         );
     }

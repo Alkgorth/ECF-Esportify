@@ -33,6 +33,10 @@ class Controller
                         $pageController = new FooterController();
                         $pageController->route();
                         break;
+                    case 'subscription':
+                        $pageController = new SubscriptionController();
+                        $pageController->route();
+                        break;
                     default:
                         throw new \Exception("Désolé cette page n'existe pas 😣");
                         break;

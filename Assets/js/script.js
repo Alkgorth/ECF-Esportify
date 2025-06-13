@@ -1,3 +1,5 @@
+import { Button } from "bootstrap";
+
 console.log("Je suis chargé");
 
 //Affichage du menu en -600px
@@ -36,4 +38,45 @@ document.addEventListener("DOMContentLoaded", () => {
       "Les checkboxes 'public' et 'private' n'ont pas été trouvées."
     );
   }
+});
+
+// Récupération bouton inscription joueur à un évènement
+
+const inscriptionButtons = document.querySelectorAll(".bouton-inscription");
+
+inscriptionButtons.forEach(button => {
+  button.addEventListener("click", async(e) => {
+    e.preventDefault();
+
+    const eventId = button.dataset.eventId;
+console.log(eventId);
+    const url = `http://esportify:8000/index.php?controller=subscription&action=subscribe&id=${eventId}`;
+    try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({eventId: eventId}),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert ("Erreur lors de l'inscription ! " + errorData.message || `HTTP-Error: ${response.status}`);
+          return;
+        }
+
+        const result = await response.json();
+    
+        if (result.success) {
+          alert("Vous êtes insrit à l'évènement !");
+        } else {
+          alert("Erreur : " + result.message || "Inscription impossible.");
+        }
+    
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'évènement : ", error);
+      alert("Une erreur inattendue est survenue. Veuillez réessayer.")
+    }
+  });
 });

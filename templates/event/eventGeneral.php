@@ -1,7 +1,7 @@
 <?php
 
     require_once _ROOTPATH_ . '/templates/head.php';
-    // require_once _ROOTPATH_ . '/templates/header.php';
+    require_once _ROOTPATH_ . '/templates/header.php';
 
     $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
     $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
@@ -41,7 +41,7 @@
 
     <div class="container ms-4">
         <div id="events-container" class="container-fluid ms-4">
-            <?php foreach ($allEvent as $event) {?>
+            <?php foreach ($allEvents as $event) {?>
                 <div class="card mb-3 col-10 event-card carte"
                     data-start="<?php echo (new DateTime($event['start']))->format('Y-m-d H:i') ?>"
                     data-organisateur="<?php echo htmlspecialchars(strtolower($event['organisateur'])) ?>"
@@ -109,7 +109,7 @@
                                 </div>
                             <?php endif; ?>
                             <div class="d-flex">
-                            <button class="btn btn-primary mb-3 inscription mx-auto" type="submit" name="inscription">S'inscrire</button>
+                            <button class="btn btn-primary mb-3 bouton-inscription mx-auto" type="button" name="inscription" data-event-id="<?php echo htmlspecialchars($event['id']) ?>">S'inscrire</button>
                             </div>
                         </div>
                     </div>

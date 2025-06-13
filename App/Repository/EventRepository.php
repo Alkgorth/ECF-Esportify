@@ -100,7 +100,7 @@ class EventRepository extends MainRepository
         return $eventDetail;
     }
 
-    //Affichage des informations global pour un évènement
+    //Affichage des informations global pour un évènement au statut validé
     public function findValidate()
     {
         $query = $this->pdo->prepare('SELECT
@@ -132,6 +132,28 @@ class EventRepository extends MainRepository
         $events = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
         return $events;
+    }
+
+    //Récupération d'un évènement pour inscription
+    public function findOneById(int $eventId)
+    {
+        $query = $this->pdo->prepare('SELECT
+            e.id_event AS id,
+            e.name_event AS name,
+            e.date_hour_start AS start,
+            e.date_hour_end AS end,
+            e.nombre_de_joueurs AS joueurs,
+            e.status AS status
+            FROM event AS e
+            WHERE e.id_event = :eventId
+            ');
+
+        $query->bindParam(':eventId', $eventId, $this->pdo::PARAM_STR);
+
+        $query->execute();
+        $event = $query->fetch($this->pdo::FETCH_ASSOC);
+
+        return $event;
     }
 
     public function findEventAdmin()

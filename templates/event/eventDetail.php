@@ -63,7 +63,7 @@
                         </div>
                     <?php endif; ?>
                 <div class="d-flex mt-4">
-                    <button class="btn btn-primary mb-3 inscription mx-auto" type="submit" name="inscription">S'inscrire</button>
+                    <button class="btn btn-primary mb-3 bouton-inscription mx-auto" type="submit" name="inscription" data-event-id="<?php echo htmlspecialchars($event['id']) ?>">S'inscrire</button>
                 </div>
             </div>
         <?php else: ?>

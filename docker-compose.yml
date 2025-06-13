@@ -33,7 +33,7 @@ services:
     restart: always
     container_name: esportify_mongo
     ports:
-      - 27017:27017
+      - 27018:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: MonUtilisateur
       MONGO_INITDB_ROOT_PASSWORD: MonMotDePasse
