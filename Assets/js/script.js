@@ -70,9 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (!response.ok) {
             const errorData = await response.json();
-            console.error("Erreur HTTP ou réponse non JSON:", response.status, errorDetails);
-            alert(`Erreur du serveur (${response.status}) : ${errorDetails.substring(0, 100)}...`);
-            alert ("Erreur lors de l'inscription ! " + errorData.message || `HTTP-Error: ${response.status}`);
+            console.error("Erreur HTTP ou réponse non JSON:", response.status, errorData.message);
+            alert(`Erreur du serveur (${response.status}) : ${errorData.message || 'Détails non disponibles.'}`);
             return;
           }
 
@@ -86,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       
       } catch (error) {
-        console.error("Erreur lors de la récupération de l'évènement : ", error);
+        console.error("Erreur lors de la requête d'inscription : ", error);
         alert("Une erreur inattendue est survenue. Veuillez réessayer.")
       }
     });

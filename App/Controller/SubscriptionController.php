@@ -45,11 +45,11 @@ class SubscriptionController extends Controller
                 exit;
             }
 
-                        // 2. Vérification CSRF (NOUVEAU ET CORRECTEMENT IMPLÉMENTÉ)
+            // 2. Vérification CSRF (NOUVEAU ET CORRECTEMENT IMPLÉMENTÉ)
             // Récupère le token du header 'X-CSRF-TOKEN' envoyé par le JavaScript
             $csrfTokenFromRequest = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
             if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
-                http_response_code(403); // Forbidden
+                http_response_code(403);
                 echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
                 exit;
             }
@@ -58,23 +58,29 @@ class SubscriptionController extends Controller
             $userName = $_SESSION['user']['pseudo'];
 
             if (empty($userId) || empty($userName)) {
-                throw new Exception("User not authenticatided");
+                http_response_code(401);
+                echo json_encode(['success' => false, 'message' => "Informations utilisateur manquantes après vérification de connexion."]);
+                exit;
             }
 
             $input = file_get_contents('php://input');
             $data = json_decode($input, true);
 
-            $eventId = $data['eventId'] ?? null;
+            $eventId = $data['eventId'];
             
             if (!$eventId) {
-                throw new Exception("Identifiant de l'évènement manquant.");
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => "Identifiant de l'évènement manquant."]);
+                exit;
             }
 
             $eventRepository = new EventRepository();
             $event = $eventRepository->findOneById($eventId);
 
             if (!$event) {
-                throw new Exception("Événement introuvable.");
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => "Événement introuvable."]);
+                exit;
             }
 
             $eventData = [
@@ -102,27 +108,32 @@ class SubscriptionController extends Controller
                 exit;
             }
             */
-            $userMongoRepository->addEventToUser($userData, $eventData);
-            $eventMongoRepository->addUserToEvent($eventData, $userData['pseudo']);
 
             $successUserUpdate = $userMongoRepository->addEventToUser($userData, $eventData);
-            $successEventUpdate = $eventMongoRepository->addUserToEvent($eventData, $userData['pseudo']);
+            $successEventUpdate = $eventMongoRepository->addUserToEvent($eventData, $userData);
 
             if ($successUserUpdate && $successEventUpdate) {
-            http_response_code(200);
-            echo json_encode([
-                'success' => true,
-                'message' => 'Inscription réussie.'
-            ]);
+                http_response_code(200);
+                echo json_encode([
+                    'success' => true,
+                    'message' => "Inscription réussie."
+                ]);
             } else {
-                http_response_code(500); 
-                echo json_encode(['success' => false, 'message' => 'Échec de l\'enregistrement des données dans la base de données.']);
+                $errorMessage = '';
+                if (!$successUserUpdate) {
+                    $errorMessage .= "Échec ajout événement à l'utilisateur. ";
+                }
+                if (!$successEventUpdate) {
+                    $errorMessage .= "Échec ajout utilisateur à l'événement.";
+                }
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'enregistrement dans la base de données : ' . trim($errorMessage)]);
             }
             exit;
 
         } catch (\Exception $e) {
             http_response_code(500); // Internal Server Error
-            echo json_encode(['success' => false, 'message' => 'Erreur serveur : ' . $e->getMessage()]);
+            echo json_encode(['success' => false, 'message' => "Erreur serveur : " . $e->getMessage()]);
             exit;
         }
     }
