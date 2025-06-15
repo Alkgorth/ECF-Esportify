@@ -45,8 +45,6 @@ class SubscriptionController extends Controller
                 exit;
             }
 
-            // 2. Vérification CSRF (NOUVEAU ET CORRECTEMENT IMPLÉMENTÉ)
-            // Récupère le token du header 'X-CSRF-TOKEN' envoyé par le JavaScript
             $csrfTokenFromRequest = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
             if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
                 http_response_code(403);
