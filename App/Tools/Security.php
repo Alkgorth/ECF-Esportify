@@ -44,6 +44,8 @@ class Security
         return false;
     }
 
+    
+
     public static function csrfToken()
     {
         if (! empty($_POST)) {
