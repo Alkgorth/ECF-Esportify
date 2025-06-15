@@ -50,7 +50,7 @@ class MongoConnector
             $this->mongo_host = 'localhost';
         }
     }
-  
+
         public static function getInstance(): self
     {
 
