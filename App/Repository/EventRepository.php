@@ -218,7 +218,7 @@ class EventRepository extends MainRepository
         $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
         $queryEvent->bindValue('nombre_de_joueurs', $event->getNombreDeJoueurs(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':description', trim($event->getDescription()), $this->pdo::PARAM_STR);
-        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->getVisibility()->value), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':visibility',trim($event->getVisibility()->value), $this->pdo::PARAM_STR);
         $queryEvent->bindValue('fk_id_user', $event->getFkIdUser(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':status', $event->getStatus()->value, $this->pdo::PARAM_STR);
 
@@ -235,17 +235,18 @@ class EventRepository extends MainRepository
     public function updateEvent(Event $event): bool
     {
         $queryEvent = $this->pdo->prepare(
-            "UPDATE event SET cover_image_path = :cover_image_path,
-                                name_event = :name_event,
-                                name_game = :name_game,
-                                fk_id_plateforme = :fk_id_plateforme,
-                                date_hour_start = :date_hour_start,
-                                date_hour_end = :date_hour_end,
-                                nombre_de_joueurs = :nombre_de_joueurs,
-                                description = :description,
-                                visibility = :visibility,
-                                status = :status
-                                WHERE id_event = :id"
+            "UPDATE event SET 
+                cover_image_path = :cover_image_path,
+                name_event = :name_event,
+                name_game = :name_game,
+                fk_id_plateforme = :fk_id_plateforme,
+                date_hour_start = :date_hour_start,
+                date_hour_end = :date_hour_end,
+                nombre_de_joueurs = :nombre_de_joueurs,
+                description = :description,
+                visibility = :visibility,
+                status = :status
+                WHERE id_event = :id"
         );
         $queryEvent->bindValue(':id', $event->getIdEvent(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':status', $event->getStatus()->value, $this->pdo::PARAM_STR);
@@ -257,7 +258,7 @@ class EventRepository extends MainRepository
         $queryEvent->bindValue(':date_hour_end', $event->getDateHourEnd()->format('Y-m-d H:i:s'), $this->pdo::PARAM_STR);
         $queryEvent->bindValue('nombre_de_joueurs', $event->getNombreDeJoueurs(), $this->pdo::PARAM_INT);
         $queryEvent->bindValue(':description', htmlspecialchars(trim($event->getDescription()), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
-        $queryEvent->bindValue(':visibility', htmlspecialchars(trim($event->getVisibility()->value), ENT_QUOTES, 'UTF-8'), $this->pdo::PARAM_STR);
+        $queryEvent->bindValue(':visibility',trim($event->getVisibility()->value), $this->pdo::PARAM_STR);
 
         return $queryEvent->execute();
     }

@@ -38,18 +38,21 @@
         <h2 class="mb-3 mt-3 text-center">Évènements suggérés</h2>
         <div class="container mb-3 cardEvent">
             <div class="row row-cols-1 row-cols-md-1 row-cols-lg-4 g-4 events justify-content-center align-items-center d-flex">
-                <?php foreach ($events as $event) {?>
+                <?php foreach ($events as $event) {
+                        $existingCoverPath = $event['cover'] ?? null;
+                        $existingDiaporamaPaths = !empty($event['diaporama']) ? explode(', ', $event['diaporama']) : [];
+                    ?>
                     <div class="col">
                         <div class="card h-100">
-                            <a href="index.php?controller=event&action=event&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
+                            <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
                                 <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?php echo $event['name'] ?>">
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $event['name'] ?></h5>
-                                    <p class="card-text">Début :                                                                  <?php echo $event['start'] ?></p>
-                                    <p class="card-text">Fin :                                                               <?php echo $event['end'] ?></p>
-                                    <p class="card-text">Joueurs inscrits :                                                                            <?php echo $event['joueurs'] ?></p>
-                                    <p class="card-text">Status :                                                                  <?php echo $event['status'] ?></p>
+                                    <p class="card-text">Début :<?php echo $event['start'] ?></p>
+                                    <p class="card-text">Fin :<?php echo $event['end'] ?></p>
+                                    <p class="card-text">Joueurs inscrits :<?php echo $event['joueurs'] ?></p>
+                                    <p class="card-text">Status :<?php echo $event['status'] ?></p>
                                 <div class="row mt-4">
                                     <div class="text-center col-12">
                                         <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#eventModal<?php echo $event['id'] ?>">
@@ -65,7 +68,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="eventModalLabel<?php echo $event['id'] ?>">Détails de l'événement :<?php echo $event['name'] ?></h1>
+                                    <h1 class="modal-title fs-5" id="eventModalLabel<?php echo $event['id'] ?>">Détails de l'événement : <?php echo $event['name'] ?></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
@@ -101,14 +104,41 @@
                                         <!-- Input pour l'id de l'évènement -->
                                         <input type="hidden" name="id_event" value="<?php echo $event['id']; ?>">
 
+                                        <!-- Input pour l'id de l'image de couverture -->
+                                        <input type="hidden" name="existing_cover_image_path" value="<?php echo htmlspecialchars($existingCoverPath); ?>">
+
                                         <!-- Modal pour la modification de l'évènement -->
                                         <div class="mb-3 text-center">
                                             <label for="cover_image_path">Modifier l'image de couverture</label>
+                                            <?php if (!empty($existingCoverPath)) { ?>
+                                                <div class="current-cover-image mb-2">
+                                                    <p>Image de couverture actuelle : </p>
+                                                    <img src="<?php echo $cheminCouverture . htmlspecialchars($existingCoverPath) ?>" alt="couverture actuelle" style="max-width: 150px; height:auto;">
+                                                </div>
+                                            <?php } ?>
                                             <input type="file" id="cover_image_path" name="cover_image_path" accept="image/png, image/jpeg" />
                                         </div>
 
                                         <div class="mb-3 text-center">
-                                            <label for="image_path">Modifier les images de diaporama</label>
+                                            <label for="image_path" class="form-label">Modifier les images de diaporama</label>
+                                            <?php if (!empty($existingDiaporamaPaths)) { ?>
+                                                <div class="current-diaporama-images mb-2">
+                                                    <p>Images du diaporama acruelles : </p>
+                                                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                                                        <?php foreach ($existingDiaporamaPaths as $diapoPath) {
+                                                            $filename = basename($diapoPath);
+                                                        ?>
+                                                            <span class="badge bg-secondary d-flex align-items-center me-2">
+                                                                <?php echo htmlspecialchars($filename); ?>
+                                                                <button type="button" class="btn-close btn-close-white ms-1" aria-label="Supprimer visuellement"></button>
+                                                            </span>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <?php foreach ($existingDiaporamaPaths as $diapoPath) { ?>
+                                                    <input type="hidden" name="existing_diaporama_image_paths[]" value="<?php echo htmlspecialchars($diapoPath); ?>">
+                                                <?php } ?>
+                                            <?php } ?>
                                             <input type="file" id="image_path" name="image_path[]" accept="image/png, image/jpeg, image/jpg, image/webp" multiple/>
                                         </div>
 
@@ -159,7 +189,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="nombre_de_joueurs" class="form-label">Nombre de joueurs</label>
-                                            <input type="number" class="form-control                                                                                     <?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
+                                            <input type="number" class="form-control<?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
                                                 id="nombre_de_joueurs"
                                                 name="nombre_de_joueurs"
                                                 min="10"
@@ -171,13 +201,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea class="form-control                                                                          <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
-                                                id="description"
-                                                name="description"
-                                                rows="5" cols="33"
-                                                required>
-                                                <?php echo htmlspecialchars($event['description']) ?>
-                                            </textarea>
+                                            <textarea class="form-control<?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"id="description" name="description" rows="5" cols="33"required><?php echo html_entity_decode($event['description']) ?></textarea>
                                             <?php if (isset($error['description'])) {?>
                                                 <div class="invalid-feedback"><?php echo $error['description'] ?></div>
                                             <?php }?>
@@ -185,16 +209,16 @@
 
                                         <div>
                                             <fieldset id="checkVisibility">
-                                                <legend>Visibilité</legend>
-                                                <div>
-                                                    <input type="checkbox" id="public" name="visibility" value="public" checked />
-                                                    <label for="public">Public</label>
-                                                </div>
-                                                <div>
-                                                    <input type="checkbox" id="private" name="visibility" value="privé" />
-                                                    <label for="private">Privé</label>
-                                                </div>
-                                            </fieldset>
+                                            <legend>Visibilité</legend>
+                                            <div>
+                                                <input type="radio" id="public_<?php echo $event['id']; ?>" name="visibility" value="public" <?php echo ($event['visibility'] == 'public' ? 'checked' : ''); ?> />
+                                                <label for="public_<?php echo $event['id']; ?>">Public</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="private_<?php echo $event['id']; ?>" name="visibility" value="privé" <?php echo ($event['visibility'] == 'privé' ? 'checked' : ''); ?> />
+                                                <label for="private_<?php echo $event['id']; ?>">Privé</label>
+                                            </div>
+                                        </fieldset>
                                         </div>
 
                                         <div class="modal-footer">
