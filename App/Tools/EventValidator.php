@@ -215,7 +215,7 @@ class EventValidator
 
                 $actualDiapoFiles = [];
                 foreach ($files['name'] as $key => $name) {
-                    if (!empty($name) && $files['error']['key'] !== UPLOAD_ERR_NO_FILE) {
+                    if (!empty($name) && isset($files['error'][$key]) && $files['error'][$key] !== UPLOAD_ERR_NO_FILE) {
                         $actualDiapoFiles[$key] = $name;
                     }
                 }
@@ -227,7 +227,7 @@ class EventValidator
                         $error['image_path'] = "Maximum d'image pour le diaporama dépassé, le nombre d'images autorisées est de " . self::MAX_DIAPO_IMAGES . ".";
                     } else {
                         foreach ($files['name'] as $key => $name) {
-                            if (!empty($name) && $files['error']['key'] !== UPLOAD_ERR_NO_FILE && $uploadedDiapoCount < self::MAX_DIAPO_IMAGES) {
+                            if (!empty($name) && isset($files['error'][$key]) !== UPLOAD_ERR_NO_FILE && $uploadedDiapoCount < self::MAX_DIAPO_IMAGES) {
                                 $fileData = [
                                     'name' => $name,
                                     'type' => $files['type'][$key],
@@ -243,7 +243,7 @@ class EventValidator
                                     $uploadedFiles['image_path'][] = $uploadResult['nameOfFile'];
                                     $uploadedDiapoCount++;
                                 }
-                            } elseif ($files['error'][$key] !== UPLOAD_ERR_NO_FILE && !empty($name)) {
+                            } elseif (isset($files['error'][$key]) && $files['error'][$key] !== UPLOAD_ERR_NO_FILE && !empty($name)) {
                                 $diapoErrors[] = ImageValidator::errorMessage($files['error'][$key], htmlspecialchars(basename($name)));
                             }
                         }
