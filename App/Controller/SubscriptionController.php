@@ -97,6 +97,7 @@ class SubscriptionController extends Controller
 
             $eventMongoRepository = new MongoEventRepository();
             $userMongoRepository = new MongoUserRepository();
+            
             /*
             Condition pour vérifier si l'utilisateur est déjà inscrit à l'event
             Créer la méthode de vérification.
@@ -130,7 +131,7 @@ class SubscriptionController extends Controller
             exit;
 
         } catch (\Exception $e) {
-            http_response_code(500); // Internal Server Error
+            http_response_code(500);
             echo json_encode(['success' => false, 'message' => "Erreur serveur : " . $e->getMessage()]);
             exit;
         }

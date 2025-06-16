@@ -4,9 +4,10 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Status;
 use App\Repository\EventRepository;
-use App\Repository\UserRepository;
 use App\Tools\EventValidator;
+use App\Tools\ImageValidator;
 use App\Tools\Security;
+use DateTimeImmutable;
 
 class EventController extends Controller
 {
@@ -210,7 +211,7 @@ class EventController extends Controller
     protected function mesEvents()
     {
         try {
-            
+
             if (! isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
                 header('Location: index.php?controller=connexions&action=connexion');
                 exit();
@@ -219,13 +220,12 @@ class EventController extends Controller
             $userId = $_SESSION['user']['id'];
 
             $error           = [];
-            $majEvent        = "Votre demande de mise à jour à été envoyée.";
-            $deleteEvent     = "L'évènement à bien été supprimé !";
+            $majEvent        = "Votre demande de mise à jour a été envoyée.";
+            $deleteEvent     = "L'évènement a bien été supprimé !";
             $eventRepository = new EventRepository();
-            $myEvent = $eventRepository->myEvents($userId);
+            $myEvents = $eventRepository->myEvents($userId);
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
-
 
             if (Security::csrfToken()) {
 
@@ -248,34 +248,34 @@ class EventController extends Controller
 
                 if ($uploadedCoverImage) {
                     $event->setCoverImagePath($uploadedCoverImage);
+                } else {
+                    $existingCoverPath = $_POST['existing_cover_image_path'] ?? null;
+                    $event->setCoverImagePath(($existingCoverPath));
                 }
 
-                $imageErrors = EventValidator::isFileUploaded($_FILES['image_path']);
+                $finalDiapoImages = [];
+                if (!empty($uploadedDiapoImages)) {
+                    $finalDiapoImages = $uploadedDiapoImages;
+                } else {
+                    $finalDiapoImages = $_POST['existing_diaporama_image_paths'] ?? [];
+                }
+
                 $eventErrors = EventValidator::validateEvent($event);
-                $error       = array_merge($error, $eventErrors ?? [], $imageErrors ?? []);
-
-                if (! empty($eventErrors)) {
-                    $error = array_merge($error, $eventErrors);
-                }
-
-                if (! empty($imageErrors)) {
-                    $error = array_merge($error, $imageErrors);
-                }
-
+                $error = array_merge($error, $eventErrors ?? []);
                 $event->setFkIdUser($userId);
 
                 if (empty($error)){
                     $updateEvent = $eventRepository->updateEvent($event);
-                    
                     if ($updateEvent) {
-                        $eventRepository->updateEventImage($event->getIdEvent(), $uploadedDiapoImages);
+                        $eventRepository->updateEventImage($event->getIdEvent(), $finalDiapoImages);
                         $majEvent = "Votre demande de mise à jour à été envoyée.";
                         header('Location: index.php?controller=event&action=mesEvents');
+                        exit();
                     } else {
                         $error['database'] = "Erreur lors de la mise à jour !";
                     }
                 } else {
-                    $myEvent = $eventRepository->myEvents($userId);
+                    $myEvents = $eventRepository->myEvents($userId);
                 }
 
             }
@@ -301,7 +301,9 @@ class EventController extends Controller
             'majEvent'    => $majEvent,
             'plateformes' => $plateformes,
             'error'       => $error,
-            'events'      => $myEvent,
+            'events'      => $myEvents,
+            'cheminCouverture' => EventValidator::getCoverDir(),
+            'cheminDiaporama' => EventValidator::getDiaporamaDir(),
         ]);
 
         } catch (\Exception $e) {

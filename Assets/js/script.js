@@ -88,6 +88,15 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Erreur lors de la requête d'inscription : ", error);
         alert("Une erreur inattendue est survenue. Veuillez réessayer.")
       }
+
+      btnToto.style.display = "block";
+      
     });
   });
 });
+
+
+const btnToto = document.getElementById("toto");
+btnToto.style.display = "none";
+
+console.log(btnToto);

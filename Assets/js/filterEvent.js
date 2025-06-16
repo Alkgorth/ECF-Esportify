@@ -11,25 +11,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (filterType === "date") {
                     const dateA = new Date(a.dataset.start);
                     const dateB = new Date(b.dataset.start);
-                    return dateA - dateB; // plus proche d'abord
+                    return dateA - dateB;
                 }
 
                 if (filterType === "organisateur") {
                     const orgaA = a.dataset.organisateur;
                     const orgaB = b.dataset.organisateur;
-                    return orgaA.localeCompare(orgaB); // ordre alpha
+                    return orgaA.localeCompare(orgaB);
                 }
 
                 if (filterType === "joueurs") {
                     const nbA = parseInt(a.dataset.joueurs, 10);
                     const nbB = parseInt(b.dataset.joueurs, 10);
-                    return nbA - nbB; // croissant
+                    return nbA - nbB;
                 }
 
                 return 0;
             });
 
-            // Réinjection dans le DOM dans l'ordre trié
             cards.forEach(card => eventsContainer.appendChild(card));
         });
     });
