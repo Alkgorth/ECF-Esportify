@@ -1,15 +1,11 @@
 <?php
+    use App\Tools\EventValidator;
 
-    require_once _ROOTPATH_ . '/templates/head.php';
-    require_once _ROOTPATH_ . '/templates/header.php';
-
-    $cheminCouverture = '/Assets/Documentation/Images/Couverture/';
-    $cheminDiapo      = '/Assets/Documentation/Images/Diapo/';
+    $cheminCouverture = EventValidator::getCoverDir();
+    $cheminDiapo      = EventValidator::getDiaporamaDir();
 ?>
-<main>
-    <section class="container mt-5 mb-4">
-        <h1>Page événements visiteur</h1>
-        <?php if ($eventDetail): ?>
+
+<?php if ($eventDetail): ?>
             <div class="row">
                 <div class="col-md-6">
                     <img src="<?php echo $cheminCouverture . $eventDetail['cover'] ?>"
@@ -43,7 +39,7 @@
                                                 $activeClass = $first ? 'active' : '';
                                             ?>
 	                                    <div class="carousel-item <?php echo $activeClass?>">
-	                                            <img src="<?php echo $cheminDiapo . trim($imageName) ?>" class="img-fluid rounded d-block w-100" alt="Image du diaporama">
+	                                            <img src="<?php echo $cheminDiapo . trim($imageName) ?>" class="img-fluid rounded d-block w-100" alt="Image <?php echo htmlspecialchars(trim($imageName)) ?>">
 	                                    </div>
 	                                        <?php
                                                     $first = false;
@@ -69,27 +65,3 @@
         <?php else: ?>
             <p class="alert alert-warning">L'événement demandé n'a pas été trouvé.</p>
         <?php endif; ?>
-    </section>
-
-    <!-- Chat asynchrone / à rendre visible uniquement si l'utilisateur est enregistré sur l'évènement-->
-     <section class="container mt-5 chatAsynchrone">
-
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <div class="mb-3">
-                <label for="chatAsynchrone" class="form-label">Exprimez-vous sur l'événement*</label>
-                <textarea class="form-control" id="chatAsynchrone" rows="5" placeholder="Ecrivez votre message"></textarea>
-                <div class="form-text">
-                </div>
-            </div>
-        </div>
-    </div>
-
-     </section>
-</main>
-
-<?php
-
-    require_once _ROOTPATH_ . '/templates/footer.php';
-
-?>

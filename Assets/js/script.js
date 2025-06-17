@@ -100,3 +100,50 @@ const btnToto = document.getElementById("toto");
 btnToto.style.display = "none";
 
 console.log(btnToto);
+
+// Affichage modal détails évènements
+document.addEventListener('DOMContentLoaded', function() {
+  const eventDetailModal = document.getElementById('eventModal');
+  const eventModalContent = document.getElementById('eventModalContent');
+  eventDetailModal.addEventListener('show.bs.modal', function(event) {
+    event.preventDefault();
+
+    const anchor = event.relatedTarget;
+    const eventId = anchor.getAttribute('data-event-id');
+
+    console.log('ID de l\'événement :', eventId); 
+    console.log('URL de la requête :', `http://esportify:8000/index.php?controller=event&action=eventDetail&id=${eventId}&ajax=1`);
+
+    eventModalContent.innerHTML = `
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+      </div>`;
+
+      fetch(`http://esportify:8000/index.php?controller=event&action=eventDetail&id=${eventId}&ajax=1`)
+        .then(response => {
+          console.log('Réponse du serveur (brute):', response);
+            if (!response.ok) {
+              throw new Error(`Erreur HTTP : ${response.status} ${response.statusText}`);
+            }
+            return response.text();
+        })
+        .then(html => {
+          console.log('Contenu HTML reçu : ', html);
+          eventModalContent.innerHTML = html;
+
+          const newCarousel = eventModalContent.querySelector('#carouselExampleRide');
+          if (newCarousel) {
+            new bootstrap.Carousel(newCarousel);
+          }
+        })
+        .catch(error => {
+          console.error('Erreur lors du chargement des détails de l\'évènement : ', error);
+          eventModalContent.innerHTML = `
+              <div class="alert alert-danger" role="alert">
+                  Impossible de charger les détails de l'évènement : ${error.message}
+                  </div>`;
+        });
+  });
+});

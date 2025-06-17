@@ -61,15 +61,28 @@ class EventController extends Controller
 
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
+                $isAjax = isset($_GET['ajax']);
 
                 // Charger le jeu par un appel au repository
                 $eventRepository = new EventRepository();
                 $eventDetail     = $eventRepository->findEventById($id);
 
-                $this->render('event/eventDetail', [
-                    'eventDetail' => $eventDetail,
+                if (!$eventDetail) {
+                    throw new \Exception("Événement introuvable.");
+                }
 
-                ]);
+                if ($isAjax) {
+                    $this->render('event/modalContent', [
+                        'eventDetail' => $eventDetail,
+                        'cheminCouverture' => EventValidator::getCoverDir(),
+                        'cheminDiaporama' => EventValidator::getDiaporamaDir(),
+                    ]);
+                } else {
+                    $this->render('event/eventDetail', [
+                        'eventDetail' => $eventDetail,
+                    ]);
+                }
+
             } else {
                 throw new \Exception("L'id est manquant en paramètre");
             }
