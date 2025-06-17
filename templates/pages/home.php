@@ -84,7 +84,7 @@
                 <?php foreach ($events as $event) {?>
                     <div class="col">
                         <div class="card h-100 carte">
-                            <a href="index.php?controller=event&action=eventDetail&id=<?php echo $event['id'] ?>" id=derniersEvent class="text-decoration-none text-white">
+                            <a href="#" class="text-decoration-none text-white open-event-modal" data-bs-toggle="modal" data-bs-target="#eventModal" data-event-id="<?php echo $event['id']; ?>">
                                 <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?php echo $event['name'] ?>">
                             </a>
                             <div class="card-body">
@@ -100,6 +100,23 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal détails évènement -->
+     <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">Détail de l'évènement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body" id="eventModalContent">
+                    <div class="text-center">
+                        <div class="spinner-border text-primary" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
 </main>
 
 <?php
