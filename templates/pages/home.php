@@ -76,8 +76,8 @@
         </div>
     </section>
 
+    <!-- Cartes des évènements validés -->
     <section class="sectionBasse mt-2">
-
         <h2 class="mb-4 text-center">Les derniers évènements</h2>
         <div class="container mb-3">
             <div class="row row-cols-1 row-cols-md-4 g-4 events">
@@ -110,8 +110,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
                 <div class="modal-body" id="eventModalContent">
-                    <div class="text-center">
-                        <div class="spinner-border text-primary" role="status"></div>
                     </div>
                 </div>
             </div>

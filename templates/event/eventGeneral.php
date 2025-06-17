@@ -112,7 +112,6 @@
                                 <!-- Input pour CSRF -->
                                 <input type="hidden" id="csrfTokenInput" name="csrf_token" value="<?php echo htmlspecialchars($_COOKIE['csrf_token'] ?? ''); ?>">
                                 <button class="btn btn-primary mb-3 bouton-inscription mx-auto" type="button" name="inscription" data-event-id="<?php echo htmlspecialchars($event['id']) ?>">S'inscrire</button>
-                                <button class="btn btn-warning" type="button" id="toto">TOTO</button>
                             </div>
                         </div>
                     </div>
