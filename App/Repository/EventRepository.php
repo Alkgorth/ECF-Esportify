@@ -16,18 +16,19 @@ class EventRepository extends MainRepository
             e.date_hour_start AS start,
             e.date_hour_end AS end,
             e.nombre_de_joueurs AS joueurs,
-            e.description AS description,
             e.cover_image_path AS cover,
-            pl.name AS plateforme_name,
-            u.pseudo AS organisateur
+            pl.name AS plateforme_name
             FROM event AS e
             INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
-            INNER JOIN user u ON e.fk_id_user = u.id_user
-            ORDER BY RAND()
+            WHERE e.status = :status_valide
+            GROUP BY e.id_event
+            ORDER BY e.date_hour_start DESC
             LIMIT 8');
 
-        $query->execute();
+        $statusValide = 'validé';
+        $query->bindParam(':status_valide', $statusValide, $this->pdo::PARAM_STR);
 
+        $query->execute();
         $event = $query->fetchAll($this->pdo::FETCH_ASSOC);
 
         return $event;
