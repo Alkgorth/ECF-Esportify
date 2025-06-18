@@ -42,14 +42,14 @@ class SubscriptionController extends Controller
             if (!Security::isLoggedIn()) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté.']);
-                exit;
+                return;
             }
 
             $csrfTokenFromRequest = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
             if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
                 http_response_code(403);
                 echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
-                exit;
+                return;
             }
 
             $userId = $_SESSION['user']['id'];
@@ -58,7 +58,7 @@ class SubscriptionController extends Controller
             if (empty($userId) || empty($userName)) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => "Informations utilisateur manquantes après vérification de connexion."]);
-                exit;
+                return;
             }
 
             $input = file_get_contents('php://input');
@@ -69,7 +69,7 @@ class SubscriptionController extends Controller
             if (!$eventId) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => "Identifiant de l'évènement manquant."]);
-                exit;
+                return;
             }
 
             $eventRepository = new EventRepository();
@@ -78,7 +78,7 @@ class SubscriptionController extends Controller
             if (!$event) {
                 http_response_code(404);
                 echo json_encode(['success' => false, 'message' => "Événement introuvable."]);
-                exit;
+                return;
             }
 
             $eventData = [
@@ -111,12 +111,15 @@ class SubscriptionController extends Controller
             $successUserUpdate = $userMongoRepository->addEventToUser($userData, $eventData);
             $successEventUpdate = $eventMongoRepository->addUserToEvent($eventData, $userData);
 
+
+
             if ($successUserUpdate && $successEventUpdate) {
                 http_response_code(200);
                 echo json_encode([
                     'success' => true,
                     'message' => "Inscription réussie."
                 ]);
+                return;
             } else {
                 $errorMessage = '';
                 if (!$successUserUpdate) {
@@ -127,13 +130,12 @@ class SubscriptionController extends Controller
                 }
                 http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'enregistrement dans la base de données : ' . trim($errorMessage)]);
+                return;
             }
-            exit;
-
         } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode(['success' => false, 'message' => "Erreur serveur : " . $e->getMessage()]);
-            exit;
+            return;
         }
     }
 }
