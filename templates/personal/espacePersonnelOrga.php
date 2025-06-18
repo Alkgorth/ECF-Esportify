@@ -4,18 +4,17 @@
     require_once _ROOTPATH_ . '/templates/header.php';
 
 ?>
-
 <main class="container">
-    <section>
-        <h1>Page Espace Personnel Orga</h1>
-    </section>
+  <section class="container justify-content-center align-items-center d-flex">
+    <h1 class="m-4">Page Espace Personnel Orga</h1>
+  </section>
 
   <section class="container row-col text-center justify-content-center align-items-center d-flex">
     <div class="d-grid gap-2 d-md-block mt-2 me-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=mesEvents" role="button">Mes évènements</a>
     </div>
 
-    <div class="d-grid gap-2 d-md-block mt-2 me-2 ms-2">
+    <div class="d-grid gap-2 d-md-block mt-2 mx-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=createEvent" role="button">Soumettre un évènement</a>
     </div>
 

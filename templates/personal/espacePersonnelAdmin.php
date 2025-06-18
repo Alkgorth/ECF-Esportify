@@ -6,22 +6,20 @@
 ?>
 
 <main class="container">
-  <section>
-    <h1>Page Espace Personnel Admin</h1>
+  <section class="container justify-content-center align-items-center d-flex">
+    <h1 class="m-4">Page Espace Personnel Admin</h1>
   </section>
 
-    <section class="container row text-center justify-content-center align-items-center d-flex">
-    <div class="d-grid gap-2 d-md-block mt-2">
+  <section class="container row-col text-center justify-content-center align-items-center d-flex">
+    <div class="d-grid gap-2 d-md-block mt-2 me-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=eventAdmin" role="button">Mes évènements</a>
     </div>
- 
 
-  
-    <div class="d-grid gap-2 d-md-block mt-2">
+    <div class="d-grid gap-2 d-md-block mt-2 mx-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=createEvent" role="button">Soumettre un évènement</a>
     </div>
->
-    <div class="d-grid gap-2 d-md-block mt-2">
+
+    <div class="d-grid gap-2 d-md-block mt-2 ms-2">
       <a class="btn btn-primary" href="#" role="button">Mon historique</a>
     </div>
   </section>

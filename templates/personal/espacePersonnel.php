@@ -15,7 +15,7 @@
       <a class="btn btn-primary" href="index.php?controller=event&action=mesEvents" role="button">Mes évènements</a>
     </div>
 
-    <div class="d-grid gap-2 d-md-block mt-2 me-2 ms-2">
+    <div class="d-grid gap-2 d-md-block mt-2 mx-2">
       <a class="btn btn-primary" href="index.php?controller=event&action=createEvent" role="button">Soumettre un évènement</a>
     </div>
 
