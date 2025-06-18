@@ -6,31 +6,31 @@
 ?>
 
 <?php if ($eventDetail): ?>
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row align-items-stretch">
+                <div class="col-md-6 mb-3">
                     <img src="<?php echo $cheminCouverture . $eventDetail['cover'] ?>"
-                    class="img-fluid rounded" alt="<?php echo $eventDetail['name'] ?>">
+                    class="img-fluid rounded w-100 h-100 object-fit-cover" alt="<?php echo $eventDetail['name'] ?>">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 d-flex flex-column justify-content-evenly">
                     <h2 class="text-center"><?php echo $eventDetail['name'] ?></h2>
-                    <p class="lead text-center">Jeu :<?php echo $eventDetail['game_name'] ?></p>
-                    <p class="text-center fs-2">Plateforme :<?php echo $eventDetail['plateforme_name'] ?></p>
-                    <p class="text-center fs-2">Organisateur :<?php echo $eventDetail['organisateur'] ?></p>
+                    <p class="lead text-center">Jeu : <?php echo $eventDetail['game_name'] ?></p>
+                    <p class="text-center fs-2">Plateforme : <?php echo $eventDetail['plateforme_name'] ?></p>
+                    <p class="text-center fs-2">Organisateur : <?php echo $eventDetail['organisateur'] ?></p>
                 </div>
                 
                 
-                <div class="row row-cols-1 row-cols-md-2 align-items-center">
-                    <p class="text-center fs-2">Début :<?php echo $eventDetail['start'] ?></p>
-                    <p class="text-center fs-2">Fin :<?php echo $eventDetail['end'] ?></p>
+                <div class="d-flex flex-column align-items-center mt-3">
+                    <p class="text-center fs-2">Début : <?php echo $eventDetail['start'] ?></p>
+                    <p class="text-center fs-2">Fin : <?php echo $eventDetail['end'] ?></p>
                 </div>
                     <p>Nombre de joueurs inscrits :<?php echo $eventDetail['joueurs'] ?></p>
                     <p class="mt-3"><?php echo nl2br($eventDetail['description']) ?></p>
 
                     <?php if (! empty($eventDetail['diaporama'])): ?>
-                            <h3>Diaporama</h3>
+                            <h4 class="my-3">Diaporama</h4>
 
                         <div class="container mt-4">
-                            <div id="carouselExampleRide" class="carousel slide mx-auto justify-content-center col-8" data-bs-ride="true">
+                            <div id="carouselModal" class="carousel slide mx-auto justify-content-center col-8" data-bs-ride="true">
                                 <div class="carousel-inner mb-2">
                                         <?php
                                             $diapoImages = explode(',', $eventDetail['diaporama']);
@@ -39,19 +39,18 @@
                                                 $activeClass = $first ? 'active' : '';
                                             ?>
 	                                    <div class="carousel-item <?php echo $activeClass?>">
-	                                            <img src="<?php echo $cheminDiapo . trim($imageName) ?>" class="img-fluid rounded d-block w-100" alt="Image <?php echo htmlspecialchars(trim($imageName)) ?>">
+	                                            <img src="<?php echo $cheminDiapo . trim($imageName) ?>"
+                                                class="img-fluid rounded d-block w-100"
+                                                alt="Image <?php echo htmlspecialchars(trim($imageName)) ?>">
 	                                    </div>
-	                                        <?php
-                                                    $first = false;
-                                                endforeach;
-                                            ?>
+	                                        <?php $first = false; endforeach; ?>
                                 </div>
 
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselModal" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Précédent</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselModal" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Suivant</span>
                                 </button>
@@ -59,7 +58,12 @@
                         </div>
                     <?php endif; ?>
                 <div class="d-flex mt-4">
-                    <button class="btn btn-primary mb-3 bouton-inscription mx-auto" type="submit" name="inscription" data-event-id="<?php echo htmlspecialchars($eventDetail['id']) ?>">S'inscrire</button>
+                    <!-- Input pour CSRF -->
+                    <input type="hidden" id="csrfTokenInput" name="csrf_token" value="<?php echo htmlspecialchars($_COOKIE['csrf_token'] ?? ''); ?>">
+                    <button class="btn btn-primary mb-3 bouton-inscription mx-auto"
+                    type="button"
+                    name="inscription"
+                    data-event-id="<?php echo htmlspecialchars($eventDetail['id']) ?>">S'inscrire</button>
                 </div>
             </div>
         <?php else: ?>

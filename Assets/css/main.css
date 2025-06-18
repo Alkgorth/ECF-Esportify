@@ -12048,6 +12048,18 @@ textarea.form-control-lg {
   font-family: var(--esportify-font-menus);
 }
 
+#eventModalContent {
+  color: var(--esportify-white);
+  font-family: var(--esportify-font-menus);
+  background-color: var(--esportify-grey-50);
+}
+
+.titleModal {
+  color: var(--esportify-white);
+  font-family: var(--esportify-font-title);
+  background-color: var(--esportify-grey-25);
+}
+
 * {
   margin: 0;
   padding: 0;
