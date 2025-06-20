@@ -23,3 +23,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # On installe les dépendences php du projet
 RUN composer install --no-dev --optimize-autoloader
+# Installer Node.js 20.x
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Vérification
+RUN node -v && npm -v
+
+# Installation package Node
+RUN npm install
