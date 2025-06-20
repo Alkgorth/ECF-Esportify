@@ -22,4 +22,4 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # On installe les dépendences php du projet
-RUN composer install && composer dump-autoload
+RUN composer install --no-dev --optimize-autoloader
