@@ -3,6 +3,7 @@
 /vendor
 /.env
 Assets/js/prod.env.js
+docker-compose.override.yml
 
 #Fichier temporaire pour test PHP
 /test
