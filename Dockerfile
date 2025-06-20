@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         libwebp-dev \
         libcurl4-openssl-dev pkg-config libssl-dev \
+        git \
+        unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install gd pdo pdo_mysql \
     && pecl install mongodb \
