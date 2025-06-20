@@ -9,6 +9,8 @@ services:
       - db
       - mongodb
     restart: always
+    ports:
+      - 80:80
     volumes:
       - .:/var/www/html
 
@@ -44,9 +46,10 @@ services:
     ports:
       - 8080:80
     environment:
-      - PMA_HOST=db
-      - PMA_USER=root
-      - PMA_PASSWORD=MonMotDePasse
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_ROOT_PASSWORD: MonMotDePasse
+      PMA_PASSWORD: MonMotDePasse
     depends_on:
       - db
     restart: always
