@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__.'/config_const.php';
+require __DIR__ . '/vendor/autoload.php';
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -33,8 +34,6 @@ define('_TEMPLATEPATH_', __DIR__.'/templates');
 spl_autoload_register();
 
 use App\Controller\Controller;
-use App\Entity\User;
-
 
 $controller = new Controller;
 $controller->route();
