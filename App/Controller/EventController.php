@@ -124,7 +124,118 @@ class EventController extends Controller
 
     protected function eventAdmin()
     {
-        $this->render('event/eventAdmin', []);
+        try {
+
+            if (! isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
+                header('Location: index.php?controller=connexions&action=connexion');
+                exit();
+            }
+
+            $userId = $_SESSION['user']['id'];
+
+            $error           = [];
+            $majEvent        = "Votre demande de mise à jour a été envoyée.";
+            $deleteEvent     = "L'évènement a bien été supprimé !";
+            $eventRepository = new EventRepository();
+            $myEvents = $eventRepository->myEvents($userId);
+            $plateformes     = $eventRepository->getAllPlateformes();
+            $event           = new Event();
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
+                    $csrfTokenFromRequest = $_POST['csrfToken'];
+                }
+    
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
+                }
+            }
+
+            if (isset($_POST['saveUpdate'])) {
+                $event->hydrate($_POST);
+
+                if (!empty($_POST['id_event'])) {
+                    $event->setIdEvent((int) $_POST['id_event']);
+                } else {
+                    $error['id_event'] = "L'identifiant de l'évènement est manquant";
+                };
+
+                $event->setStatus(Status::EnAttente);
+
+                $uploadResult        = EventValidator::secureImage($_FILES);
+                $uploadedCoverImage  = $uploadResult['uploaded']['cover_image_path'] ?? null;
+                $uploadedDiapoImages = $uploadResult['uploaded']['image_path'] ?? [];
+                $uploadErrors        = $uploadResult['errors'];
+                $error               = array_merge($error, $uploadErrors ?? []);
+
+                if ($uploadedCoverImage) {
+                    $event->setCoverImagePath($uploadedCoverImage);
+                } else {
+                    $existingCoverPath = $_POST['existing_cover_image_path'] ?? null;
+                    $event->setCoverImagePath(($existingCoverPath));
+                }
+
+                $finalDiapoImages = [];
+                if (!empty($uploadedDiapoImages)) {
+                    $finalDiapoImages = $uploadedDiapoImages;
+                } else {
+                    $finalDiapoImages = $_POST['existing_diaporama_image_paths'] ?? [];
+                }
+
+                $eventErrors = EventValidator::validateEvent($event);
+                $error = array_merge($error, $eventErrors ?? []);
+                $event->setFkIdUser($userId);
+
+                if (empty($error)){
+                    $updateEvent = $eventRepository->updateEvent($event);
+                    if ($updateEvent) {
+                        $eventRepository->updateEventImage($event->getIdEvent(), $finalDiapoImages);
+                        $majEvent = "Votre demande de mise à jour à été envoyée.";
+                        header('Location: index.php?controller=event&action=mesEvents');
+                        exit();
+                    } else {
+                        $error['database'] = "Erreur lors de la mise à jour !";
+                    }
+                } else {
+                    $myEvents = $eventRepository->myEvents($userId);
+                }
+        }
+
+        if (isset($_POST['delete']) && Security::csrfToken()){
+            if (!empty($_POST['id_event'])) {
+                $eventIdToDelete = (int) $_POST['id_event'];
+                $eventRepository->deleteEvent($eventIdToDelete);
+                header('Location: index.php?controller=event&action=mesEvents');
+                exit();
+            } else {
+                $error['delete'] = "L'évènement à supprimer n'a pas été trouvé.";
+            }
+        }
+
+        if (empty($plateformes)) {
+            throw new \Exception("Aucune donnée n'a été trouvée");
+        }
+
+        $this->render('event/mesEvents', [
+            'deleteEvent' => $deleteEvent,
+            'majEvent'    => $majEvent,
+            'plateformes' => $plateformes,
+            'error'       => $error,
+            'events'      => $myEvents,
+            'cheminCouverture' => EventValidator::getCoverDir(),
+            'cheminDiaporama' => EventValidator::getDiaporamaDir(),
+        ]);
+
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     //Affichage de la page création évènement
@@ -134,15 +245,30 @@ class EventController extends Controller
             $error     = [];
             $affichage = "Votre proposition d'évènement à bien été envoyé.";
             $majEvent  = "Votre évènement à été mis à jour.";
+            $plateformes = "";
 
             if (! isset($_SESSION['user'])) {
                 header('Location: index.php?controller=connexions&action=connexion');
             }
 
-            if (Security::csrfToken()) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
+                    $csrfTokenFromRequest = $_POST['csrfToken'];
+                }
+    
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
+                }
+            
 
                 $eventRepository = new EventRepository();
                 $plateformes     = $eventRepository->getAllPlateformes();
+                var_dump($plateformes);
                 $event           = new Event();
 
                 if (isset($_POST['valider']) || isset($_POST['modifier'])) {

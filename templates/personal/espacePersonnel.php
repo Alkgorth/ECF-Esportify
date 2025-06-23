@@ -43,7 +43,7 @@
       <h1 class="text-center pb-4">Espace personnel</h1>
 
       <!-- Input pour CSRF -->
-      <input type="hidden" name="csrfToken" value="<?php echo $_COOKIE['csrfToken']; ?>">
+      <input type="hidden" id="csrfTokenInput" name="csrfToken" value="<?php echo htmlspecialchars($_COOKIE['csrfToken'] ?? ''); ?>">
 
       <div class="mb-3 text-center">
         <label for="last_name" class="form-label">Nom</label>

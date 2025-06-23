@@ -41,6 +41,10 @@
       <?php }?>
 
       <h1 class="text-center pb-4">Espace personnel</h1>
+
+      <!-- Input pour CSRF -->
+      <input type="hidden" id="csrfTokenInput" name="csrfToken" value="<?php echo htmlspecialchars($_COOKIE['csrfToken'] ?? ''); ?>">
+      
       <div class="mb-3 text-center">
         <label for="last_name" class="form-label">Nom</label>
         <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name'])?>">

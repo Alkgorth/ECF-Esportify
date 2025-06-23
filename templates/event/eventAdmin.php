@@ -45,10 +45,10 @@
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $event['name'] ?></h5>
-                                    <p class="card-text">Début :                                                                  <?php echo $event['start'] ?></p>
-                                    <p class="card-text">Fin :                                                               <?php echo $event['end'] ?></p>
-                                    <p class="card-text">Joueurs inscrits :                                                                            <?php echo $event['joueurs'] ?></p>
-                                    <p class="card-text">Status :                                                                  <?php echo $event['status'] ?></p>
+                                    <p class="card-text">Début :<?php echo $event['start'] ?></p>
+                                    <p class="card-text">Fin :<?php echo $event['end'] ?></p>
+                                    <p class="card-text">Joueurs inscrits :<?php echo $event['joueurs'] ?></p>
+                                    <p class="card-text">Status :<?php echo $event['status'] ?></p>
                                 <div class="row mt-4">
                                     <div class="text-center col-12">
                                         <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#eventModal<?php echo $event['id'] ?>">
@@ -114,7 +114,8 @@
                                         <div class="mb-3 text-center">
                                             <label for="name_event" class="form-label">Nom évènement</label>
                                                 <input type="text" class="form-control
-                                                <?php echo(isset($error['name_event']) ? 'is-invalid' : '') ?>" id="name_event" name="name_event" value="<?php echo htmlspecialchars($event['name']) ?>" required>
+                                                <?php echo(isset($error['name_event']) ? 'is-invalid' : '') ?>" id="name_event"
+                                                    name="name_event" value="<?php echo htmlspecialchars($event['name']) ?>" required>
                                                 <?php if (isset($error['name_event'])) {?>
                                                     <div class="invalid-feedback"><?php echo $error['name_event'] ?></div>
                                                 <?php }?>
@@ -122,7 +123,8 @@
                                         <div class="mb-3 text-center">
                                             <label for="name_game" class="form-label">Nom du jeux</label>
                                             <input type="text" class="form-control
-                                            <?php echo(isset($error['name_game']) ? 'is-invalid' : '') ?>" id="name_game" name="name_game" value="<?php echo htmlspecialchars($event['game_name']) ?>" required>
+                                            <?php echo(isset($error['name_game']) ? 'is-invalid' : '') ?>" id="name_game"
+                                                name="name_game" value="<?php echo htmlspecialchars($event['game_name']) ?>" required>
                                             <?php if (isset($error['name_game'])) {?>
                                                 <div class="invalid-feedback"><?php echo $error['name_game'] ?></div>
                                             <?php }?>
@@ -143,7 +145,8 @@
                                         <div class="mb-3 text-center">
                                             <label for="date_hour_start" class="form-label">Date et heure de début</label>
                                             <input type="datetime-local" class="form-control
-                                            <?php echo(isset($error['date_hour_start']) ? 'is-invalid' : '') ?>" id="date_hour_start" name="date_hour_start" value="<?php echo htmlspecialchars($event['start']) ?>" min="" max="" required>
+                                            <?php echo(isset($error['date_hour_start']) ? 'is-invalid' : '') ?>" id="date_hour_start"
+                                                name="date_hour_start" value="<?php echo htmlspecialchars($event['start']) ?>" min="" max="" required>
                                             <?php if (isset($error['date_hour_start'])) {?>
                                                 <div class="invalid-feedback"><?php echo $error['date_hour_start'] ?></div>
                                             <?php }?>
@@ -151,14 +154,15 @@
                                         <div class="mb-3 text-center">
                                             <label for="date_hour_end" class="form-label">Date et heure de fin</label>
                                             <input type="datetime-local" class="form-control
-                                            <?php echo(isset($error['date_hour_end']) ? 'is-invalid' : '') ?>" id="date_hour_end" name="date_hour_end" value="<?php echo htmlspecialchars($event['end']) ?>" required>
+                                            <?php echo(isset($error['date_hour_end']) ? 'is-invalid' : '') ?>" id="date_hour_end"
+                                                name="date_hour_end" value="<?php echo htmlspecialchars($event['end']) ?>" required>
                                             <?php if (isset($error['date_hour_end'])) {?>
                                                 <div class="invalid-feedback"><?php echo $error['date_hour_end'] ?></div>
                                             <?php }?>
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="nombre_de_joueurs" class="form-label">Nombre de joueurs</label>
-                                            <input type="number" class="form-control                                                                                     <?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
+                                            <input type="number" class="form-control<?php echo(isset($error['nombre_de_joueurs']) ? 'is-invalid' : '') ?>"
                                                 id="nombre_de_joueurs"
                                                 name="nombre_de_joueurs"
                                                 min="10"
@@ -170,7 +174,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea class="form-control                                                                          <?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
+                                            <textarea class="form-control<?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"
                                                 id="description"
                                                 name="description"
                                                 rows="5" cols="33"
@@ -213,7 +217,8 @@
 
 
                             <!-- Modal de confirmation de suppression -->
-                            <div class="modal fade" id="confirmDeleteModal<?php echo $event['id']; ?>" tabindex="-1" aria-labelledby="confirmDeleteLabel<?php echo $event['id']; ?>" aria-hidden="true">
+                            <div class="modal fade" id="confirmDeleteModal<?php echo $event['id']; ?>" tabindex="-1"
+                                aria-labelledby="confirmDeleteLabel<?php echo $event['id']; ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content border-danger">
                                         <div class="modal-header">
