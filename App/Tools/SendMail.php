@@ -16,7 +16,7 @@ use PHPMailer\PHPMailer\Exception;
 
 
 //Load Composer's autoloader
-require 'vendor\autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 class SendMail
 {
@@ -26,23 +26,18 @@ class SendMail
         $mail = new PHPMailer(true);
 
         try {
-            //Server settings
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'ap.percheron@gmail.com';                     //SMTP username
-            $mail->Password   = ConfigSecu::$smtpPassword;                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'ap.percheron@gmail.com';
+            $mail->Password   = ConfigSecu::$smtpPassword;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
 
             //Recipients
             $mail->setFrom('ap.percheron@gmail.com', 'Mailer');
             $mail->addAddress($email, $last_name . ' ' . $first_name);     //Add a recipient
             $mail->addReplyTo('ap.percheron@gmail.com', 'Information');
-
-            //Attachments
-            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
@@ -55,8 +50,7 @@ class SendMail
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients'; // pour les boites mail plus anciennes
 
             $mail->send();
-            echo 'Message has been sent';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     }

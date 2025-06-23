@@ -54,10 +54,13 @@ class Security
         return $_COOKIE['csrf_token'];
     }
 
-    public static function checkCsrfToken(string $tokenFromRequest): bool
+    public static function checkCsrfToken(string $csrfTokenFromRequest): bool
     {
-        // On vérifie que le cookie existe et que les tokens correspondent
-        return isset($_COOKIE['csrf_token']) && hash_equals($_COOKIE['csrf_token'], $tokenFromRequest);
+        if (!isset($_COOKIE['csrf_token'])) {
+            return false;
+            var_dump($_COOKIE['csrf_token']);
+        }
+        return hash_equals($_COOKIE['csrf_token'], $csrfTokenFromRequest);
     }
 }
 
