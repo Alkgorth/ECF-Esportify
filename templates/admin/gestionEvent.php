@@ -138,7 +138,7 @@
                                                 }?>
 
                                         <!-- Input pour CSRF -->
-                                        <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
+                                        <input type="hidden" name="csrfToken" value="<?php echo $_COOKIE['csrfToken']; ?>">
 
                                         <!-- Input pour l'id de l'évènement -->
                                         <input type="hidden" name="id_event" value="<?php echo $event['id']; ?>">
@@ -268,7 +268,7 @@
                                         <div class="modal-footer justify-content-center">
                                             <form method="POST">
                                             <!-- Pour envoyer l'ID de l'évènement à supprimer -->
-                                            <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
+                                            <input type="hidden" name="csrfToken" value="<?php echo $_COOKIE['csrfToken']; ?>">
                                             <input type="hidden" name="id_event" value="<?php echo $event['id']; ?>">
                                             <button type="submit" name="delete" class="btn bouton-valider">Oui, supprimer</button>
                                             </form>

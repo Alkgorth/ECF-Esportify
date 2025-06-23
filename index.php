@@ -15,10 +15,10 @@ session_set_cookie_params([
 
 session_start();
 
-if (!isset($_COOKIE['csrf_token'])) {
+if (!isset($_COOKIE['csrfToken'])) {
     $token = bin2hex(random_bytes(32));
     setcookie(
-        'csrf_token',
+        'csrfToken',
         $token,
         time() + 3600,
         '/',
@@ -26,7 +26,7 @@ if (!isset($_COOKIE['csrf_token'])) {
         false,
         true
     );
-    $_COOKIE['csrf_token'] = bin2hex(random_bytes(32));
+    $_COOKIE['csrfToken'] = bin2hex(random_bytes(32));
 }
 
 define('_ROOTPATH_', __DIR__);

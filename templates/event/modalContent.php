@@ -59,7 +59,7 @@
                     <?php endif; ?>
                 <div class="d-flex mt-4">
                     <!-- Input pour CSRF -->
-                    <input type="hidden" id="csrfTokenInput" name="csrf_token" value="<?php echo htmlspecialchars($_COOKIE['csrf_token'] ?? ''); ?>">
+                    <input type="hidden" id="csrfTokenInput" name="csrfToken" value="<?php echo htmlspecialchars($_COOKIE['csrfToken'] ?? ''); ?>">
                     <button class="btn btn-primary mb-3 bouton-inscription mx-auto"
                     type="button"
                     name="inscription"

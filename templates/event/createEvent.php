@@ -33,7 +33,7 @@
         <h1 class="text-center pb-4">Créer un évènement</h1>
 
         <!-- Input pour CSRF -->
-        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_COOKIE['csrf_token']); ?>">
+        <input type="hidden" name="csrfToken" value="<?php echo htmlspecialchars($_COOKIE['csrfToken']); ?>">
 
         <div class="mb-3 text-center">
         <label for="cover_image_path" class="label-form">Choisissez une image de couverture:</label>
