@@ -11,6 +11,7 @@ class ImageValidator {
     {
         $error = null;
         $path = null;
+        $nameOfFile = '';
 
         if ($fileData['error'] === UPLOAD_ERR_OK) {
             $fileType = mime_content_type($fileData['tmp_name']);

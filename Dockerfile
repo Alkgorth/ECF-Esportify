@@ -32,3 +32,5 @@ RUN node -v && npm -v
 
 # Installation package Node
 RUN npm install
+
+RUN chown -R www-data:www-data /var/www/html
