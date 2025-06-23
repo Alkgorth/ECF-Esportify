@@ -50,7 +50,20 @@ class AuthController extends Controller
     {
         $error = [];
 
-        if (Security::csrfToken()) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
+                    $csrfTokenFromRequest = $_POST['csrfToken'];
+                }
+    
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
+                }
+            }
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['connexion'])) {
                 if (isset($_POST['mail']) && isset($_POST['password'])) {
@@ -90,7 +103,7 @@ class AuthController extends Controller
                     }
                 }
             }
-        }
+            
         $this->render('auth/connexion', [
             'error' => $error,
         ]);

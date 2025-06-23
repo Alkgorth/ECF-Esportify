@@ -6,6 +6,8 @@ use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use App\Tools\SendMail;
 use App\Tools\UserValidator;
+use App\Tools\Security;
+
 
 class UserController extends Controller
 {
@@ -53,9 +55,18 @@ class UserController extends Controller
 
             $user = new User();
 
-            if (! empty($_POST)) {
-                if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
-                    die('Token CSRF invalide');
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
+                    $csrfTokenFromRequest = $_POST['csrfToken'];
+                }
+    
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
                 }
             }
 
@@ -71,6 +82,7 @@ class UserController extends Controller
                     SendMail::mailCreateUser($user->getLastName(), $user->getFirstName(), $user->getMail());
 
                     header('Location: index.php?controller=auth&action=connexion');
+                    exit();
                 }
             }
 

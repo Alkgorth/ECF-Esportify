@@ -45,8 +45,7 @@ class SubscriptionController extends Controller
                 return;
             }
 
-            $csrfTokenFromRequest = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
-            if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+            if (!Security::checkCsrfToken($_POST['csrfToken'])) {
                 http_response_code(403);
                 echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
                 return;

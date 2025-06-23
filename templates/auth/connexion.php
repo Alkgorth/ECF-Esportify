@@ -19,7 +19,7 @@
     <form method="POST" class="col-sm-6 mb-3 mx-auto justify-content-center">
 
         <!-- Input pour CSRF -->
-        <input type="hidden" name="csrf_token" value="<?php echo $_COOKIE['csrf_token']; ?>">
+        <input type="hidden" id="csrfTokenInput" name="csrfToken" value="<?php echo htmlspecialchars($_COOKIE['csrf_token'] ?? ''); ?>">
 
         <div class="mb-2 text-center">
             <label for="mail" class="form-label texte-input">Adresse mail</label>
