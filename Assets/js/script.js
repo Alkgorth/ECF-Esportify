@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>`;
 
-      fetch(`http://esportify:8000/index.php?controller=event&action=eventDetail&id=${eventId}&ajax=1`)
+      fetch(`index.php?controller=event&action=eventDetail&id=${eventId}&ajax=1`)
         .then(response => {
           console.log('Réponse du serveur (brute):', response);
             if (!response.ok) {
