@@ -18,10 +18,4 @@ configSecu.php
 
 #Dossier d'image à ne pas envoyer sur le repo
 /Assets/Documentation/Images/
-# Pour ignorer le dossier Image, il va tout d'abord falloir le retirer des dossiers trackés par Git
-# Pour cela il va falloir entrer les commandes suivantes :
-# Suppression du suivis
-# git rm -r --cached Assets/Documentation/Images/
-# Faire un commit
-# git commit -m "Supprime le dossier Images du suivi Git"
-# Le dossier ne devrait plus faire partis des éléments envoyés sur le repo.
+!/Assets/Documentation/Images/Logo-Bannière
