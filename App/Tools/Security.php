@@ -56,11 +56,11 @@ class Security
 
     public static function checkCsrfToken(string $csrfTokenFromRequest): bool
     {
-        if (!isset($_COOKIE['csrf_token'])) {
+        if (!isset($_COOKIE['csrfToken'])) {
             return false;
-            var_dump($_COOKIE['csrf_token']);
+            var_dump($_COOKIE['csrfToken']);
         }
-        return hash_equals($_COOKIE['csrf_token'], $csrfTokenFromRequest);
+        return hash_equals($_COOKIE['csrfToken'], $csrfTokenFromRequest);
     }
 }
 
