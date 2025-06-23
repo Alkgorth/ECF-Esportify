@@ -17,5 +17,6 @@ powerup.js
 configSecu.php
 
 #Dossier d'image à ne pas envoyer sur le repo
-/Assets/Documentation/Images/
+/Assets/Documentation/Images/*
 !/Assets/Documentation/Images/Logo-Bannière
+!/Assets/Documentation/Images/gameurs
