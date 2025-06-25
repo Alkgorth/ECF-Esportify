@@ -21,7 +21,6 @@ class EventRepository extends MainRepository
             FROM event AS e
             INNER JOIN plateforme pl ON e.fk_id_plateforme  = pl.id_plateforme
             WHERE e.status = :status_valide
-            GROUP BY e.id_event
             ORDER BY e.date_hour_start DESC
             LIMIT 8');
 
