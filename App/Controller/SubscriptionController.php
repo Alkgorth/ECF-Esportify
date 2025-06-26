@@ -110,8 +110,6 @@ class SubscriptionController extends Controller
             $successUserUpdate = $userMongoRepository->addEventToUser($userData, $eventData);
             $successEventUpdate = $eventMongoRepository->addUserToEvent($eventData, $userData);
 
-
-
             if ($successUserUpdate && $successEventUpdate) {
                 http_response_code(200);
                 echo json_encode([

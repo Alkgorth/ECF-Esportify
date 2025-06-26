@@ -12016,7 +12016,17 @@ textarea.form-control-lg {
 }
 
 .carteTexte {
+  color: var(--esportify-white);
   font-family: var(--esportify-font-subtitles);
+}
+
+.diaporamaImage {
+  max-height: 350px;
+  width: auto;
+}
+
+.diapoImgContainer {
+  min-height: 400px;
 }
 
 .input-form {

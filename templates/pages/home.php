@@ -112,7 +112,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Modal détails évènement -->
      <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
