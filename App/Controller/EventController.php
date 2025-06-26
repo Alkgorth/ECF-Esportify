@@ -141,20 +141,17 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
                 $csrfTokenFromRequest = '';
-    
-                if (!empty($_POST['csrfToken'])) {
+
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['csrfToken'])) {
                     $csrfTokenFromRequest = $_POST['csrfToken'];
                 }
-    
+
                 if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
                     http_response_code(403);
                     echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
                     return;
                 }
-            }
 
             if (isset($_POST['saveUpdate'])) {
                 $event->hydrate($_POST);
@@ -206,7 +203,13 @@ class EventController extends Controller
                 }
         }
 
-        if (isset($_POST['delete']) && Security::csrfToken()){
+        if (isset($_POST['delete'])){
+              $csrfTokenFromRequest = $_POST['csrfToken'] ?? '';
+              if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                http_response_code(403);
+                echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                return;
+              }
             if (!empty($_POST['id_event'])) {
                 $eventIdToDelete = (int) $_POST['id_event'];
                 $eventRepository->deleteEvent($eventIdToDelete);
@@ -245,7 +248,8 @@ class EventController extends Controller
             $error     = [];
             $affichage = "Votre proposition d'évènement à bien été envoyé.";
             $majEvent  = "Votre évènement à été mis à jour.";
-            $plateformes = "";
+            $eventRepository = new EventRepository();
+            $plateformes     = $eventRepository->getAllPlateformes();
 
             if (! isset($_SESSION['user'])) {
                 header('Location: index.php?controller=connexions&action=connexion');
@@ -254,21 +258,17 @@ class EventController extends Controller
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $csrfTokenFromRequest = '';
-    
-                if (!empty($_POST['csrfToken'])) {
+
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['csrfToken'])) {
                     $csrfTokenFromRequest = $_POST['csrfToken'];
                 }
-    
+
                 if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
                     http_response_code(403);
                     echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
                     return;
                 }
-            
 
-                $eventRepository = new EventRepository();
-                $plateformes     = $eventRepository->getAllPlateformes();
-                var_dump($plateformes);
                 $event           = new Event();
 
                 if (isset($_POST['valider']) || isset($_POST['modifier'])) {
@@ -365,8 +365,18 @@ class EventController extends Controller
             $myEvents = $eventRepository->myEvents($userId);
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
+            $csrfTokenFromRequest = '';
 
-            if (Security::csrfToken()) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['csrfToken'])) {
+                $csrfTokenFromRequest = $_POST['csrfToken'];
+            }
+
+            if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                http_response_code(403);
+                echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                return;
+            }
+
 
             if (isset($_POST['saveUpdate'])) {
                 $event->hydrate($_POST);
@@ -418,32 +428,37 @@ class EventController extends Controller
                 }
 
             }
-        }
 
-        if (isset($_POST['delete']) && Security::csrfToken()){
-            if (!empty($_POST['id_event'])) {
-                $eventIdToDelete = (int) $_POST['id_event'];
-                $eventRepository->deleteEvent($eventIdToDelete);
-                header('Location: index.php?controller=event&action=mesEvents');
-                exit();
-            } else {
-                $error['delete'] = "L'évènement à supprimer n'a pas été trouvé.";
+            if (isset($_POST['delete'])){
+                $csrfTokenFromRequest = $_POST['csrfToken'] ?? '';
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
+                }
+                if (!empty($_POST['id_event'])) {
+                    $eventIdToDelete = (int) $_POST['id_event'];
+                    $eventRepository->deleteEvent($eventIdToDelete);
+                    header('Location: index.php?controller=event&action=mesEvents');
+                    exit();
+                } else {
+                    $error['delete'] = "L'évènement à supprimer n'a pas été trouvé.";
+                }
             }
-        }
 
-        if (empty($plateformes)) {
-            throw new \Exception("Aucune donnée n'a été trouvée");
-        }
+            if (empty($plateformes)) {
+                throw new \Exception("Aucune donnée n'a été trouvée");
+            }
 
-        $this->render('event/mesEvents', [
-            'deleteEvent' => $deleteEvent,
-            'majEvent'    => $majEvent,
-            'plateformes' => $plateformes,
-            'error'       => $error,
-            'events'      => $myEvents,
-            'cheminCouverture' => EventValidator::getCoverDir(),
-            'cheminDiaporama' => EventValidator::getDiaporamaDir(),
-        ]);
+            $this->render('event/mesEvents', [
+                'deleteEvent' => $deleteEvent,
+                'majEvent'    => $majEvent,
+                'plateformes' => $plateformes,
+                'error'       => $error,
+                'events'      => $myEvents,
+                'cheminCouverture' => EventValidator::getCoverDir(),
+                'cheminDiaporama' => EventValidator::getDiaporamaDir(),
+            ]);
 
         } catch (\Exception $e) {
             $this->render('errors/default', [

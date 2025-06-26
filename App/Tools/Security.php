@@ -44,21 +44,10 @@ class Security
         return false;
     }
 
-    public static function csrfToken()
-    {
-        if (! empty($_POST)) {
-            if (! isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_COOKIE['csrf_token']) {
-                die('Token CSRF invalide');
-            }
-        }
-        return $_COOKIE['csrf_token'];
-    }
-
     public static function checkCsrfToken(string $csrfTokenFromRequest): bool
     {
         if (!isset($_COOKIE['csrfToken'])) {
             return false;
-            var_dump($_COOKIE['csrfToken']);
         }
         return hash_equals($_COOKIE['csrfToken'], $csrfTokenFromRequest);
     }

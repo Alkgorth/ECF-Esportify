@@ -33,6 +33,18 @@ INSERT INTO `plateforme` (`id_plateforme`, `name`) VALUES
 
 
 INSERT INTO `user` (`id_user`, `last_name`, `first_name`, `mail`, `pseudo`, `password`, `role`) VALUES
-(1, 'Utilisateur', 'User', 'muppihoicraprau-3140@yopmail.com', 'UserMuppi', '$2y$10$zuyEFd2KsNSNz7DJEMduXu4rlRIMbZ5chun4RGFlZTHD0J85ijbSe', 'joueur'),
-(2, 'Organisateur', 'Orga', 'frussaroxaufroi-3534@yopmail.com', 'OrgaFruss', '$2y$10$e.04EuLKJJYO1DbUs/3qi.wzBkbXvxEOTY1y8YtBJzDQXrKRQa2mS', 'organisateur'),
-(3, 'Administrateur', 'Admin', 'loulawojeuse-9062@yopmail.com', 'AdminLoula', '$2y$10$/2ysJgTO2nsxYdgCqQC0SeSXGiU0g7Xo.fMf4YE.OdeAZACXIybye', 'administrateur');
+(1, 'Utilisateur', 'User', 'joueur@yopmail.com', 'UserMuppi', '$2y$10$2pKv96ofN1oIO9KeNEhNf.TXrbLQ7pzII6b1CUnjH4uM3szM/c.iS', 'joueur'),
+(2, 'Organisateur', 'Orga', 'organisateur@yopmail.com', 'OrgaFruss', '$2y$10$ZnqYlOqFhnj9HbNlb/iWgODv4uP/M6j2hY2k4K2T19x9sIvkhMgwy', 'organisateur'),
+(3, 'Administrateur', 'Admin', 'administrateur@yopmail.com', 'AdminLoula', '$2y$10$RaUl0NYrQx6a0th0R.ZMJOrPH36tcSGp2pmuR0sAJiDfdO4YzNyDy', 'administrateur'),
+(5, 'Percheron', 'Arnaud', 'ap.percheron@gmail.com', 'Alkgorth', '$2y$10$dr0atUOlPkIFdDSBZ235Ku4RTSex89PQRRxiHAY2bWO5eyeb931bC', 'administrateur'),
+(6, 'Chouchou', 'Loulou', 'loulou@gmail.com', 'Chouchou', '$2y$10$Mtt9Z0mYm/y.oXSpDzgBsORwMJz7Ity5HGlnnCSt415iSZGiKhLja', 'joueur');
+
+
+INSERT INTO `event_image` (`id_event_image`, `fk_id_event`, `image_path`, `image_order`) VALUES
+(12, 13, 'event de test6825bd9dd3e1bDiapo_1_resized.jpg', 1),
+(13, 14, 'event test new683617231f1c8Diapo_1_resized.jpg', 1),
+(14, 14, 'event test new6836172383f85Diapo_2_resized.jpg', 2),
+(15, 14, 'event test new68361723f1456Diapo_3_resized.jpg', 3),
+(16, 12, 'update683627bd1650aDiapo_1_resized.jpg', 1),
+(17, 12, 'update683627bd7ff10Diapo_2_resized.jpg', 2),
+(18, 12, 'update683627bddf056Diapo_3_resized.jpg', 3),
