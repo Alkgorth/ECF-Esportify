@@ -26,7 +26,7 @@ if (!isset($_COOKIE['csrfToken'])) {
         false,
         true
     );
-    $_COOKIE['csrfToken'] = bin2hex(random_bytes(32));
+    $_COOKIE['csrfToken'] = $token;
 }
 
 define('_ROOTPATH_', __DIR__);

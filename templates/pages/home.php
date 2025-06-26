@@ -28,19 +28,24 @@
             <div id="carouselExampleRide" class="carousel slide mx-auto justify-content-center col-8" data-bs-ride="true">
                 <div class="carousel-inner mb-2 zoneCarousel">
                     <div class="carousel-item active">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="d-block w-100" alt="Gameuse victoire">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg"
+                            class="d-block w-100" alt="Gameuse victoire">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="d-block w-100" alt="Gameuse Ingame">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg"
+                            class="d-block w-100" alt="Gameuse Ingame">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="d-block w-100" alt="Team Gamers">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg"
+                            class="d-block w-100" alt="Team Gamers">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="d-block w-100" alt="Team Gamers">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg"
+                            class="d-block w-100" alt="Team Gamers">
                     </div>
                     <div class="carousel-item">
-                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="d-block w-100" alt="Team Gamers">
+                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg"
+                            class="d-block w-100" alt="Team Gamers">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
@@ -57,19 +62,24 @@
                 <div class="d-flex flex-wrap justify-content-center gap-2 mt-3 miniature-wrapper">
 
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="0">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg" class="img-fluid w-100" alt="Miniature Gameuse victoire">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-3.jpg"
+                            class="img-fluid w-100" alt="Miniature Gameuse victoire">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="1">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg" class="img-fluid w-100" alt="Miniature Gameuse Ingame">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-1.jpg"
+                            class="img-fluid w-100" alt="Miniature Gameuse Ingame">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="2">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg" class="img-fluid w-100" alt="Miniature Team Gamers">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-2.jpg"
+                            class="img-fluid w-100" alt="Miniature Team Gamers">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="3">
-                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg" class="img-fluid w-100" alt="Miniature Team Gamers">
+                        <img src="../../Assets/Documentation/Images/gameurs/Competition-esport-4.jpg"
+                            class="img-fluid w-100" alt="Miniature Team Gamers">
                     </div>
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="4">
-                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg" class="img-fluid w-100" alt="Miniature Team Gamers">
+                        <img src="../../Assets/Documentation/Images/gameurs/e-sport-equipe.jpg"
+                            class="img-fluid w-100" alt="Miniature Team Gamers">
                     </div>
                 </div>
             </div>
@@ -84,8 +94,10 @@
                 <?php foreach ($events as $event) {?>
                     <div class="col">
                         <div class="card h-100 carte">
-                            <a href="#" class="text-decoration-none text-white open-event-modal" data-bs-toggle="modal" data-bs-target="#eventModal" data-event-id="<?php echo $event['id']; ?>">
-                                <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top" alt="<?php echo $event['name'] ?>">
+                            <a href="#" class="text-decoration-none text-white open-event-modal" data-bs-toggle="modal"
+                                data-bs-target="#eventModal" data-event-id="<?php echo $event['id']; ?>">
+                                    <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top"
+                                        alt="<?php echo $event['name'] ?>">
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title carteTitre"><?php echo $event['name'] ?></h5>
