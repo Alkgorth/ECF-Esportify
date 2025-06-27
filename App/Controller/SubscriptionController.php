@@ -37,8 +37,8 @@ class SubscriptionController extends Controller
 
     private function subscribe()
     {
-        try {     
-            
+        try {
+
             if (!Security::isLoggedIn()) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté.']);
@@ -60,10 +60,7 @@ class SubscriptionController extends Controller
                 return;
             }
 
-            $input = file_get_contents('php://input');
-            $data = json_decode($input, true);
-
-            $eventId = $data['eventId'];
+            $eventId = $_POST['eventId'];
             
             if (!$eventId) {
                 http_response_code(400);

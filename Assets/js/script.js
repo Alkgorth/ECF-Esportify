@@ -105,6 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
 
       const eventId = button.dataset.eventId;
+      const formData = new URLSearchParams();
+      formData.append('eventId', eventId);
+      formData.append('csrfToken', csrfToken);
 
       console.log("ID de l'évènement cliqué :", eventId);
       
@@ -113,9 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
           const response = await fetch(url, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify({eventId: eventId, csrfToken: csrfToken}),
+            body: formData.toString(),
           });
 
           if (!response.ok) {

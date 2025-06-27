@@ -9,7 +9,7 @@ class FavoriteDocumentRepository extends MongoMainRepository
 {
     protected function getFavoriteCollection(): Collection
     {
-        return $this->getCollection('Test_collection');
+        return $this->getCollection('Subscribe');
     }
 
     public function findUserByName(string $name): ?FavoriteDocument
