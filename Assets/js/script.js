@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('ID de l\'événement :', eventId); 
     console.log('URL de la requête :',
-      `http://esportify:8000/index.php?controller=event&action=eventDetail&id=${eventId}&ajax=1`);
+      `index.php?controller=event&action=eventDetail&id=${eventId}&ajax=1`);
 
     eventModalContent.innerHTML = `
       <div class="text-center">
