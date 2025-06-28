@@ -1,5 +1,3 @@
-import { APIKEY } from "./prod.env.js";
-
 const input = document.getElementById("name_game");
 const suggestionsContainer = document.getElementById("suggestions");
 
