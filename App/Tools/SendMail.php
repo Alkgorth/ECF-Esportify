@@ -30,7 +30,7 @@ class SendMail
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'ap.percheron@gmail.com';
-            $mail->Password   = ConfigSecu::$smtpPassword;
+            $mail->Password   = getenv('SMTP_PASSWORD');
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 

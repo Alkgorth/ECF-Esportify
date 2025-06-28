@@ -6,11 +6,19 @@ const suggestionsContainer = document.getElementById("suggestions");
 input.addEventListener("input", async() => {
     const query = input.value.trim();
     if (query.length >= 3) {
-        const url = `https://api.rawg.io/api/games?key=${APIKEY}&search=${encodeURIComponent(query)}&page_size=5`;
+        const url = `index.php?controller=rawgapikey&action=rawgApiKey&search=${encodeURIComponent(query)}`;
+        
 
         try {
             const response = await fetch(url);
             const data = await response.json();
+
+            if (data.error) {
+                suggestionsContainer.innerHTML = `<div class="error-message">${data.error}</div>`;
+                console.error("Erreur de l'API RAWG :", data.error);
+                return;
+            }
+
             const games = data.results;
 
             suggestionsContainer.innerHTML = games.map(game =>

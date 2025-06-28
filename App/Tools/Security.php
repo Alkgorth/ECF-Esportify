@@ -52,5 +52,3 @@ class Security
         return hash_equals($_COOKIE['csrfToken'], $csrfTokenFromRequest);
     }
 }
-
-

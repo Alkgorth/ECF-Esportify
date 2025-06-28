@@ -52,24 +52,23 @@ class UserController extends Controller
     {
         try {
             $error = [];
-
             $user = new User();
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $csrfTokenFromRequest = '';
-    
+
                 if (!empty($_POST['csrfToken'])) {
                     $csrfTokenFromRequest = $_POST['csrfToken'];
                 }
-    
+
                 if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
                     http_response_code(403);
                     echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
                     return;
                 }
             }
-
+            
             if (isset($_POST['saveUser'])) {
                 $user->hydrate($_POST);
                 $user->setRole('joueur');

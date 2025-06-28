@@ -38,7 +38,7 @@ class SubscriptionController extends Controller
     private function subscribe()
     {
         try {
-
+            
             if (!Security::isLoggedIn()) {
                 http_response_code(401);
                 echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté.']);

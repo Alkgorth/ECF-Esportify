@@ -37,6 +37,10 @@ class Controller
                         $pageController = new SubscriptionController();
                         $pageController->route();
                         break;
+                    case 'rawgapikey':
+                        $pageController = new RawgKeyApiController();
+                        $pageController->route();
+                        break;
                     default:
                         throw new \Exception("Désolé cette page n'existe pas 😣");
                         break;

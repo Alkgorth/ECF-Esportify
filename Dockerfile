@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable mongodb
 
 # Copie de mes sources dans le conteneur (le workdir)
-# Ne pas commenter sinon crée l'erreur :  => ERROR [app stage-0 4/4] RUN composer install / plus nécéssaire avec ce que l'on a fait dans le docker-compose sur app->volumes
 COPY . .
 
 # Je vais chercher la dernière image de composer, dossier source et dossier destination
