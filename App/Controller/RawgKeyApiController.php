@@ -63,7 +63,5 @@ class RawgKeyApiController extends Controller
             echo json_encode(['error' => $e->getMessage()]);
         }
 
-        echo $response;
-    
     }
 }
