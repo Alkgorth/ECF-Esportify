@@ -141,17 +141,20 @@ class EventController extends Controller
             $plateformes     = $eventRepository->getAllPlateformes();
             $event           = new Event();
 
-                $csrfTokenFromRequest = '';
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['csrfToken'])) {
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
                     $csrfTokenFromRequest = $_POST['csrfToken'];
                 }
-
+    
                 if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
                     http_response_code(403);
                     echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
                     return;
                 }
+            }
 
             if (isset($_POST['saveUpdate'])) {
                 $event->hydrate($_POST);
