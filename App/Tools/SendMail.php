@@ -3,11 +3,6 @@
 
 namespace App\Tools;
 
-use App\Repository\UserRepository;
-use App\Entity\User;
-use App\Controller\AuthController;
-use App\Tools\configSecu;
-
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -66,7 +61,7 @@ class SendMail
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = 'ap.percheron@gmail.com';                     //SMTP username
-            $mail->Password   = ConfigSecu::$smtpPassword;                               //SMTP password
+            $mail->Password   = getenv('SMTP_PASSWORD');                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 

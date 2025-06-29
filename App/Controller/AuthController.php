@@ -114,6 +114,22 @@ class AuthController extends Controller
         try {
             $error = [];
 
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
+                    $csrfTokenFromRequest = $_POST['csrfToken'];
+                }
+    
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
+                }
+            }
+
+
             if (isset($_POST['resetPassword']) && isset($_POST['mail'])) {
                 $mail = $_POST['mail'];
 
@@ -150,6 +166,22 @@ class AuthController extends Controller
     {
         try {
             $error = [];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $csrfTokenFromRequest = '';
+    
+                if (!empty($_POST['csrfToken'])) {
+                    $csrfTokenFromRequest = $_POST['csrfToken'];
+                }
+    
+                if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                    return;
+                }
+            }
+
 
             if (isset($_GET['token'])) {
                 $tokenValue = $_GET['token'];
@@ -208,6 +240,21 @@ class AuthController extends Controller
 
     protected function deconnexion()
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $csrfTokenFromRequest = '';
+
+            if (!empty($_POST['csrfToken'])) {
+                $csrfTokenFromRequest = $_POST['csrfToken'];
+            }
+
+            if (!Security::checkCsrfToken($csrfTokenFromRequest)) {
+                http_response_code(403);
+                echo json_encode(['success' => false, 'message' => 'Jeton CSRF invalide. Requête refusée.']);
+                return;
+            }
+        }
+
         session_regenerate_id(true);
         session_destroy();
         unset($_SESSION);
