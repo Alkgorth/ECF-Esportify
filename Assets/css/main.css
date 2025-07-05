@@ -11997,6 +11997,24 @@ textarea.form-control-lg {
   font-family: var(--esportify-font-menus);
 }
 
+.bouton-valider {
+  background-color: var(--esportify-blue);
+  border: 2px solid var(--esportify-green);
+  text-align: center;
+  box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-75);
+  border-radius: 1.5rem;
+  color: var(--esportify-dark);
+}
+
+.bouton-inscription {
+  background-color: var(--esportify-green);
+  border: 2px solid var(--esportify-blue);
+  color: var(--esportify-grey-50);
+  text-align: center;
+  box-shadow: inset -0.3rem -0.3rem 6px -1px var(--esportify-grey-75);
+  border-radius: 1.5rem;
+}
+
 .carte {
   background-color: var(--esportify-grey-50);
   border: 2px solid var(--esportify-green);
@@ -12056,6 +12074,13 @@ textarea.form-control-lg {
 .texte-input {
   color: var(--esportify-white);
   font-family: var(--esportify-font-menus);
+}
+
+.suggestion-item {
+  max-width: 375px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--esportify-grey-75);
 }
 
 #eventModalContent {

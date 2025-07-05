@@ -43,13 +43,11 @@ class AdminController extends Controller
         try {
 
             if(isset($_SESSION['user']['role']) === 'administrateur'){
-
                 $eventRepository = new EventRepository();
                 $allEvent = $eventRepository->findEventAdmin();
-
             } else {
                 throw new \Exception("Vous n'êtes pas autorisé à accéder à cette page");
-                // header('Location: index.php?');
+                header('Location: index.php?');
             }
 
             $this->render('admin/gestionEvent', [

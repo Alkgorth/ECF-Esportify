@@ -6,7 +6,6 @@ input.addEventListener("input", async() => {
     if (query.length >= 3) {
         const url = `index.php?controller=rawgapikey&action=rawgApiKey&search=${encodeURIComponent(query)}`;
         
-
         try {
             const response = await fetch(url);
             const data = await response.json();
