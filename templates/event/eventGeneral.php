@@ -34,9 +34,9 @@
     <?php endif; ?>
 
     <div id="filters" class="d-flex justify-content-center gap-3 my-4">
-        <button data-filter="date" class="btn btn-outline-primary">Date</button>
-        <button data-filter="organisateur" class="btn btn-outline-primary">Organisateur</button>
-        <button data-filter="joueurs" class="btn btn-outline-primary">Nombre de joueurs</button>
+        <button data-filter="date" class="btn bouton-connexion">Date</button>
+        <button data-filter="organisateur" class="btn bouton-connexion">Organisateur</button>
+        <button data-filter="joueurs" class="btn bouton-connexion">Nombre de joueurs</button>
     </div>
 
     <div class="container ms-4">

@@ -58,7 +58,6 @@
                 </button>
 
                 <!-- Miniatures -->
-                <!-- <div class="d-flex flex-nowrap justify-content-center col-8 mx-auto miniature"> -->
                 <div class="d-flex flex-wrap justify-content-center gap-2 mt-3 miniature-wrapper">
 
                     <div class="miniature-thumb" data-bs-target="#carouselExampleRide" data-bs-slide-to="0">

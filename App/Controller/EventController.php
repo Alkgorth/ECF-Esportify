@@ -359,6 +359,7 @@ class EventController extends Controller
                 exit();
             }
 
+            var_dump($_SESSION);
             $userId = $_SESSION['user']['id'];
 
             $error           = [];

@@ -48,8 +48,8 @@
       <div class="mb-3 text-center">
         <label for="last_name" class="form-label">Nom</label>
         <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo htmlspecialchars($_SESSION['user']['last_name'])?>">
-
       </div>
+      
       <div class="mb-3 text-center">
         <label for="first_name" class="form-label">Prénom</label>
         <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo htmlspecialchars($_SESSION['user']['first_name'])?>">

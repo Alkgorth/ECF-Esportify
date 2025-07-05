@@ -201,7 +201,7 @@
                                         </div>
                                         <div class="mb-3 text-center">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea class="form-control<?php echo(isset($error['description']) ? 'is-invalid' : '') ?>"id="description" name="description" rows="5" cols="33"required><?php echo html_entity_decode($event['description']) ?></textarea>
+                                            <textarea class="form-control<?php echo(isset($error['description']) ? 'is-invalid' : '') ?>" id="description" name="description" rows="5" cols="33"required><?php echo html_entity_decode($event['description']) ?></textarea>
                                             <?php if (isset($error['description'])) {?>
                                                 <div class="invalid-feedback"><?php echo $error['description'] ?></div>
                                             <?php }?>

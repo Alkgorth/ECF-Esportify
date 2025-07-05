@@ -26,3 +26,10 @@
     color: var(--esportify-white);
     font-family: var(--esportify-font-menus);
 }
+
+.suggestion-item {
+    max-width: 375px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--esportify-grey-75);
+}
