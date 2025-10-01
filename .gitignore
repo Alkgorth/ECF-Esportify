@@ -5,6 +5,10 @@
 Assets/js/prod.env.js
 docker-compose.override.yml
 
+# Fichiers Docker de développement (ne pas commiter)
+Dockerfile.dev
+docker-compose.dev.yml
+
 #Fichier temporaire pour test PHP
 /test
 
