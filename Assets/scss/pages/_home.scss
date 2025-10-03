@@ -3,7 +3,24 @@
     min-height: 100vh;
     width: 100%;
     padding: 3rem 0;
-    clip-path: ellipse(150% 100% at 50% 100%);
+    /* Clip-path pour mobile - courbe plus subtile */
+    clip-path: ellipse(300% 100% at 50% 100%);
+}
+
+/* Tablettes */
+@media only screen and (min-width: 768px) {
+    .sectionBasse {
+        clip-path: ellipse(150% 98% at 50% 100%);
+        padding: 4rem 0;
+    }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1024px) {
+    .sectionBasse {
+        clip-path: ellipse(150% 100% at 50% 100%);
+        padding: 5rem 0;
+    }
 }
 
 .banniere {

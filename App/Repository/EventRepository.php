@@ -168,6 +168,7 @@ class EventRepository extends MainRepository
             e.description AS description,
             e.visibility AS visibilite,
             e.cover_image_path AS cover,
+            e.status AS status,
             pl.name AS plateforme,
             u.pseudo AS organisateur,
             GROUP_CONCAT(DISTINCT ei.image_path SEPARATOR ", ") AS diaporama

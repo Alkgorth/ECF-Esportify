@@ -23,9 +23,11 @@ class EventController extends Controller
                     case 'eventGeneral':
                         $this->eventGeneral();
                         break;
+                    // A faire
                     case 'eventGamer':
                         $this->eventGamer();
                         break;
+                    // A faire
                     case 'eventOrga':
                         $this->eventOrga();
                         break;
