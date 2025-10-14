@@ -102,7 +102,7 @@ svg {
   transition: var(--transition-speed);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 575px) {
   .barreNav {
     position: fixed;
     bottom: 0;
@@ -178,7 +178,7 @@ svg {
   }
 }
 
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 576px) {
   .barreNav {
     top: 0;
     width: 5rem;
