@@ -89,16 +89,16 @@
     <section class="sectionBasse mt-2">
         <h2 class="mb-4 text-center">Les derniers évènements</h2>
         <div class="container mb-3">
-            <div class="row row-cols-1 row-cols-md-4 g-4 events">
+            <div class="row g-4 events justify-content-center">
                 <?php foreach ($events as $event) {?>
-                    <div class="col">
+                    <div class="col-12 col-md-6 col-lg-3 event-card-wrapper">
                         <div class="card h-100 carte">
                             <a href="#" class="text-decoration-none text-white open-event-modal" data-bs-toggle="modal"
                                 data-bs-target="#eventModal" data-event-id="<?php echo $event['id']; ?>">
-                                    <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top"
+                                    <img src="<?php echo $cheminCouverture . $event['cover'] ?>" class="card-img-top event-image"
                                         alt="<?php echo $event['name'] ?>">
                             </a>
-                            <div class="card-body">
+                            <div class="card-body event-content">
                                 <h5 class="card-title carteTitre"><?php echo $event['name'] ?></h5>
                                 <p class="card-text carteTexte"><?php echo $event['plateforme_name'] ?></p>
                                 <p class="card-text carteTexte">Début :<?php echo $event['start'] ?></p>
