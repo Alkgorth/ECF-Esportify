@@ -1,22 +1,71 @@
 console.log("Je suis chargé");
 
-//Affichage du menu en -600px
-const openBtn = document.getElementById("nav-burger");
-const navBar = document.getElementById("navbar");
+//Affichage du menu déroulant mobile (≤575px)
+const burgerBtn = document.getElementById("nav-burger");
+const mobileMenu = document.getElementById("mobile-menu");
 
-if (openBtn && navBar) {
-  openBtn.addEventListener("click", () => {
-    const isNavVisible = navBar.classList.contains("visible");
-  
-    if (isNavVisible) {
-      navBar.classList.remove("visible");
-    } else {
-      navBar.classList.add("visible");
+// Fonction pour gérer l'affichage de la navigation selon la résolution
+function handleNavigation() {
+  if (burgerBtn && mobileMenu) {
+    
+    // Fonction pour ouvrir le menu mobile
+    function openMobileMenu() {
+      burgerBtn.classList.add("menu-open");
+      mobileMenu.classList.add("menu-open");
+      burgerBtn.querySelector('a').setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
     }
-  });
-} else {
-  console.warn("Éléments de navigation (nav-burger, navbar) non trouvés.");
+    
+    // Fonction pour fermer le menu mobile
+    function closeMobileMenu() {
+      burgerBtn.classList.remove("menu-open");
+      mobileMenu.classList.remove("menu-open");
+      burgerBtn.querySelector('a').setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    
+    // Gérer le clic sur le burger menu/croix
+    burgerBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const isMenuOpen = burgerBtn.classList.contains("menu-open");
+      
+      if (isMenuOpen) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+
+    // Fermer le menu si la fenêtre est redimensionnée vers desktop
+    window.addEventListener('resize', () => {
+      const windowWidth = window.innerWidth;
+      if (windowWidth > 575 && burgerBtn.classList.contains("menu-open")) {
+        closeMobileMenu();
+      }
+    });
+    
+    // Fermer le menu si on clique en dehors (sur l'overlay)
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        closeMobileMenu();
+      }
+    });
+    
+    // Fermer le menu si on clique sur un lien (navigation)
+    const mobileLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
+  } else {
+    console.warn("❌ Éléments de navigation mobile non trouvés");
+  }
 }
+
+// Initialiser la navigation
+handleNavigation();
 
 // Affichage modal détails évènements
 document.addEventListener('DOMContentLoaded', () => {
