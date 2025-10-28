@@ -12205,13 +12205,6 @@ svg {
   text-align: center;
 }
 
-.myBurger {
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 1.5rem;
-  letter-spacing: 0.3ch;
-}
-
 .logo img {
   width: 2.5rem;
   transition: var(--transition-speed);
@@ -12228,67 +12221,139 @@ svg {
   transition: var(--transition-speed);
 }
 
+/* Menu burger - masqué par défaut */
+.myBurger {
+  display: none;
+}
+
+/* Menu déroulant mobile - masqué par défaut et sur desktop */
+.mobile-menu-dropdown {
+  display: none; /* Masqué par défaut sur tous les écrans */
+}
+
 @media only screen and (max-width: 575px) {
+  /* Masquer complètement la barre de navigation classique sur mobile */
   .barreNav {
+    display: none !important;
+  }
+  /* Style du bouton burger - positionné en bas à droite */
+  .myBurger {
+    display: flex !important;
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1100;
+    background: var(--esportify-grey-5);
+    border-radius: 2rem;
+    border: 2px solid var(--esportify-green);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    padding: 0.5rem 1.2rem;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .myBurger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+  /* Style du texte "Esportify" dans le bouton burger */
+  .myBurger #logo-text {
+    color: var(--esportify-green);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 0.1ch;
+    margin-right: 1rem;
+    display: inline;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  /* Masquer le texte quand le menu est ouvert */
+  .myBurger.menu-open #logo-text {
+    pointer-events: none;
+  }
+  /* Style des icônes burger */
+  .myBurger svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+    transition: all 0.3s ease;
+  }
+  /* Style du lien dans le bouton burger */
+  .myBurger a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .myBurger a:focus {
+    outline-offset: 2px;
+  }
+  /* Alterner les icônes burger/croix */
+  .myBurger .close-icon {
+    display: none;
+  }
+  .myBurger.menu-open .burger-icon {
+    display: none;
+  }
+  .myBurger.menu-open .close-icon {
+    display: block;
+  }
+  /* Menu déroulant mobile */
+  .mobile-menu-dropdown {
+    display: block;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 4rem;
-    justify-content: space-between;
-    overflow: hidden;
-    display: flex;
-  }
-  .barreNav.visible {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 5rem;
     height: 100vh;
-    max-height: 100vh;
-    transition: var(--transition-speed);
-    display: block;
+    background: rgba(0, 0, 0, 0.5); /* Overlay semi-transparent */
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1050;
+    overflow: hidden;
   }
-  .barreNav.visible ul {
-    flex-direction: column;
-    width: 8rem;
-    height: auto;
+  /* État ouvert du menu */
+  .mobile-menu-dropdown.menu-open {
+    transform: translateY(0);
   }
-  .barreNav:hover {
-    width: 16rem;
-  }
-  .barreNav:hover .mySpan {
-    display: inline;
-  }
-  .barreNav:hover .logo-text {
-    margin-left: 3rem;
-    left: 0px;
-  }
-  .myBurger {
-    position: fixed;
+  /* Contenu du menu mobile */
+  .mobile-menu-content {
+    position: absolute;
     bottom: 0;
     left: 0;
-    display: block;
-    margin-bottom: 1.5rem;
-    z-index: 9999;
+    width: 100%;
+    max-height: 70vh;
+    background: var(--esportify-grey-5);
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    padding: 2rem 1rem 6rem 1rem;
+    overflow-y: auto;
   }
-  .barreNav.visible .myBurger {
-    visibility: hidden;
+  .mobile-nav-item {
+    margin-bottom: 0.5rem;
   }
-  .logo {
-    visibility: hidden;
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    color: var(--esportify-white);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+    font-size: 1.1rem;
   }
-  .barreNav.visible .logo {
-    visibility: visible;
+  .mobile-nav-link:hover {
+    background: var(--esportify-dark);
+    color: var(--esportify-green);
   }
-  ul {
-    flex-direction: row;
-  }
-  .liItem {
-    visibility: hidden;
-  }
-  .barreNav.visible .liItem {
-    visibility: visible;
+  .mobile-nav-link svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
   }
 }
 @media only screen and (min-width: 576px) {
